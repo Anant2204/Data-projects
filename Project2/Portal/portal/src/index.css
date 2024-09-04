@@ -1,0 +1,9 @@
+/* global styles placeholder */
+
+.header_logo {
+  height: 20px;
+  border-right: 2px solid white;
+  padding-right: 15px;
+  margin-right: 15px;
+  cursor: pointer;
+}

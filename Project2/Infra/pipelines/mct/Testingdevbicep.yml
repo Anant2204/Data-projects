@@ -1,0 +1,49 @@
+trigger:
+- none
+
+pool:
+   vmImage: 'Ubuntu-latest'
+
+variables: 
+ templatefile: '.source/localModules/mct.kv.bicep'
+ devresourceGroupName: 'mct-rg-dev1'
+ parametersfile:
+
+
+stages:
+  - stage: Dev
+    jobs:
+      - job: Manual_approval
+        pool: server
+        timeoutInMinutes: 4320
+        steps:
+        - task: ManualValidation@0
+          inputs:
+           notifyUsers: DeploytoDev
+           instructions: Accept or Reject 
+           onTimeout: reject
+
+      - job: Whatif
+        dependsOn: Manual_approval
+        steps:
+           - task: AzureCLI@2
+             displayName: Validate Bicep code
+             inputs:
+               azureSubscription: 'mct-dev1'
+               scriptType: 'bash'
+               scriptLocation: 'inlineScript'
+               inlineScript: |
+                 az --version  
+                 az deployment group what-if --parameters @$(parametersfile) --resource-group $(devresourceGroupName) --template-file $(templatefile)
+
+      - job: deploy
+        dependsOn: Whatif
+        steps:
+           - task: AzureCLI@2
+             displayName: Deploybicepcode
+             inputs:
+               azureSubscription: 'mct-dev1'
+               scriptType: 'bash'
+               scriptLocation: 'inlineScript'
+               inlineScript: |
+                 az deployment group create --parameters @$(parametersfile) --resource-group $(devresourceGroupName) --template-file $(templatefile)

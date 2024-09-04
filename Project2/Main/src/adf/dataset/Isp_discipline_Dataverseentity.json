@@ -1,0 +1,16 @@
+{
+	"name": "Isp_discipline_Dataverseentity",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "pac_dv_isp_prd",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "CommonDataServiceForAppsEntity",
+		"schema": [],
+		"typeProperties": {
+			"entityName": "isp_discipline"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

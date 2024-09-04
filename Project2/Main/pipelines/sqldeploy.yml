@@ -1,0 +1,110 @@
+trigger:
+  branches:
+    include:
+    - dev
+    - release1/*
+  paths:
+    include:
+    - src/database/*
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    pool:
+      name: 'mct1espool'
+      image: mct1esptwindows
+      os: windows
+    stages:
+    - stage : "BuildPackage"
+      displayName: Build and Publish
+      jobs:
+      - job: "Build"
+        templateContext:
+          outputs:
+          - output: pipelineArtifact
+            targetPath: $(Build.ArtifactStagingDirectory)
+            artifactName: sqldeploy
+            publishLocation: 'Container'
+        steps:
+        - task: VSBuild@1
+          inputs:
+            solution: 'src/database/database.sln'
+            platform: 'any cpu'
+            configuration: 'release'
+
+        - task: CopyFiles@2
+          inputs:
+            SourceFolder: '$(system.defaultworkingdirectory)'
+            Contents: '**\bin\release\**'
+            TargetFolder: '$(build.artifactstagingdirectory)'
+
+    ####Deploy-DEV1###
+
+    - stage: DeployDEV1
+      displayName: Deploy - DEV1
+      dependsOn: BuildPackage
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+      jobs:
+      - template: /pipelines/templates/sql_deploymenttask.yml@self
+        parameters:
+          azureSubscription: 'mct-dev1'
+          environment: 'DEV1'
+          AuthenticationType: 'servicePrincipal'
+          ServerName: 'pac-sql-dev1.database.windows.net'
+          DatabaseName: 'mctdev1db'    
+          AdditionalArguments: '/p:BlockOnPossibleDataLoss=False /p:CommandTimeout=600'
+          IpDetectionMethod: 'AutoDetect'
+
+    ####Deploy-UAT1###
+    - stage: DeployUAT1
+      displayName: Deploy - UAT1
+      dependsOn: BuildPackage
+      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release1'))
+      jobs:
+      - template: /pipelines/templates/sql_deploymenttask.yml@self
+        parameters:
+          azureSubscription: 'mct-uat1'
+          environment: 'UAT1'
+          AuthenticationType: 'servicePrincipal'
+          ServerName: 'pac-sql-uat1.database.windows.net'
+          DatabaseName: 'mctuat1db'
+          AdditionalArguments: '/p:BlockOnPossibleDataLoss=False /p:CommandTimeout=600'
+          IpDetectionMethod: 'AutoDetect'
+
+    ####Deploy-Prod###
+    - stage: DeployPROD
+      displayName: Deploy - PROD
+      dependsOn: DeployUAT1
+      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release1'))
+      jobs:
+      - template: /pipelines/templates/sql_deploymenttask.yml@self
+        parameters:
+          azureSubscription: 'mct-prod'
+          environment: 'PROD'
+          AuthenticationType: 'servicePrincipal'
+          ServerName: 'pac-sql-prod.database.windows.net'
+          DatabaseName: 'mctproddb'
+          AdditionalArguments: '/p:BlockOnPossibleDataLoss=False /p:CommandTimeout=600'
+          IpDetectionMethod: 'AutoDetect'
+
+    - stage: DeployPRODDR
+      displayName: Deploy - PRODDR
+      dependsOn: DeployUAT1
+      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release1'))
+      jobs:
+      - template: /pipelines/templates/sql_deploymenttask.yml@self
+        parameters:
+          azureSubscription: 'mct-proddr'
+          environment: 'PRODDR'
+          AuthenticationType: 'servicePrincipal'
+          ServerName: 'pac-sql-proddr.database.windows.net'
+          DatabaseName: 'mctproddrdb'
+          AdditionalArguments: '/p:BlockOnPossibleDataLoss=False /p:CommandTimeout=600'
+          IpDetectionMethod: 'AutoDetect'
+
+    

@@ -1,0 +1,165 @@
+.panelHeaderText {
+  font-family: 'Segoe UI';
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: black;
+  background-color: 'white';
+}
+
+/* .panelHeaderText .ms-Panel-main {
+  z-index: 100000000 !important;
+} */
+
+.feedback-content {
+  margin-top: 24px;
+  /* display: flex; */
+  flex-direction: column;
+  justify-content: space-between;
+  /* height: 125vh;  */
+  height: auto;
+  width: 100%;
+}
+
+.ms-ChoiceField {
+  margin-right: 15px;
+}
+
+.question {
+  font-family: 'Segoe UI';
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #323130;
+}
+
+.question-container {
+  width: 100%;
+  max-width: 400px;
+  height: 50px;
+  margin: 0 auto;
+  padding: 5px 0;
+  gap: 4px;
+}
+
+.custom-textfield ::placeholder {
+  letter-spacing: 0px;
+  text-align: left;
+  color: #969594;
+}
+
+
+.choice-container {
+  width: 100%;
+  max-width: 400px;
+  /* height: 138px; */
+  height: auto;
+  margin: 0 auto;
+}
+
+.choice-container label {
+  font-family: 'Segoe UI';
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.custom-choice-group .ms-ChoiceField-field {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.custom-choice-group .ms-ChoiceField-input {
+  height: 100%;
+  width: 100%;
+}
+
+.comment-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.checkbox-options {
+    margin-top: 24px;
+    width: 100%;
+    max-width: 400px;
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* .is-checked i{
+    background-color: #0078d4 !important;
+    color: #FBFBFB !important;
+} */
+  
+  .checkbox-options label {
+    font-family: 'Segoe UI';
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+
+  .feedback-preview-image{
+    margin-bottom: 24px;
+  }
+
+  .privacy-statement-container {
+    margin-top: auto;
+    width: 265px;
+    left: 24px;
+  }
+  
+  .privacy-statement-content {
+    font-family: 'Segoe UI';
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #A19F9D;
+    margin-bottom: 16px;
+  }
+
+  .feedback-end-container{
+    margin-top: 16px;
+  }
+
+  .feedback-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    padding-bottom: 40px;    
+  }
+
+  .submit-message{
+    margin-top: 3px;
+    font-family: 'Segoe UI';
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+  }
+  .comment-container .ms-TextField-fieldGroup {
+    /* CSS properties */
+    border: 0px solid rgb(96, 94, 92) !important;
+  }
+  
+  .feedback-content {
+    margin-top: 17px;
+    margin-left: 10px !important;
+  }
+
+
+  #feedbackPanelTest > .ms-Layer {
+    z-index: 2000000000 !important;
+  }

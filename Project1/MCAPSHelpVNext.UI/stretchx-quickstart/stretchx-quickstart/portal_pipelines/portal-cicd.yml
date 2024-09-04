@@ -1,0 +1,49 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  filepath: '$(Build.SourcesDirectory)/portal'
+
+##########Stage-Release##########
+stages:
+- stage: BUILD
+  displayName: Build Package
+  jobs:
+  - job: Build
+    workspace:
+      clean: all
+    steps:
+    - checkout: self
+      clean: true
+      persistCredentials: true
+      
+    - task: ArchiveFiles@2
+      displayName: Archive Portal
+      inputs:
+        rootFolderOrFile: '$(filepath)'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        replaceExistingArchive: true
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+
+#####Stage-DEV#####
+- stage: DEV
+  displayName: 'Deploy to DEV'
+  jobs:
+  - template: templates/deploymenttask.yml
+    parameters:
+      subscription: 'your-azure-resource-manager-service-connection-name'
+      envName: 'DEV'
+      appName: 'your-app-name eg. ose-dev-wa-portal'

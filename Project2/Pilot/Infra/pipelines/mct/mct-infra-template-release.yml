@@ -1,0 +1,67 @@
+stages:
+
+#####Stage-NonProd_WhatIf#####
+- stage: NonProd_WhatIf
+  displayName: 'NonProd_WhatIf'
+  dependsOn: Publish
+  #condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/copilot/deeksha')) #Triggers only for develop branch
+  variables:
+  - template: ../vars/mct/NONPROD.yml@self
+  jobs:
+  - template: mct-infra-template-whatif.yml@self
+    parameters:
+      resourceGroup: ${{ variables.resourceGroup }}
+      azureSubscription: ${{ variables.azureSubscription }}
+      env: ${{ variables.env }}
+      dateTime: ${{ variables.dateTime }}
+      location: ${{ variables.location }}
+
+#####Stage-NONPROD_Deploy#####
+- stage: NONPROD_Deploy
+  displayName: 'NONPROD_Deploy'
+  dependsOn: NonProd_WhatIf
+  variables:
+  - template: ../vars/mct/NONPROD.yml@self
+  jobs:
+  - template: mct-infra-template-deployment.yml@self
+    parameters:
+      resourceGroup: ${{ variables.resourceGroup }}
+      azureSubscription: ${{ variables.azureSubscription }}
+      env: ${{ variables.env }}
+      dateTime: ${{ variables.dateTime }}
+      location: ${{ variables.location }}
+
+
+#####Stage-Prod_WhatIf#####      
+- stage: Prod_WhatIf
+  displayName: 'Prod_WhatIf'
+  dependsOn: Publish
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release'))
+  variables:
+  - template: ../vars/mct/PROD.yml@self
+  jobs:
+  - template: mct-infra-template-whatif.yml@self
+    parameters:
+      resourceGroup: ${{ variables.resourceGroup }}
+      azureSubscription: ${{ variables.azureSubscription }}
+      env: ${{ variables.env }}
+      dateTime: ${{ variables.dateTime }}
+      location: ${{ variables.location }}
+      
+
+#####Stage-Prod_Deploy#####
+- stage: Prod_Deploy
+  displayName: 'Prod_Deploy'
+  dependsOn: Prod_WhatIf
+  variables:
+  - template: ../vars/mct/PROD.yml@self
+  
+  jobs:
+  - template: mct-infra-template-deployment.yml@self
+    parameters:
+      resourceGroup: ${{ variables.resourceGroup }}
+      azureSubscription: ${{ variables.azureSubscription }}
+      env: ${{ variables.env }}
+      dateTime: ${{ variables.dateTime }}
+      location: ${{ variables.location }}
+      

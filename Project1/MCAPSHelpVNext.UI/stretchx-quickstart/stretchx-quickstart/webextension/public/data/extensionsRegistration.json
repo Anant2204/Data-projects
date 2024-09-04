@@ -1,0 +1,51 @@
+{
+  "routes": [
+    {
+      "key": "4afa8f62-a142-11ed-a8fc-0242ac120002",
+      "name": "consumption",
+      "routePath": "consumption",
+      "active": true
+    }
+  ],
+  "extensions": [
+    {
+      "key": "be299642-f32a-4e67-8ba8-13e1cb9c95ac",
+      "feedbackEmail": "feedbackconsumptions@microsoft.com",
+      "version": "1.0.0",
+      "name": "Consumption Extension",
+      "files": [
+        {
+          "name": "sw-consumption.js",
+          "type": "module",
+          "url": "/extensions/",
+          "log": true,
+          "active": true
+        },
+        {
+          "name": "sw-consumption-vendor.js",
+          "type": "module",
+          "url": "/extensions/",
+          "log": false,
+          "active": true
+        }
+      ],
+      "pages": [
+        {
+          "key": "4afa8dbe-a142-11ed-a8fc-0242ac120002",
+          "name": "consumption",
+          "description": "Consumption",
+          "showNavigation": true,
+          "icon": "M365InvoicingLogo",
+          "routeKey": "4afa8f62-a142-11ed-a8fc-0242ac120002",
+          "tileKey": "4afa95c0-a142-11ed-a8fc-0242ac120002",
+          "search": "",
+          "component": "sw-consumption",
+          "exclude": [],
+          "active": true
+        }
+      ],
+      "tiles": [],
+      "active": true
+    }
+  ]
+}

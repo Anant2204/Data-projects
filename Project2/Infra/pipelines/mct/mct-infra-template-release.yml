@@ -1,0 +1,99 @@
+stages:
+#####Stage-DEV1_WhatIf#####
+- stage: DEV1_WhatIf
+  displayName: 'DEV1_WhatIf'
+  dependsOn: Publish
+  #condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/dev1')) #Triggers only for develop branch
+  variables:
+  - template: ../vars/mct/DEV1.yml@self
+  jobs:
+  - template: mct-infra-template-whatif.yml@self
+    parameters:
+      resourceGroup: ${{ variables.resourceGroup }}
+      azureSubscription: ${{ variables.azureSubscription }}
+      env: ${{ variables.env }}
+      dateTime: ${{ variables.dateTime }}
+      location: ${{ variables.location }}
+
+#####Stage-DEV1_Deploy#####
+- stage: DEV1_Deploy
+  displayName: 'DEV1_Deploy'
+  dependsOn: DEV1_WhatIf
+  variables:
+  - template: ../vars/mct/DEV1.yml@self
+  jobs:
+  - template: mct-infra-template-deployment.yml@self
+    parameters:
+      resourceGroup: ${{ variables.resourceGroup }}
+      azureSubscription: ${{ variables.azureSubscription }}
+      env: ${{ variables.env }}
+      dateTime: ${{ variables.dateTime }}
+      location: ${{ variables.location }}
+
+#####Stage-UAT1_WhatIf#####
+
+- stage: UAT1_WhatIf
+  displayName: 'UAT1_WhatIf'
+  dependsOn: Publish
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release1'))
+  variables:
+  - template: ../vars/mct/UAT1.yml@self
+  jobs:
+  - template: mct-infra-template-whatif.yml@self
+    parameters:
+      resourceGroup: ${{ variables.resourceGroup }}
+      azureSubscription: ${{ variables.azureSubscription }}
+      env: ${{ variables.env }}
+      dateTime: ${{ variables.dateTime }}
+      location: ${{ variables.location }}
+      
+
+#####Stage-UAT1_Deploy#####
+- stage: UAT1_Deploy
+  displayName: 'UAT1_Deploy'
+  dependsOn: UAT1_WhatIf
+  variables:
+  - template: ../vars/mct/UAT1.yml@self
+  
+  jobs:
+  - template: mct-infra-template-deployment.yml@self
+    parameters:
+      resourceGroup: ${{ variables.resourceGroup }}
+      azureSubscription: ${{ variables.azureSubscription }}
+      env: ${{ variables.env }}
+      dateTime: ${{ variables.dateTime }}
+      location: ${{ variables.location }}
+
+#####Stage-Prod_WhatIf#####      
+- stage: Prod_WhatIf
+  displayName: 'Prod_WhatIf'
+  dependsOn: Publish
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release1'))
+  variables:
+  - template: ../vars/mct/PROD.yml@self
+  jobs:
+  - template: mct-infra-template-whatif.yml@self
+    parameters:
+      resourceGroup: ${{ variables.resourceGroup }}
+      azureSubscription: ${{ variables.azureSubscription }}
+      env: ${{ variables.env }}
+      dateTime: ${{ variables.dateTime }}
+      location: ${{ variables.location }}
+      
+
+#####Stage-Prod_Deploy#####
+- stage: Prod_Deploy
+  displayName: 'Prod_Deploy'
+  dependsOn: Prod_WhatIf
+  variables:
+  - template: ../vars/mct/PROD.yml@self
+  
+  jobs:
+  - template: mct-infra-template-deployment.yml@self
+    parameters:
+      resourceGroup: ${{ variables.resourceGroup }}
+      azureSubscription: ${{ variables.azureSubscription }}
+      env: ${{ variables.env }}
+      dateTime: ${{ variables.dateTime }}
+      location: ${{ variables.location }}
+      

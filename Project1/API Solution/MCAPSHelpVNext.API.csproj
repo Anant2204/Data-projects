@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Version>1.0.0.1</Version>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+    </PropertyGroup>
+  <PropertyGroup>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="MCAPSHelpVnext.Common\**" />
+    <Content Remove="MCAPSHelpVnext.Common\**" />
+    <EmbeddedResource Remove="MCAPSHelpVnext.Common\**" />
+    <None Remove="MCAPSHelpVnext.Common\**" />
+  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="11.0.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+        <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
+        <PackageReference Include="Azure.Identity" Version="1.10.4" />
+        <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+        <PackageReference Include="HtmlAgilityPack" Version="1.11.54" />
+        <PackageReference Include="Microsoft.ApplicationInsights" Version="2.21.0" />
+        <PackageReference Include="Microsoft.ApplicationInsights.Profiler.AspNetCore" Version="2.5.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.24" />
+        <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.24" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.24" />
+        <PackageReference Include="Microsoft.AspNetCore.Owin" Version="6.0.24" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.6" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Graph" Version="4.54.0" />
+        <PackageReference Include="Microsoft.Identity.Client" Version="4.57.0" />
+        <PackageReference Include="Microsoft.Identity.Web" Version="2.15.3" />
+        <PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="2.15.3" />
+        <PackageReference Include="Microsoft.Identity.Web.TokenCache" Version="2.15.3" />
+        <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Owin" Version="4.2.2" />
+        <PackageReference Include="Microsoft.VisualStudio.Validation" Version="17.6.11" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
+        <PackageReference Include="Validation" Version="2.5.51" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\MCAPSHelpVNext.DataRepository\MCAPSHelpVNext.DataRepository.csproj" />
+      <ProjectReference Include="MCAPSHelpVnext.Common\MCAPSHelpVnext.Common.csproj" />
+    </ItemGroup>
+</Project>

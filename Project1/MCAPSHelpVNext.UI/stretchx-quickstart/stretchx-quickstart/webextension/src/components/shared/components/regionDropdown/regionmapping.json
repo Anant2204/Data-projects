@@ -1,0 +1,133 @@
+{
+  "areas": {
+    "Africa": {
+      "regions": [
+        { "display_name": "South Africa North", "name": "southafricanorth" },
+        { "display_name": "South Africa West", "name": "southafricawest" }
+      ]
+    },
+    "Asia Pacific": {
+      "regions": [
+        { "display_name": "Australia Central", "name": "australiacentral" },
+        { "display_name": "Australia Central 2", "name": "australiacentral2" },
+        { "display_name": "Australia East", "name": "australiaeast" },
+        { "display_name": "Australia Southeast", "name": "australiasoutheast" },
+        { "display_name": "Central India", "name": "centralindia" },
+        { "display_name": "East Asia", "name": "eastasia" },
+        { "display_name": "Japan East", "name": "japaneast" },
+        { "display_name": "Japan West", "name": "japanwest" },
+        { "display_name": "Jio India Central", "name": "jioindiacentral" },
+        { "display_name": "Jio India West", "name": "jioindiawest" },
+        { "display_name": "Korea South", "name": "koreasouth" },
+        { "display_name": "South East Asia", "name": "southeastasia" },
+        { "display_name": "South India", "name": "southindia" },
+        { "display_name": "West India", "name": "westindia" }
+      ]
+    },
+    "Azure Government": {
+      "regions": [
+        { "display_name": "US DoD Central", "name": "usdodcentral" },
+        { "display_name": "US Gov Arizona", "name": "usgovarizona" },
+        { "display_name": "US Gov Iowa", "name": "usgoviowa" },
+        { "display_name": "US Gov Texas", "name": "usgovtexas" },
+        { "display_name": "US Gov Virginia", "name": "usgovvirginia" }
+      ]
+    },
+    "Azure Stack": {
+      "regions": [
+        { "display_name": "Azure Stack", "name": "Azure Stack" },
+        { "display_name": "Azure Stack US Gov", "name": "Azure Stack US Gov" }
+      ]
+    },
+    "Canada": {
+      "regions": [
+        { "display_name": "Canada Central", "name": "canadacentral" },
+        { "display_name": "Canada East", "name": "canadaeast" }
+      ]
+    },
+    "Europe": {
+      "regions": [
+        { "display_name": "France Central", "name": "francecentral" },
+        { "display_name": "France South", "name": "francesouth" },
+        { "display_name": "Germany North", "name": "germanynorth" },
+        {
+          "display_name": "Germany West Central",
+          "name": "germanywestcentral"
+        },
+        { "display_name": "North Europe", "name": "northeurope" },
+        { "display_name": "Norway East", "name": "norwayeast" },
+        { "display_name": "Norway West", "name": "norwaywest" },
+        { "display_name": "Poland Central", "name": "polandcentral" },
+        { "display_name": "Sweden Central", "name": "swedencentral" },
+        { "display_name": "Sweden South", "name": "swedensouth" },
+        { "display_name": "Switzerland North", "name": "switzerlandnorth" },
+        { "display_name": "Switzerland West", "name": "switzerlandwest" },
+        { "display_name": "UK North", "name": "uknorth" },
+        { "display_name": "UK South", "name": "uksouth" },
+        { "display_name": "UK South 2", "name": "uksouth2" },
+        { "display_name": "UK West", "name": "ukwest" },
+        { "display_name": "West Europe", "name": "westeurope" }
+      ]
+    },
+    "Global": {
+      "regions": [{ "display_name": "Global", "name": "Global" }]
+    },
+    "Intercontinental": {
+      "regions": [
+        { "display_name": "Intercontinental", "name": "Intercontinental" }
+      ]
+    },
+    "Middle East": {
+      "regions": [
+        { "display_name": "Qatar Central", "name": "qatarcentral" },
+        { "display_name": "UAE Central", "name": "uaecentral" },
+        { "display_name": "UAE North", "name": "uaenorth" }
+      ]
+    },
+    "South America": {
+      "regions": [
+        { "display_name": "Brazil South", "name": "brazilsouth" },
+        { "display_name": "Brazil Southeast", "name": "brazilsoutheast" }
+      ]
+    },
+    "US": {
+      "regions": [
+        { "display_name": "Central US", "name": "centralus" },
+        { "display_name": "Central US EUAP", "name": "centraluseuap" },
+        { "display_name": "East US", "name": "eastus" },
+        { "display_name": "East US 2", "name": "eastus2" },
+        { "display_name": "East US 2 EUAP", "name": "eastus2euap" },
+        { "display_name": "East US SLV", "name": "eastusslv" },
+        { "display_name": "North Central US", "name": "northcentralus" },
+        { "display_name": "South Central US", "name": "southcentralus" },
+        {
+          "display_name": "South Central US Stage",
+          "name": "southcentralusstg"
+        },
+        { "display_name": "West Central US", "name": "westcentralus" },
+        { "display_name": "West US", "name": "westus" },
+        { "display_name": "West US 2", "name": "westus2" },
+        { "display_name": "West US 3", "name": "westus3" }
+      ]
+    },
+    "Others": {
+      "regions": [
+        { "display_name": "ATT Atlanta 1", "name": "attatlanta1" },
+        { "display_name": "ATT Dallas 1", "name": "attdallas1" },
+        { "display_name": "ATT Detroit 1", "name": "attdetroit1" },
+        { "display_name": "ATT New York", "name": "attnewyork1" },
+        { "display_name": "US Gov", "name": "US Gov" },
+        { "display_name": "US Gov Zone 1", "name": "US Gov Zone 1" },
+        { "display_name": "Zone 1", "name": "Zone 1" },
+        { "display_name": "Zone 1 (China)", "name": "Zone 1 (China)" },
+        { "display_name": "Zone 2", "name": "Zone 2" },
+        { "display_name": "Zone 3", "name": "Zone 3" },
+        { "display_name": "Zone 4", "name": "Zone 4" },
+        { "display_name": "Zone 5", "name": "Zone 5" },
+        { "display_name": "Zone 6", "name": "Zone 6" },
+        { "display_name": "Zone 7", "name": "Zone 7" },
+        { "display_name": "Zone 8", "name": "Zone 8" }
+      ]
+    }
+  }
+}

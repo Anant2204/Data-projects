@@ -1,0 +1,38 @@
+{
+	"name": "DS_MCT_EDM_Mapping",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "pac_sql_prd",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "OrgCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RoleSummary",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Q1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Q2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "IncentivePlan",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "hr",
+			"table": "tmp_MCT_EDM_Mapping"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

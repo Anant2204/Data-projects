@@ -1,0 +1,17 @@
+{
+	"name": "Isp_rolesummary_Staging_AzureSqlTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "pac_sql_prd",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Isp_rolesummary_staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

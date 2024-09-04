@@ -1,0 +1,81 @@
+trigger: none
+pr: none
+
+schedules:
+- cron: '0 0 * * *'
+  displayName: Daily midnight build
+  branches:
+    include:
+    - develop
+
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+variables:
+  solution: '**/Copilot.Backend.sln'
+  buildConfiguration: 'Release'
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    pool:
+      name: 'mct1espool'
+      image: mct1esptwindows
+      os: windows 
+
+    stages:
+    - stage: stage
+      displayName: QG
+      jobs:
+      - job: Build
+        steps:
+        - task: CodeQL3000Init@0
+          inputs:
+            Enabled: true
+
+        - task: SonarQubePrepare@5
+          displayName: Prepare Sonar Analysis
+          inputs:
+            SonarQube: 'mct-copilot-sonar'
+            scannerMode: 'MSBuild'
+            projectKey: 'MCT_MCT-Copilot'
+            projectName: 'MCT_MCT-Copilot_#Tools'
+            projectVersion: '$(Build.BuildId)'
+
+        - task: UseDotNet@2
+          displayName: Use .Net 6.0.x
+          inputs:
+            packageType: 'sdk'
+            version: '6.0.x'
+
+        # Step 4: Restore dependencies
+        - task: DotNetCoreCLI@2
+          displayName: 'Restore'
+          inputs:
+            command: 'restore'
+            projects: '$(solution)'
+            feedsToUse: 'select'
+            vstsFeed: 'c1eb1d13-5333-4112-95b2-2e514c22c241/e7a9b03a-3e9e-4ae7-b444-a06a80ff3074'
+          # Step 5: Build the project
+        - task: DotNetCoreCLI@2
+          displayName: 'Build project'
+          inputs:
+            command: 'build'
+            projects: '$(solution)'
+            arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory) --no-restore'
+
+        - task: CodeQL3000Finalize@0
+          condition: always()
+
+        - task: SonarQubeAnalyze@5
+          displayName: Analyse Build
+          inputs:
+            jdkversion: 'JAVA_HOME_17_X64'
+
+        - task: SonarQubePublish@5
+          displayName: Publish Sonar Report
+          inputs:
+            pollingTimeoutSec: '300'
+

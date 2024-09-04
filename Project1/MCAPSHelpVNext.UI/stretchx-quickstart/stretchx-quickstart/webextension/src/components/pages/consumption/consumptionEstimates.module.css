@@ -1,0 +1,68 @@
+.consumptionName {
+    color: blue;
+    cursor: pointer;
+  }
+  
+  .actionButtonContainer {
+    margin-top: 1rem;
+  }
+  
+  .applyButton {
+    margin-right: 1rem;
+  }
+
+  .imageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .centeredImage {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+    margin-bottom: 1rem;
+  }
+  
+  .centerButton {
+    margin-top: 1rem;
+  }
+
+.row {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    padding: 1rem;
+  }
+
+.rowContainer {
+    max-width: 80%; 
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+  
+  .detailsListContainer {
+    max-width: 80%; 
+    margin: 0 auto;
+  }
+  
+  .headerFirstColumn {
+    display: none;
+  }
+  
+  .rowContent {
+    border-bottom: none !important;
+  }
+
+.searchBoxContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+  }
+
+  .highlightedText {
+    background-color: yellow;
+  }
+  

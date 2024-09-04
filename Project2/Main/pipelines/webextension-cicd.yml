@@ -1,0 +1,107 @@
+trigger:
+  branches:
+    include:
+    - dev
+    - release1/*
+
+  paths:
+    include:
+    - src/webextension/*
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    pool:
+      name: 'mct1espool'
+      image: mct1esptwindows
+      os: windows
+
+    ##########Stage-Build##########
+    stages:
+    - stage: BUILD
+      displayName: Build and Package
+      jobs:
+      - job: Build
+        templateContext:
+          outputs:
+          - output: pipelineArtifact
+            targetPath: $(Build.ArtifactStagingDirectory)
+            artifactName: drop
+            publishLocation: 'Container'
+        cancelTimeoutInMinutes: 1
+        timeoutInMinutes: 30
+        workspace:
+          clean: all
+        steps:
+        - checkout: self
+          clean: true
+          persistCredentials: true
+
+        - task: ArchiveFiles@2
+          displayName: Archive extension Code
+          inputs:
+            rootFolderOrFile: '$(Build.SourcesDirectory)/src/webextension'
+            includeRootFolder: false
+            archiveType: 'zip'
+            archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+            replaceExistingArchive: true
+            
+    #####Stage-DEV1#####
+    - stage: DEV_1
+      displayName: 'Deploy to DEV1'
+      dependsOn: BUILD
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+      jobs:
+      - template: /pipelines/templates/deploymenttask.yml@self
+        parameters:
+          serviceconnection: 'mct-dev1'
+          envName: 'DEV1'
+          storageAccountName: 'mctdev1saportal'
+          containerName: 'webextension'
+          resourceGroup: 'mct-rg-dev1'
+
+    ###Stage-UAT1 ####
+    - stage: UAT1
+      displayName: Deploy - UAT1
+      dependsOn: BUILD
+      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release1/'))
+      jobs:
+      - template: /pipelines/templates/deploymenttask.yml@self
+        parameters:
+          serviceconnection: 'mct-uat1'
+          envName: 'UAT1'
+          storageAccountName: 'mctuat1saportal'
+          containerName: 'webextension'
+          resourceGroup: 'mct-rg-uat1'
+
+    ###Stage-PROD ####
+    - stage: PROD
+      displayName: Deploy - PROD
+      dependsOn: UAT1
+      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release1/'))
+      jobs:
+      - template: /pipelines/templates/deploymenttask.yml@self
+        parameters:
+          serviceconnection: 'mct-prod'
+          envName: 'PROD'
+          storageAccountName: 'mctprodsaportal'
+          containerName: 'webextension'
+          resourceGroup: 'mct-rg-prod'
+
+    - stage: PRODDR
+      displayName: Deploy - PRODDR
+      dependsOn: UAT1
+      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release1/'))
+      jobs:
+      - template: /pipelines/templates/deploymenttask.yml@self
+        parameters:
+          serviceconnection: 'mct-proddr'
+          envName: 'PRODDR'
+          storageAccountName: 'mctproddrsaportal'
+          containerName: 'webextension'
+          resourceGroup: 'mct-rg-proddr'

@@ -1,0 +1,6 @@
+variables:
+  resourceGroup: "mct-rg-copilot-nonprod" #Deploy env resource group
+  azureSubscription: "mct-copilot-nonprod" #Deploy env DevOps service Connection
+  env: "NONPROD"
+  location: "westus" #Default location for deployment
+  dateTime: $(Get-Date -Format yyyyMMddhhmmss)

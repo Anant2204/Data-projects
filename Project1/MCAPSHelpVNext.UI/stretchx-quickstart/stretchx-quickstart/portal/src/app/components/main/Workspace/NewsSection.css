@@ -1,0 +1,44 @@
+.news_Section{
+    position: relative;
+    overflow: hidden;
+}
+.news{
+    z-index: 2;
+    margin-left:30px;
+    font-size: 20px;
+    line-height: 22px;
+    font-family: 'Segoe UI';
+    position:sticky;
+    top:0;
+}
+.news-items{
+    font-size: 13px;
+    line-height: 25px;
+    color:#115EA3;
+    padding: 8px 25px;
+    height: calc(100% - 40px);
+    overflow-y: auto;
+}
+.news-items li{
+    list-style-type: none;
+    font-family: 'Segoe UI';
+    padding:5px;
+}
+.news-items a{
+    cursor: pointer;
+    text-decoration: none;
+    color: #115EA3;
+    font-weight: 600;
+}
+
+.news-items::-webkit-scrollbar{
+    width:0;
+    height: 0;
+    display:none;
+}
+  
+.colIndicatorsNews .ms-Icon {
+    font-size: 9px!important;
+}
+
+

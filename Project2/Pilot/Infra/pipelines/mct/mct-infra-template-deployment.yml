@@ -1,0 +1,28 @@
+#Deployment#
+   jobs: 
+   - deployment: Deployment
+     templateContext:
+       type: releaseJob
+       isProduction: true
+       inputs:
+       - input: pipelineArtifact
+         artifactName: deployArtifact 
+         targetPath: $(System.DefaultWorkingDirectory)/deployArtifact
+     displayName: Deployment
+     timeoutInMinutes: 120
+     environment: ${{ parameters.env }}
+     strategy:
+       runOnce:
+         deploy:
+           steps:
+
+#Az CLI task to Create resources using Bicep Templates
+             - task: AzureCLI@2
+               displayName: Deploy Bicep All resources
+               inputs:
+                 azureSubscription: ${{ parameters.azureSubscription }}
+                 scriptType: 'pscore'
+                 scriptLocation: 'inlineScript'
+                 inlineScript: |
+                    az deployment sub create --name mctBicepDeploy${{ parameters.dateTime }} --location ${{ parameters.location }} --template-file mct.bicep --parameters parameters/mct/${{ parameters.env }}.json | ConvertFrom-Json
+                 workingDirectory: '$(System.DefaultWorkingDirectory)/deployArtifact/Infra/source'

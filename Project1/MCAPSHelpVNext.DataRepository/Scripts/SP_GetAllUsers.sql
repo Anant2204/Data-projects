@@ -1,0 +1,6 @@
+CREATE PROCEDURE BSO.GetAllUsers
+AS
+BEGIN
+    SELECT *
+    FROM BSO.[User];
+END;

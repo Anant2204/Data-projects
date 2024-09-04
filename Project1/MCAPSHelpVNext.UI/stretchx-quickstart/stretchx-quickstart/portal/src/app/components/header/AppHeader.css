@@ -1,0 +1,83 @@
+div[class^="titleContainer"]  a.ms-Link{
+    color: #ffffff!important;
+}
+div[class^="titleContainer"]  a.ms-Link:hover{
+    color: #ffffff!important;
+}
+button[aria-label="Help"] i {
+    color: white;
+}
+
+button[aria-label="Help"] {
+    color: white !important;
+}
+
+button[aria-label="Help"]:hover {
+    color: white !important;
+}
+
+#fluent-default-layer-host .aboutPanel .ms-Panel-main {
+    height: 298px !important;
+    margin-right: 52px;
+    width: 228px !important;
+    top: 0vh !important;
+    /* top: 18vh!important; */
+}
+
+#headerTab > .ms-Layer {
+    z-index: 2000000000 !important;
+  }
+
+  .ms-Dropdown-callout > .ms-Callout-container > .ms-Fabric > .ms-Layer{
+    z-index: 2000000000 !important;
+  }
+
+
+
+#fluent-default-layer-host .aboutPanel .ms-Panel-commands {
+    visibility: hidden;
+    height: 0px;
+    /* top: 18vh!important; */
+}
+#fluent-default-layer-host .aboutPanel .ms-Panel-content {
+   padding-left: 0px !important;
+   padding-right: 0px !important;
+   padding-bottom: 0px !important;
+    /* top: 18vh!important; */
+}
+#fluent-default-layer-host .aboutPanel .ms-Button {
+   
+    padding-right: 0px !important;
+    font-family: Segoe UI;
+    font-weight: 400;
+    font-size: 14px;
+     /* top: 18vh!important; */
+ }
+
+#fluent-default-layer-host .aboutPanel .ms-Icon {
+    margin-left: 15px;
+    font-weight: 400;
+    height: 16px !important;
+    width: 16px !important;
+    font-size: 16px;
+    transform: rotate(270deg);
+   
+     /* top: 18vh!important; */
+ }
+ 
+
+
+
+
+/* button[aria-label="Help"] i:hover {
+    color: white !important;
+} */
+.is-checked span{
+    background-color: rgb(251 251 251) !important;
+    color: #0078d4 !important;
+}
+
+.is-checked span i{
+    background-color: rgb(251 251 251) !important;
+    color: #0078d4 !important;
+}

@@ -1,0 +1,12 @@
+.PivotClass{
+    overflow: scroll;
+    overflow-x: auto;
+    margin-left: 49px;
+    margin-top: 48px;
+    height: 92vh;
+    scroll-behavior: smooth;
+
+}
+.PivotClass .root-298{
+    padding-right: 371px;
+}

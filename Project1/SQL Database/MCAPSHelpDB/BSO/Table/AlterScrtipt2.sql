@@ -1,0 +1,88 @@
+DECLARE @schema_name VARCHAR(50) = 'BSO'
+DECLARE @tableNameServices NVARCHAR(50) = 'GiveUsFeedback'
+DECLARE @COLUMN_NAME NVARCHAR(50)  = 'TypeOfFeedback'
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE 
+TABLE_SCHEMA = @schema_name
+AND TABLE_NAME = @tableNameServices
+AND COLUMN_NAME = @COLUMN_NAME)
+
+BEGIN
+    ALTER TABLE BSO.GiveUsFeedback
+    ADD TypeOfFeedback NVARCHAR(MAX) NULL;
+END;
+GO
+
+DECLARE @schema_name VARCHAR(50) = 'BSO'
+DECLARE @tableNameServices NVARCHAR(50) = 'GiveUsFeedback'
+DECLARE @COLUMN_NAME NVARCHAR(50)  = 'EmailTriggerdDate'
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE 
+TABLE_SCHEMA = @schema_name
+AND TABLE_NAME = @tableNameServices
+AND COLUMN_NAME = @COLUMN_NAME)
+BEGIN
+    ALTER TABLE BSO.GiveUsFeedback
+    ADD EmailTriggerdDate DateTime NULL;
+END;
+GO
+
+IF OBJECT_ID (N'BSO.fnGetNullIfBlank', N'FN') IS NOT NULL
+    DROP FUNCTION [BSO].[fnGetNullIfBlank];
+GO
+
+CREATE FUNCTION [BSO].[fnGetNullIfBlank]
+(
+    @inputValue NVARCHAR(MAX)
+)
+RETURNS NVARCHAR(MAX)
+AS
+BEGIN
+    DECLARE @result NVARCHAR(MAX);
+ 
+    IF LTRIM(RTRIM(ISNULL(@inputValue, ''))) = ''
+        SET @result = NULL;
+    ELSE
+        SET @result = @inputValue;
+ 
+    RETURN @result;
+END;
+GO
+
+----Last DEPLOYED on UAT and DEV 21-02-24
+
+DECLARE @SchemaName NVARCHAR(128) = 'BSO';
+DECLARE @VideoURLColumnName NVARCHAR(128) = 'VideoURL';
+DECLARE @FileURLColumnName NVARCHAR(128) = 'FileURL';
+DECLARE @TABLE_NAME  NVARCHAR(128) = 'GiveUsFeedback'
+
+DECLARE @VideoURLColumnExists BIT;
+DECLARE @FileURLColumnExists BIT;
+
+SELECT @VideoURLColumnExists = CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_SCHEMA = @SchemaName
+    AND TABLE_NAME = @TABLE_NAME
+    AND COLUMN_NAME = @VideoURLColumnName;
+
+IF @VideoURLColumnExists = 0
+BEGIN
+	
+	ALTER TABLE BSO.GiveUsFeedback
+    ADD VideoURL NVARCHAR(MAX) NULL;
+END
+
+SELECT @FileURLColumnExists = CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_SCHEMA = @SchemaName
+    AND TABLE_NAME = @TABLE_NAME
+    AND COLUMN_NAME = @FileURLColumnName;
+
+IF @FileURLColumnExists = 0
+BEGIN
+	
+	ALTER TABLE BSO.GiveUsFeedback
+    ADD FileURL NVARCHAR(MAX) NULL;
+   
+END
+GO

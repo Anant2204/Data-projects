@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Utilities\**" />
+    <EmbeddedResource Remove="Utilities\**" />
+    <None Remove="Utilities\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\.sonarlint\mcsbr_sonar\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.16" />
+	  <PackageReference Include="Azure.Core" Version="1.38.0" />
+	  <PackageReference Include="Azure.Data.AppConfiguration" Version="1.4.1" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	  <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.35.240321.1" />
+	  <PackageReference Include="Microsoft.SemanticKernel" Version="1.7.1" />
+	  <PackageReference Include="Microsoft.KernelMemory.Core" Version="0.35.240321.1" />
+	  <PackageReference Include="Microsoft.SemanticKernel" Version="1.7.1" />
+	  <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.15" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Copilot.Backend.Shared\Copilot.Backend.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Schema\table-schema-dbcopilot.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

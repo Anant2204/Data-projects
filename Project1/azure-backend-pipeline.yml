@@ -1,0 +1,26 @@
+trigger: none
+ 
+pool: 
+  name: mcapshelppool-vsogd
+ 
+steps:
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'MCAPS Help Non-Prod Deployment'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az config set extension.use_dynamic_install=yes_without_prompt
+      
+      az extension add --name front-door
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'MCAPS Help Non-Prod Deployment'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az network front-door waf-policy show --resource-group RG-MCAPSHELP-DEV-AFD --name WAFmcapshelpdev
+      
+      az network front-door waf-policy update --resource-group RG-MCAPSHELP-DEV-AFD --name WAFmcapshelpdev --mode Prevention

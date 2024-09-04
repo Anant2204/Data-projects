@@ -1,0 +1,226 @@
+trigger: none
+ 
+pool: 
+  name: mcapshelppool-vsogd
+
+
+
+variables:
+- group: azureSearchAPIKey
+- name: mainBicepFile
+  value: './infra/main.bicep'
+- name: parametersJSON
+  value: '@./infra/dev.parameters.json'
+- name: uatparametersJSON
+  value: '@./infra/uat.parameters.json'
+- name: afdparametersJSON
+  value: '@./infra/afd.parameters.json'
+- name: prodparametersJSON
+  value: '@./infra/main.parameters.json' 
+- name: afdDevResourceGroup
+  value: 'RG-MCAPSHELP-DEV-AFD'
+- name: devResourceGroup
+  value: 'RG-MCAPSHELP-DEV'
+- name: uatResourceGroup
+  value: 'RG-MCAPSHELP-UAT'
+- name: prodResourceGroup
+  value: 'RG-MCAPSHELP-PROD'
+# - name: prodResourceGroup
+#    value:'RG-MCAPSHELP-PROD'
+ 
+ 
+ 
+steps:
+- task: AzureCLI@2
+  displayName: 'Deploy DEV Resources'
+  inputs:
+    azureSubscription: 'MCAPS Help Non-Prod Deployment'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+        # az deployment group what-if --resource-group $(uatResourceGroup) --template-file $(mainBicepFile) --parameters $(uatparametersJSON)      
+        az deployment group create --resource-group $(uatResourceGroup) --mode Incremental --template-file $(mainBicepFile) --parameters $(uatparametersJSON)
+      # az deployment group create --resource-group $(afdDevResourceGroup) --mode Incremental --template-file $(mainBicepFile) --parameters $(afdparametersJSON)
+        #  az deployment group what-if --resource-group $(prodResourceGroup) --template-file $(mainBicepFile) --parameters $(prodparametersJSON)
+        #  az deployment group what-if --resource-group $(afdDevResourceGroup) --template-file $(mainBicepFile) --parameters $(afdparametersJSON)
+        #  az deployment group what-if --resource-group $(devResourceGroup) --template-file $(mainBicepFile) --parameters $(parametersJSON)
+        #  az deployment group create --resource-group $(devResourceGroup) --mode Incremental --template-file $(mainBicepFile) --parameters $(parametersJSON)
+    
+
+
+# - task: AzureCLI@2
+#   displayName: 'Deploy PROD Resources'
+#   inputs:
+#     azureSubscription: 'MCAPSHelp PROD'
+#     scriptType: bash
+#     scriptLocation: inlineScript
+#     inlineScript: |
+#         az deployment group create --resource-group $(prodResourceGroup) --mode Incremental --template-file $(mainBicepFile) --parameters $(prodparametersJSON)    
+
+# - task: AzurePowerShell@5
+#   inputs:
+#     azureSubscription: 'MCAPSHelp PROD'
+#     ScriptType: 'InlineScript'
+#     Inline: |
+#       $headers = @{
+#                 'api-key' = '$(prodapiKey)'
+#                 'Content-Type' = 'application/json'
+#                 'Accept' = 'application/json'
+#             }
+#       $body = @"
+#       {
+#         "@odata.context": "https://mcapshelpsearchprod.search.windows.net/$metadata#indexes/$entity",
+#         "@odata.etag": "\"0x8DC4A84191EFF73\"",
+#         "name": "accountwithsalesunitindex",
+#         "defaultScoringProfile": null,
+#         "fields": [
+#             {
+#                 "name": "id",
+#                 "type": "Edm.String",
+#                 "searchable": false,
+#                 "filterable": false,
+#                 "retrievable": true,
+#                 "sortable": false,
+#                 "facetable": false,
+#                 "key": true,
+#                 "indexAnalyzer": null,
+#                 "searchAnalyzer": null,
+#                 "analyzer": null,
+#                 "dimensions": null,
+#                 "vectorSearchProfile": null,
+#                 "synonymMaps": []
+#             },
+#             {
+#                 "name": "MSSalesAccountId",
+#                 "type": "Edm.String",
+#                 "searchable": true,
+#                 "filterable": true,
+#                 "retrievable": true,
+#                 "sortable": true,
+#                 "facetable": false,
+#                 "key": false,
+#                 "indexAnalyzer": null,
+#                 "searchAnalyzer": null,
+#                 "analyzer": "standard.lucene",
+#                 "dimensions": null,
+#                 "vectorSearchProfile": null,
+#                 "synonymMaps": []
+#             },
+#             {
+#                 "name": "MSSalesAccountName",
+#                 "type": "Edm.String",
+#                 "searchable": true,
+#                 "filterable": true,
+#                 "retrievable": true,
+#                 "sortable": true,
+#                 "facetable": false,
+#                 "key": false,
+#                 "indexAnalyzer": null,
+#                 "searchAnalyzer": null,
+#                 "analyzer": "standard.lucene",
+#                 "dimensions": null,
+#                 "vectorSearchProfile": null,
+#                 "synonymMaps": []
+#             },
+#             {
+#                 "name": "SalesTerritoryGUID",
+#                 "type": "Edm.String",
+#                 "searchable": true,
+#                 "filterable": true,
+#                 "retrievable": true,
+#                 "sortable": true,
+#                 "facetable": false,
+#                 "key": false,
+#                 "indexAnalyzer": null,
+#                 "searchAnalyzer": null,
+#                 "analyzer": "standard.lucene",
+#                 "dimensions": null,
+#                 "vectorSearchProfile": null,
+#                 "synonymMaps": []
+#             },
+#             {
+#                 "name": "SGHName",
+#                 "type": "Edm.String",
+#                 "searchable": true,
+#                 "filterable": true,
+#                 "retrievable": true,
+#                 "sortable": true,
+#                 "facetable": false,
+#                 "key": false,
+#                 "indexAnalyzer": null,
+#                 "searchAnalyzer": null,
+#                 "analyzer": "standard.lucene",
+#                 "dimensions": null,
+#                 "vectorSearchProfile": null,
+#                 "synonymMaps": []
+#             },
+#             {
+#                 "name": "status",
+#                 "type": "Edm.String",
+#                 "searchable": true,
+#                 "filterable": true,
+#                 "retrievable": true,
+#                 "sortable": true,
+#                 "facetable": false,
+#                 "key": false,
+#                 "indexAnalyzer": null,
+#                 "searchAnalyzer": null,
+#                 "analyzer": "standard.lucene",
+#                 "dimensions": null,
+#                 "vectorSearchProfile": null,
+#                 "synonymMaps": []
+#             },
+#             {
+#                 "name": "country",
+#                 "type": "Edm.String",
+#                 "searchable": true,
+#                 "filterable": true,
+#                 "retrievable": true,
+#                 "sortable": true,
+#                 "facetable": false,
+#                 "key": false,
+#                 "indexAnalyzer": null,
+#                 "searchAnalyzer": null,
+#                 "analyzer": "standard.lucene",
+#                 "dimensions": null,
+#                 "vectorSearchProfile": null,
+#                 "synonymMaps": []
+#             }
+#         ],
+#         "scoringProfiles": [],
+#         "corsOptions": null,
+#         "suggesters": [
+#             {
+#                 "name": "SGHNameSuggester",
+#                 "searchMode": "analyzingInfixMatching",
+#                 "sourceFields": [
+#                     "SGHName"
+#                 ]
+#             }
+#         ],
+#         "analyzers": [],
+#         "tokenizers": [],
+#         "tokenFilters": [],
+#         "charFilters": [],
+#         "encryptionKey": null,
+#         "similarity": {
+#             "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
+#             "k1": null,
+#             "b": null
+#         },
+#         "vectorSearch": null,
+#         "semantic": null
+#       }
+#       "@
+            
+#             # replace mcapshelpsearchuat with the search service name
+            
+#             $url = "https://mcapshelpsearchprod.search.windows.net/indexes/accountwithsalesunitindex?api-version=2023-11-01"            
+            
+#             $output = Invoke-RestMethod -Uri $url -Headers $headers -Method PUT -Body $body | ConvertTo-Json
+#             Write-Host $output
+#     azurePowerShellVersion: 'LatestVersion'
+
+
+
+

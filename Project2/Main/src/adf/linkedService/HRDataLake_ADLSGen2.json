@@ -1,0 +1,21 @@
+{
+	"name": "HRDataLake_ADLSGen2",
+	"properties": {
+		"parameters": {
+			"DatalakeURI": {
+				"type": "String",
+				"defaultValue": "https://hcmlakeuat.dfs.core.windows.net"
+			}
+		},
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "@{linkedService().DatalakeURI}",
+			"credential": {
+				"referenceName": "ISP",
+				"type": "CredentialReference"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
+}

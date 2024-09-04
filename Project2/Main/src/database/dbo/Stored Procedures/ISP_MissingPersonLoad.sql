@@ -1,0 +1,81 @@
+﻿CREATE procedure [dbo].[ISP_MissingPersonLoad]
+AS
+begin
+print 'will use if required in production'
+-- INSERT INTO [HR].[Tbl_Seller_Details]
+--            ([Alias]
+--            ,[FullName]
+--            ,[PositionNumber]
+--            ,[PersonnelNumber]
+--            ,[Country]
+--            ,[FY_ManagerAlias]
+--            ,[FY_ManagerFullName]
+--            ,[FY_Org]
+--            ,[FY_RS]
+--            ,[FY_Q1]
+--            ,[FY_Q2]
+--            ,[CY_ManagerFullName]
+--            ,[CY_ManagerAlias]
+--            ,[CY_Org]
+--            ,[CY_RoleSummary]
+--            ,[CY_Q1]
+--            ,[CY_Q2]
+--            ,[ReviewStatus]
+--            ,[edm_fyenddate]
+--            ,[edm_fystartdate]
+--            ,[edm_plansellerid]
+--            ,[isp_isbubbled]
+--            ,[isp_istouched]
+--            ,[ISPReviewReason]
+--            ,[isp_reviewed]
+-- 		   ,isp_level1
+--            ,[isp_level2]
+--            ,[isp_Level3]
+-- 		    ,[Reports_To_Level_1_Email]
+--            ,[Reports_To_Level_1_Full_Name]
+--            ,[Reports_To_Level_2_Email]
+--            ,[Reports_To_Level_2_Full_Name]
+--            ,[Reports_To_Level_3_Email]
+--            ,[Reports_To_Level_3_Full_Name]
+--            ,[Reports_To_Level_4_Email]
+--            ,[Reports_To_Level_4_Full_Name]
+--            ,[Reports_To_Level_5_Email]
+--            ,[Reports_To_Level_5_Full_Name]
+--            ,[Reports_To_Level_6_Email]
+--            ,[Reports_To_Level_6_Full_Name]
+--            ,[Reports_To_Level_7_Email]
+--            ,[Reports_To_Level_7_Full_Name]
+--            ,[ISPLastModifiedDate]
+--            ,[statecode])
+--      VALUES
+--            ('MALAA'
+--            ,'Mala Anand'
+-- 		   ,91918973
+--            ,1394191	
+--            ,'United States',
+-- 		   'JUDSON','Judson Althoff',	'Core - CE&S',	'Field Business Leadership M',	'N/A','N/A',
+-- 		   'JUDSON','Judson Althoff',	'Core - CE&S',	'Field Business Leadership M',	'N/A','N/A',
+--            'Approved',
+          
+--            '9999-12-31 00:00:00.0000000',
+-- 		   '2021-07-01 00:00:00.0000000',	
+-- 		   '96DA4D65-19AF-EB11-A812-000D3A5AD82B',
+-- 		   0,	0,	NULL	,0,'D47C31A6-18AF-EB11-A812-000D3A5ADB97'	,'96DA4D65-19AF-EB11-A812-000D3A5AD82B',	'4926F0E1-18AF-EB11-A812-000D3A5ADB97','JUDSON',
+-- 'Althoff, Judson B',
+-- 'JUDSON (Directs)',
+-- 'Althoff, Judson B (Directs)',
+-- 'JUDSON (Directs)',
+-- 'Althoff, Judson B (Directs)',
+-- 'JUDSON (Directs)',
+-- 'Althoff, Judson B (Directs)',
+-- 'JUDSON (Directs)',
+-- 'Althoff, Judson B (Directs)',
+-- 'JUDSON (Directs)',
+-- 'Althoff, Judson B (Directs)',
+-- 'JUDSON (Directs)',
+-- 'Althoff, Judson B (Directs)',
+-- 	'2022-05-14 09:44:36.0000000'	,0
+-- 		   )           
+
+
+     END

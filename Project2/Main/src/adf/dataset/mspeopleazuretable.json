@@ -1,0 +1,142 @@
+{
+	"name": "mspeopleazuretable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "pac_sql_prd",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "personnelNumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "fullName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "profession",
+				"type": "nvarchar"
+			},
+			{
+				"name": "discipline",
+				"type": "nvarchar"
+			},
+			{
+				"name": "managerEmail",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reportsToFullName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "org",
+				"type": "nvarchar"
+			},
+			{
+				"name": "orgSummary",
+				"type": "nvarchar"
+			},
+			{
+				"name": "roleSummary",
+				"type": "nvarchar"
+			},
+			{
+				"name": "costCenter",
+				"type": "nvarchar"
+			},
+			{
+				"name": "costCenterCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reportsToLevel1Email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reportsToLevel1FullName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reportsToLevel2Email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reportsToLevel2FullName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reportsToLevel3Email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reportsToLevel3FullName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reportsToLevel4Email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reportsToLevel4FullName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reportsToLevel5Email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reportsToLevel5FullName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reportsToLevel6Email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reportsToLevel6FullName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reportsToLevel7Email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "reportsToLevel7FullName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "qualifier1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "qualifier2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "incentivePlanType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "careerStage",
+				"type": "nvarchar"
+			},
+			{
+				"name": "standardTitle",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "HR",
+			"table": "mspeople"
+		}
+	}
+}

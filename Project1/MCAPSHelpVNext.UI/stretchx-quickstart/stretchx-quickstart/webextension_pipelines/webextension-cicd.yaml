@@ -1,0 +1,61 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - develop
+    - release/*
+
+resources:
+- repo: self
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  uirootfolderpath: '$(Build.SourcesDirectory)/webextension'
+
+##########Stage-Build##########
+stages:
+- stage: BUILD
+  displayName: Build and Package
+  jobs:
+  - job: Build
+    cancelTimeoutInMinutes: 1
+    timeoutInMinutes: 30
+    workspace:
+      clean: all
+    steps:
+    - checkout: self
+      clean: true
+      persistCredentials: true
+
+    - task: ArchiveFiles@2
+      displayName: Archive Portal Code
+      inputs:
+        rootFolderOrFile: '$(uirootfolderpath)'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        replaceExistingArchive: true
+
+    - task: PublishBuildArtifacts@1
+      displayName: publish artifacts
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+        
+#####Stage-DEV#####
+- stage: DEV
+  displayName: 'Deploy to DEV'
+  dependsOn: BUILD
+  jobs:
+  - template: templates/deploymenttask.yml
+    parameters:
+      subscription: 'your-Azure-Resourece-Manager-Service-Connection'
+      envName: 'DEV'
+      storageAccountName: 'your-storage-accountname e.g. osedevsaportal01'
+      containerName: 'your-container-name'
+      resourceGroup: 'your-resource-group-name'
+      cdnProfileName: 'your-cdn-name'
+      endpointName: 'yourendpoint e.g.ose-dev-cde-portal-02'

@@ -1,0 +1,17 @@
+.aboutIcon{
+    font-weight: 400;
+    font-size: 16px;
+    margin-top: 3px;
+    justify-content: flex-start;
+    margin-right: 10px;
+}
+.aboutButton{
+    border: none;
+    width: 100%;
+    display: flex;
+    font-family: 'Segoe UI';
+    /* justify-content: space-between; */
+}
+#fluent-default-layer-host .Training .ms-Panel-main{
+    margin-right:0px;
+  }

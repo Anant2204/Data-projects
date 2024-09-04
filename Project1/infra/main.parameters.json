@@ -1,0 +1,165 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "uatAFDEndpoint": {
+      "value": "mcapshelpdevapi"
+    },
+    "uatAFDRoute": {
+      "value": "mcapshelpdevapi"
+    },
+    "uatApiURL": {
+      "value": "mcapshelpdevapi"
+    },
+    "uatfrontdoorName": {
+      "value": "RG-MCAPSHELP-DEV-AFD-Resource"
+    },
+    "uatoriginGroup": {
+      "value": "mcapshelpdevapiorigingroup"
+    },
+    "uatSecurityPolicy": {
+      "value": "mcapshelpdev"
+    },
+    "uatwafMode": {
+      "value": "Prevention"
+    },
+    "uatwafPolicyName": {
+      "value": "WAFmcapshelpdev"
+    },
+    "resourceGroupNameAFD": {
+      "value": "RG-MCAPSHELP-DEV-AFD"
+    },
+    "deployUatAFDEndpoint": {
+      "value": true
+    },
+    "location": {
+      "value": "South Central US"
+    },
+    "SQLServeradministratorLoginUserName": {
+      "value": "MxpaCatSrvice@microsoft.com"
+    },
+    "SQLServeradministratorsid": {
+      "value": "71414682-3274-4ada-86a4-16e5e10dbb77"
+    },
+    "SQLServeradministratortenantId": {
+      "value": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+    },
+    "SQLServerazureADOnlyAuthentication": {
+      "value": true
+    },
+    "sqlServerName": {
+      "value": "mcapshelpserver"
+    },
+    "deploySQLServerWithFailOverGroup": {
+      "value": true
+    },
+    "sqlServerFailOverGroupName": {
+      "value": "mcapshelpProdFailOverGroup"
+    },
+    "dbMaxSize": {
+      "value": 268435456000
+    },
+    "dbskuCapacity": {
+      "value": 2
+    },
+    "dbskuName": {
+      "value": "GP_Gen5"
+    },
+    "dbskuTier": {
+      "value": "GeneralPurpose"
+    },
+    "deployDB": {
+      "value": true
+    },
+    "sqlDBName": {
+      "value": "mcapshelpdb"
+    },
+    "SecondarySQLServerName": {
+      "value": "mcapshelpprodsecondary"
+    },
+    "SecondarySQLServerLocation": {
+      "value": "Central US"
+    },
+    "deploySecondaryServer": {
+      "value": true
+    },
+    "resourceGroupName": {
+      "value": "RG-MCAPSHELP-PROD"
+    },
+    "SecondarySQLServeradministratorLogin": {
+      "value": "MxpaCatSrvice@microsoft.com"
+    },
+    "eventGridTopicName": {
+      "value": ""
+    },
+    "eventGridName": {
+      "value": ""
+    },
+    "deployEventGridTopic": {
+      "value": false
+    },
+    "logicAppName": {
+      "value": ""
+    },
+    "deploylogicApp": {
+      "value": false
+    },
+    "appServicePlanElasticScale": {
+      "value": false
+    },
+    "appServicePlanFamily": {
+      "value": ""
+    },
+    "appServicePlanKind": {
+      "value": ""
+    },
+    "appServicePlanMinWorkerCount": {
+      "value": 0
+    },
+    "appServicePlanSize": {
+      "value": ""
+    },
+    "appServicePlanTier": {
+      "value": ""
+    },
+    "ASPlan": {
+      "value": ""
+    },
+    "pSKUName": {
+      "value": ""
+    },
+    "deployAzureAppService": {
+      "value": false
+    },
+    "webAppName": {
+      "value": ""
+    },
+    "webAppKind": {
+      "value": ""
+    },
+    "allowedCors": {
+      "value": []
+    },
+    "deployazureWebApp": {
+      "value": false
+    },
+    "deployazureCDN": {
+      "value": false
+    },
+    "cdnProfileName": {
+      "value": ""
+    },
+    "prodcdnEndpoint": {
+      "value": ""
+    },
+    "cdnResourceGroupName": {
+      "value": ""
+    },
+    "deploystorageAccount": {
+      "value": false
+    },
+    "storageAccountName": {
+      "value": ""
+    }
+  }
+}

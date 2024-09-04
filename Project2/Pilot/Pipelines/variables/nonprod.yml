@@ -1,0 +1,10 @@
+variables:
+  azureSubscription: 'mct-copilot-nonprod'
+  resourceGroupName: 'mct-rg-copilot-nonprod'
+  environment: 'NONPROD'
+  location: 'westus'
+  WebAppName: 'mct-copilotapi-nonprod'
+  appName: mct-copilotapi-nonprod
+  keyVaultName: 'mct-kv-copilot-nonprod'
+
+  

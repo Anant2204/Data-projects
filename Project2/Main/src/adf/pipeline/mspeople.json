@@ -1,0 +1,459 @@
+{
+	"name": "mspeople",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy mspeople excel",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table hr.mspeople",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Personnel Number",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "personnelNumber",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "email",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Full Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "fullName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Profession",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "profession",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Discipline",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "discipline",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ManagerEmail",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "managerEmail",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reports To Full Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reportsToFullName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Org",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "org",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Org Summary",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "orgSummary",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Role Summary",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "roleSummary",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost Center",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "costCenter",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost Center Code",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "costCenterCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reports To Level 1 Email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reportsToLevel1Email",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reports To Level 1 Full Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reportsToLevel1FullName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reports To Level 2 Email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reportsToLevel2Email",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reports To Level 2 Full Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reportsToLevel2FullName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reports To Level 3 Email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reportsToLevel3Email",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reports To Level 3 Full Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reportsToLevel3FullName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reports To Level 4 Email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reportsToLevel4Email",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reports To Level 4 Full Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reportsToLevel4FullName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reports To Level 5 Email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reportsToLevel5Email",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reports To Level 5 Full Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reportsToLevel5FullName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reports To Level 6 Email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reportsToLevel6Email",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reports To Level 6 Full Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reportsToLevel6FullName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reports To Level 7 Email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reportsToLevel7Email",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Reports To Level 7 Full Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "reportsToLevel7FullName",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Qualifier 1",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "qualifier1",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Qualifier 2",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "qualifier2",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Incentive Plan Type",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "incentivePlanType",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Career Stage",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "careerStage",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Standard Title",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "standardTitle",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "mspeople",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "mspeopleazuretable",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "MCT_Entities",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Copy mspeople excel",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "MCT_Entities",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "MCT"
+		},
+		"annotations": []
+	}
+}

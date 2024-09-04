@@ -1,0 +1,332 @@
+body {
+  /* display: flex; */
+  justify-content: center;
+  align-items: center; /* center vertically */
+  min-height: 100vh; /* full height of the viewport */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+ 
+}
+
+
+.servicesLabel {
+  color: #000000; /* black text */
+  font-weight: bold; /* bold text */
+  text-align: left; /* align the text to the left */
+  width: 100%; /* full width */
+  margin-top: 48px;
+  margin-left: 5px;
+}
+
+.tilecontainer {
+  display: flex;
+  flex-direction: row; /* items in a row */
+  flex-wrap: wrap;
+  justify-content: left;
+  /* padding: 20px; */
+  width: 100%;
+  /* background-color: #F5F5F5; */
+  margin: 0 auto; /* center the container horizontally */
+}
+
+
+
+
+
+.staticTile {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: none;
+  background-color: #EDEBE9 !important;
+}
+
+
+
+
+.tileButton {
+  align-self:flex-end; 
+  background-color: #ffffff;
+  color: rgb(16, 110, 190);
+  text-decoration: none; /* remove underline */
+  font-weight: 400;
+  font-size: 14px;
+  /* line-height: 20; */
+  font-family: Segoe UI;
+  transition: background-color 0.3s ease; /* smooth color transition */
+  border: none; /* remove default button border */
+  cursor: pointer; /* change cursor to pointer on hover */
+  margin-top: 10px; /* add top margin to match title */
+  text-align: center;
+}
+
+/* .tileButton:hover {
+  background-color: #005a9e; 
+} */
+
+.staticTileButton {
+  align-self: center; /* align button to the center */
+  background-color: #EBEBEB; /* gray background */
+  /* color: #ffffff; white text */
+  padding: 5px 10px; /* adjust as needed */
+  border-radius: 2px; /* less rounded corners */
+  text-decoration: none; /* remove underline */
+  transition: background-color 0.3s ease; /* smooth color transition */
+  border: none; /* remove default button border */
+  cursor: pointer; /* change cursor to pointer on hover */
+  font-size: 12px; /* smaller font size */
+  margin-top: 10px; /* add top margin to match title */
+}
+
+.Service_tileDesc {
+
+  font-family: Segoe UI;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding: 5px;
+}
+
+
+
+.ms-Overlay.ms-Overlay--dark {
+ background-color: #2e2c2c0f!important;
+}
+/* .modal-header{
+  background-color: #2e2c2c0f!important;
+} */
+
+
+/* css for popup */
+.popup {
+  width: 400px;
+  border: 1px solid gray;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+.popup-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.popup-close {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.popup-body {
+  padding: 10px;
+}
+
+.popup-field {
+  margin-bottom: 10px;
+}
+
+.popup-field label {
+  display: block;
+  font-weight: bold;
+}
+
+.popup-field select,
+.popup-field input {
+  width: 100%;
+}
+
+.popup-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+.popup-save,
+.popup-cancel {
+  margin-left: 10px;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.popup-save {
+  background-color: #0078d4;
+  color: white;
+}
+
+.popup-cancel {
+  background-color: #eaeaea;
+  color: black;
+}
+
+.infopanle-overlay {
+  position: fixed;
+  top: 48px;
+  left: 0;
+  width:72.7% !important;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Adjust the alpha value for the desired transparency */
+  z-index: 999; /* Make sure it's above other content */
+}
+
+.service-info-panel
+{
+  margin-right: 26.4% !important;
+}
+
+.ms-Panel-main
+{
+  box-shadow: none !important;
+}
+
+.ms-Panel-commands
+{
+  padding-top: 0px !important;
+}
+
+
+/* ------------------------------------------------------------------New MockUp UI--------------------------------------------------------------------------------- */
+
+.multipleTiles,
+.staticTile {
+  flex: 1; 
+  min-width:230px;
+  max-width: 230px;
+  height: 135px; 
+  border: 1px solid #EBEBEB;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.0); 
+  margin-right: 16px;
+  margin-bottom: 16px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #ffffff;
+}
+
+.multipleTiles:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a box shadow on hover */
+}
+
+
+.tileContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  height: auto;
+  align-items: flex-start; /* Adjusted to allow dynamic height based on content */
+}
+
+.tileTitle {
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start; /* align title to the left */
+  align-items: baseline;
+  align-self: flex-start;
+  color: black ;
+  font-size: 16px; 
+  font-weight: 600;
+  height: 80px;
+  width: 179px;
+  margin-left: 0; /* remove left margin */
+}
+
+.separator {
+  border-bottom: 1px solid #F0F0F0;
+  /* margin: 2px 0px 2px 0px; */
+  margin: 2px 8px 2px 8px;
+}
+
+.info-icon {
+  margin-left: 190px;
+  position: absolute;
+  font-family: 'Fluent UI Icons';
+  display: inline-block;
+  font-size: 12px;
+  color: #005A9E;
+  margin-top: 8px;
+}
+
+.info-icon:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 240px;
+  background-color: #333333;
+  text-align: left;
+  text-align-last: 10px;
+  border-radius: 4px;
+  padding: 5px;
+  margin-left: -15px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 12px;
+  position: absolute;
+  top: calc(100% + 0px); /* Adjust this value to control the vertical position */
+  left: 75%;
+  transform: translateX(-50%);
+  background-color: #333333;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.tooltip-content {
+  padding: 10px; /* Adjust the padding as needed */
+  color: #fff !important;
+}
+
+.arrow-up {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #333333;
+  top: -9px;
+  left: 55%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 992px){
+  /* Define your styles for screen zoom less than 75% */
+  .multipleTiles,
+  .staticTile {
+    min-width:220px;
+    margin-right: 5%!important;
+    /* max-width: 18%; */
+  }
+}
+@media (max-width: 767px) {
+  .multipleTiles,
+  .staticTile {
+    flex-basis: calc(50% - 20px); /* adjust width for smaller screens */
+    max-width: calc(50% - 20px);
+    margin-right: 2%;
+  }
+}
+.multipleTiles.highlighted {
+  border: 2px solid #0078D4;
+  background-color: #EAF4FF;
+}
+.multipleTiles.highlighted button.tileButton{ 
+  background-color: unset;
+  }

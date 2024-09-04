@@ -1,0 +1,12 @@
+IF OBJECT_ID('[BSO].[GetAllArea]', 'P') IS NOT NULL
+BEGIN
+    DROP PROCEDURE [BSO].[GetAllArea];
+END
+GO
+CREATE PROCEDURE [BSO].[GetAllArea]
+AS
+BEGIN
+    SET NOCOUNT ON;
+	SELECT [Id],[Name] FROM [BSO].[Area] WITH (NOLOCK) WHERE IsActive = 1 ORDER BY [Name]   
+END;
+GO

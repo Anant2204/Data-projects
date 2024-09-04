@@ -1,0 +1,6 @@
+{
+  "build": {
+      "componentPath": "components",
+      "filename": "direflowBundle.js"
+  }
+}

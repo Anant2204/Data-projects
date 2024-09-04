@@ -1,0 +1,90 @@
+{
+  "id": "Announcements",
+  "title":"",
+  "subTitle":"",
+  "Announcements": [
+    {
+      "id": "AA4DD9BB-DAA7-4FCD-8696-AF639F0A3078",
+      "startDate": "2023-12-20T00:00:00Z",
+      "endDate": "2030-04-27T00:00:00Z",
+      "announcementTitle": "Welcome screen with greetings.",
+      "announcementDescription": [
+          {
+              "subheading": "Welcome to Manager Conversation Tool (MCT)",
+              "description": "Manager Conversation Tool (MCT), your comprehensive solution for a seamless Fiscal Year Roll Out (FYRO) experience! We are excited to introduce this powerful tool designed to enhance your managerial conversations and streamline the process of adapting to FYRO changes.",
+              "bulletPoints": [
+                  
+              ],
+              "wikiLink": ""
+          }
+      ],
+      "wikiLink": "Not Used - ",
+      "imageName": "welcome.svg",
+      "dateAdded": "2022-01-01T00:00:00Z",
+      "audience": "",
+      "feature": "CE2.0"
+    },
+    {
+      "id": "AA4DD9BB-DAA7-4FCD-8696-AF639F0A3079",
+      "startDate": "2023-12-20T00:00:00Z",
+      "endDate": "2030-04-27T00:00:00Z",
+      "announcementTitle": "Timeline chart illustrates the journey of the conversation process in the context from June 29th to July 10th. Each stage represents a milestone in the progression of communication and understanding between the participants.",
+      "announcementDescription": [
+          {
+              "subheading": "Conversation Timeline",
+              "description": "The timeline refers to the standard Global Conversations including all MCAPS Orgs and Areas and MS FED; exceptions may apply due to local calendar holidays. Reach out to incoming new team members only after you have received notification from Sending Manager that the Sending conversations has happened.",
+              "bulletPoints": [],
+              "wikiLink": ""
+          }
+      ],
+      "wikiLink": "Not Used - ",
+      "imageName": "timeline.svg",
+      "dateAdded": "2022-01-01T00:00:00Z",
+      "audience": "",
+      "feature": "MCT"
+    },
+    {
+      "id": "AA4DD9BB-DAA7-4FCD-8696-AF639F0A3080",
+      "startDate": "2023-12-20T00:00:00Z",
+      "endDate": "2030-04-27T00:00:00Z",
+      "announcementTitle": "Checklist to be followed by Manager before engaging with Employee. The tasks include “Taxonomy Changes,” “Data Corrections,” “Visa/Immigration,” “Leave of Absence,” “Set FY Context,” and “Make Conversations“",
+      "announcementDescription": [
+          {
+              "subheading": "Manager Checklist",
+              "description": "Before you engage with your Employee, check what is changing for your Employee. This understanding will help you to have a more meaningful and productive conversation with your employee. Empathy and active listening are key to effective communication",
+              "bulletPoints": [],
+              "wikiLink": ""
+          }
+      ],
+      "wikiLink": "Not Used - ",
+      "imageName": "checklist.svg",
+      "dateAdded": "2022-01-01T00:00:00Z",
+      "audience": "",
+      "feature": "MCT"
+    },
+    {
+      "id": "AA4DD9BB-DAA7-4FCD-8696-AF639F0A3081",
+      "startDate": "2023-12-20T00:00:00Z",
+      "endDate": "2030-04-27T00:00:00Z",
+      "announcementTitle": "Change Summary – Summarizes employees joining, leaving, or impacted by taxonomy changes. Current Manager – View or start a conversation, update the reporting manager, or change the taxonomy for direct or indirect reports. Receiving Manager – View or initiate conversation status with new team members, and update the reporting manager or taxonomy. EDM Change Requests – View, approve, reject, or track updates to manager reports and taxonomy corrections",
+      "announcementDescription": [
+          {
+              "subheading": "Left Navigation Panel",
+              "description": "",
+              "bulletPoints": [
+                "Change Summary – Summarizes employees joining, leaving, or impacted by taxonomy changes.",
+                "Current Manager – View or start a conversation, update the reporting manager, or change the taxonomy for direct or indirect reports.",
+                "Receiving Manager – View or initiate conversation status with new team members, and update the reporting manager or taxonomy.",
+                "EDM Change Requests – View, approve, reject, or track updates to manager reports and taxonomy corrections."
+              ],
+              "wikiLink": ""
+          }
+      ],  
+      "wikiLink": "Not Used - ",
+      "imageName": "navigation.svg", 
+      "dateAdded": "2024-05-24T00:00:00Z",
+      "audience": "",
+      "feature": "MCT"
+    }
+  ]
+}

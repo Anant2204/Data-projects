@@ -1,0 +1,73 @@
+parameters:
+- name: envName
+  type: string
+- name: appName
+  type: string
+- name: 'subscription' 
+  type: string
+
+jobs:  
+- deployment: Deploy
+  timeoutInMinutes: 30
+  cancelTimeoutInMinutes: 1
+  workspace:
+    clean: all
+  environment: ${{ parameters.envName }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: ExtractFiles@1
+          displayName: Extract source
+          inputs:
+            archiveFilePatterns: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+            destinationFolder: 'portal'
+            cleanDestinationFolder: true
+            overwriteExistingFiles: true
+
+        - task: NodeTool@0
+          displayName: 'Install Node 16.x'
+          inputs:
+            versionSpec: '16.0.0'
+
+        - task: Npm@1
+          displayName: 'npm cache clean'
+          inputs:
+            command: 'custom'
+            workingDir: 'portal'
+            verbose: false
+            customCommand: 'cache clean --force'
+
+        - task: Npm@1
+          displayName: 'npm install'
+          inputs:
+            command: 'install'
+            workingDir: 'portal'
+
+        - script: |
+            pushd "portal" && npm run build:${{ parameters.envName }}  && popd
+          displayName: 'npm build'
+
+        - task: ArchiveFiles@2
+          displayName: 'Archive build output'
+          inputs:
+            rootFolderOrFile: '$(Build.SourcesDirectory)/portal/build'
+            includeRootFolder: false
+            archiveType: 'zip'
+            archiveFile: '$(Build.ArtifactStagingDirectory)/${{ parameters.envName }}.zip'
+            replaceExistingArchive: true
+
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            ArtifactName: 'drop'
+            publishLocation: 'Container'
+
+        - task: AzureWebApp@1
+          displayName: Deploy web app
+          inputs:
+            azureSubscription: ${{ parameters.subscription }}
+            appType: 'webApp'
+            appName: ${{ parameters.appName }}
+            package: '$(Build.ArtifactStagingDirectory)/${{ parameters.envName }}.zip'
+            deploymentMethod: 'auto'

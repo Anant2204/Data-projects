@@ -1,0 +1,11 @@
+{
+  "build": {
+      "componentPath": "components",
+      "filename": "sw-mct.js",
+      "emitSourceMap": true,
+      "emitIndexHTML": false,
+      "emitAll": true,
+      "split": false,
+      "vendor": false
+  }
+}

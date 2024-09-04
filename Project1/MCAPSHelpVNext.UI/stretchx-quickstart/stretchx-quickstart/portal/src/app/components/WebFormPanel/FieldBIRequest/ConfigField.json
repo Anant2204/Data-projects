@@ -1,0 +1,938 @@
+{
+  "Category": "Field BI and Enablement Requests",
+  "RequestTypeOptions": [
+    {
+      "key": "New Report",
+      "text": "New Report",
+      "group": "MSXi Requests"
+    },
+    {
+      "key": "Enhancement of Existing Report",
+      "text": "Enhancement of Existing Report",
+      "group": "MSXi Requests"
+    },
+    {
+      "key": "Report Walkthrough",
+      "text": "Report Walkthrough",
+      "group": "Enablement"
+    },
+    {
+      "key": "Process Walkthrough",
+      "text": "Process Walkthrough",
+      "group": "Enablement"
+    }
+  ],
+  "Field BI and Enablement Requests - New Report": {
+    "Category": "Field BI and Enablement Requests",
+    "typeOfRequest": {
+      "New Report": {
+        "fieldType": "Dropdown",
+        "selectionType": "Single Value",
+        "dependencies": "none",
+        "editable": true,
+        "required": true,
+        "value": [
+          {
+            "key": "New Report",
+            "text": "New Report"
+          }
+        ],
+        "hooverText": "Request Type",
+        "Request Title": {
+          "fieldName": "Request Title",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": "",
+          "hooverText": "",
+          "placeholderText": "Title"
+        },
+        "Priority": {
+          "fieldName": "Priority",
+          "fieldType": "Dropdown",
+          "selectionType": "Single Value",
+          "dependencies": "None",
+          "editable": true,
+          "required": true,
+          "values": [
+            {
+              "key": "P1 - Critical",
+              "text": "P1 - Critical"
+            },
+            {
+              "key": "P2 - High",
+              "text": "P2 - High"
+            },
+            {
+              "key": "P3 - Medium",
+              "text": "P3 - Medium"
+            },
+            {
+              "key": "P4 - Low",
+              "text": "P4 - Low"
+            }
+          ],
+          "notes": "Default to 'P4 - Low'",
+          "hooverText": "Priority 1 - Urgency: High (1 - 3 days) + Impact: High\nPriority 2 - Urgency: High (4 – 14 days) + Impact: High\nPriority 3 - Urgency: Medium + Impact: Medium\nPriority 4 - Urgency: Low + Impact: Low",
+          "placeholderText": "P4 - Low"
+        },
+        "Business Area": {
+          "fieldName": "Business Area",
+          "fieldType": "Drop-down",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": [
+            {
+              "key": "Azure",
+              "text": "Azure"
+            },
+            {
+              "key": "Modern Work & Security",
+              "text": "Modern Work & Security"
+            },
+            {
+              "key": "Surface",
+              "text": "Surface"
+            },
+            {
+              "key": "Business Applications",
+              "text": "Business Applications"
+            },
+            {
+              "key": "Cross",
+              "text": "Cross"
+            }
+          ],
+          "hooverText": "Business Area",
+          "placeholderText": "Business Area"
+        },
+        "Subcategory": {
+          "fieldName": "Subcategory",
+          "fieldType": "Drop-down",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": [
+            {
+              "key": "Pipe",
+              "text": "Pipe"
+            },
+            {
+              "key": "Forecast",
+              "text": "Forecast"
+            },
+            {
+              "key": "Revenue",
+              "text": "Revenue"
+            },
+            {
+              "key": "Consumption",
+              "text": "Consumption"
+            },
+            {
+              "key": "Funding",
+              "text": "Funding"
+            },
+            {
+              "key": "Annuity",
+              "text": "Annuity"
+            },
+            {
+              "key": "Other",
+              "text": "Other"
+            }
+          ],
+          "hooverText": "Subcategory*",
+          "placeholderText": "Subcategory*"
+        },
+        "Existing Report Link": {
+          "fieldName": "Existing Report Link",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "Request Type = New Report",
+          "editable": true,
+          "required": false,
+          "notes": "",
+          "value": "",
+          "hooverText": "Existing Report Link",
+          "placeholderText": "Existing Report Link"
+        },
+        "Business Justification": {
+          "fieldName": "Business Justification",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": false,
+          "required": true,
+          "notes": "",
+          "value": "",
+          "hooverText": "Business Justification",
+          "placeholderText": "Business Justification"
+        },
+        "Impact": {
+          "fieldName": "Impact",
+          "fieldType": "Dropdown",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": [
+            {
+              "key": "Me",
+              "text": "Me"
+            },
+            {
+              "key": "My Territory",
+              "text": "My Territory"
+            },
+            {
+              "key": "My ATU",
+              "text": "My ATU"
+            },
+            {
+              "key": "My OU",
+              "text": "My OU"
+            },
+            {
+              "key": "My Segment",
+              "text": "My Segment"
+            },
+            {
+              "key": "My Role",
+              "text": "My Role"
+            },
+            {
+              "key": "US Sub",
+              "text": "US Sub"
+            }
+          ],
+          "hooverText": "Impact",
+          "placeholderText": "Impact"
+        },
+        "Field Area": {
+          "fieldName": "Field Area",
+          "fieldType": "Drop-down",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": [
+            {
+              "key": "Americas Enterprise",
+              "text": "Americas Enterprise"
+            },
+            {
+              "key": "Americas SMC",
+              "text": "Americas SMC"
+            },
+            {
+              "key": "US Commercial Industries",
+              "text": "US Commercial Industries"
+            },
+            {
+              "key": "US Health & Public Sector",
+              "text": "US Health & Public Sector"
+            }
+          ],
+          "hooverText": "Field Area",
+          "placeholderText": "Field Area"
+        },
+        "Sales Unit": {
+          "fieldName": "Sales Unit",
+          "fieldType": "Dropdown",
+          "selectionType": "Single Value",
+          "dependencies": "None",
+          "editable": true,
+          "required": true,
+          "values": [],
+          "notes": "",
+          "hooverText": "Sales Unit",
+          "placeholderText": "Sales Unit"
+        },
+        "Adoption Plan": {
+          "fieldName": "Adoption Plan",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "None",
+          "editable": true,
+          "required": true,
+          "values": "",
+          "notes": "",
+          "hooverText": "As the requestor you are responsible for driving adoption for this report/changes. What is the plan and timeline for driving adoption across the intended audience(s)?",
+          "placeholderText": "Adoption Plan"
+        },
+        "Description": {
+          "fieldName": "Description",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "None",
+          "editable": true,
+          "required": true,
+          "values": "",
+          "notes": "",
+          "hooverText": "Enter any additional information to help with researching your issue, including screeshots. For example, if you know where the revenue seems to be missing based on your investigation, state the system(s), i.e. MSXi, C&AI Portal, GPS Insights.",
+          "placeholderText": "Description"
+        },
+        "Additional visibility (CC)": {
+          "fieldName": "Additional visibility (CC)",
+          "fieldType": "Dynamic Dropdown",
+          "selectionType": "Multi Select",
+          "dependencies": "None",
+          "editable": true,
+          "required": false,
+          "values": [],
+          "hooverText": "Add names/aliases of individuals that should be involved in all communications unique to this incident, i.e., managers, other team members, individuals providing support",
+          "placeholderText": "Additional visibility"
+        }
+      }
+    }
+  },
+  "Field BI and Enablement Requests - Enhance Exisitng": {
+    "Category": "Field BI and Enablement Requests",
+    "typeOfRequest": {
+      "Enhance Exisitng": {
+        "fieldType": "Dropdown",
+        "selectionType": "Single Value",
+        "dependencies": "none",
+        "editable": true,
+        "required": true,
+        "value": [
+          {
+            "key": "Enhance Exisitng",
+            "text": "Enhance Exisitng"
+          }
+        ],
+        "hooverText": "Request Type",
+        "Request Title": {
+          "fieldName": "Request Title",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": "",
+          "hooverText": "",
+          "placeholderText": "Title"
+        },
+        "Priority": {
+          "fieldName": "Priority",
+          "fieldType": "Dropdown",
+          "selectionType": "Single Value",
+          "dependencies": "None",
+          "editable": true,
+          "required": true,
+          "values": [
+            {
+              "key": "P1 - Critical",
+              "text": "P1 - Critical"
+            },
+            {
+              "key": "P2 - High",
+              "text": "P2 - High"
+            },
+            {
+              "key": "P3 - Medium",
+              "text": "P3 - Medium"
+            },
+            {
+              "key": "P4 - Low",
+              "text": "P4 - Low"
+            }
+          ],
+          "notes": "Default to 'P4 - Low'",
+          "hooverText": "Priority 1 - Urgency: High (1 - 3 days) + Impact: High\nPriority 2 - Urgency: High (4 – 14 days) + Impact: High\nPriority 3 - Urgency: Medium + Impact: Medium\nPriority 4 - Urgency: Low + Impact: Low",
+          "placeholderText": "P4 - Low"
+        },
+        "Business Area": {
+          "fieldName": "Business Area",
+          "fieldType": "Drop-down",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": [
+            {
+              "key": "Azure",
+              "text": "Azure"
+            },
+            {
+              "key": "Modern Work & Security",
+              "text": "Modern Work & Security"
+            },
+            {
+              "key": "Surface",
+              "text": "Surface"
+            },
+            {
+              "key": "Business Applications",
+              "text": "Business Applications"
+            },
+            {
+              "key": "Cross",
+              "text": "Cross"
+            }
+          ],
+          "hooverText": "Business Area",
+          "placeholderText": "Business Area"
+        },
+        "Subcategory": {
+          "fieldName": "Subcategory",
+          "fieldType": "Drop-down",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": [
+            {
+              "key": "Pipe",
+              "text": "Pipe"
+            },
+            {
+              "key": "Forecast",
+              "text": "Forecast"
+            },
+            {
+              "key": "Revenue",
+              "text": "Revenue"
+            },
+            {
+              "key": "Consumption",
+              "text": "Consumption"
+            },
+            {
+              "key": "Funding",
+              "text": "Funding"
+            },
+            {
+              "key": "Annuity",
+              "text": "Annuity"
+            },
+            {
+              "key": "Other",
+              "text": "Other"
+            }
+          ],
+          "hooverText": "Subcategory*",
+          "placeholderText": "Subcategory*"
+        },
+        "Existing Report Link": {
+          "fieldName": "Existing Report Link",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "Request Type = Enhance Exisitng",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": "",
+          "hooverText": "Existing Report Link",
+          "placeholderText": "Existing Report Link"
+        },
+        "Business Justification": {
+          "fieldName": "Business Justification",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": false,
+          "required": true,
+          "notes": "",
+          "value": "",
+          "hooverText": "Business Justification",
+          "placeholderText": "Business Justification"
+        },
+        "Impact": {
+          "fieldName": "Impact",
+          "fieldType": "Dropdown",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": [
+            {
+              "key": "Me",
+              "text": "Me"
+            },
+            {
+              "key": "My Territory",
+              "text": "My Territory"
+            },
+            {
+              "key": "My ATU",
+              "text": "My ATU"
+            },
+            {
+              "key": "My OU",
+              "text": "My OU"
+            },
+            {
+              "key": "My Segment",
+              "text": "My Segment"
+            },
+            {
+              "key": "My Role",
+              "text": "My Role"
+            },
+            {
+              "key": "US Sub",
+              "text": "US Sub"
+            }
+          ],
+          "hooverText": "Impact",
+          "placeholderText": "Impact"
+        },
+        "Field Area": {
+          "fieldName": "Field Area",
+          "fieldType": "Drop-down",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": [
+            {
+              "key": "Americas Enterprise",
+              "text": "Americas Enterprise"
+            },
+            {
+              "key": "Americas SMC",
+              "text": "Americas SMC"
+            },
+            {
+              "key": "US Commercial Industries",
+              "text": "US Commercial Industries"
+            },
+            {
+              "key": "US Health & Public Sector",
+              "text": "US Health & Public Sector"
+            }
+          ],
+          "hooverText": "Field Area",
+          "placeholderText": "Field Area"
+        },
+        "Sales Unit": {
+          "fieldName": "Sales Unit",
+          "fieldType": "Dropdown",
+          "selectionType": "Single Value",
+          "dependencies": "None",
+          "editable": true,
+          "required": true,
+          "values": [],
+          "notes": "",
+          "hooverText": "Sales Unit",
+          "placeholderText": "Sales Unit"
+        },
+        "Adoption Plan": {
+          "fieldName": "Adoption Plan",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "None",
+          "editable": true,
+          "required": true,
+          "values": "",
+          "notes": "",
+          "hooverText": "As the requestor you are responsible for driving adoption for this report/changes. What is the plan and timeline for driving adoption across the intended audience(s)?",
+          "placeholderText": "Adoption Plan"
+        },
+        "Description": {
+          "fieldName": "Description",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "None",
+          "editable": true,
+          "required": true,
+          "values": "",
+          "notes": "",
+          "hooverText": "Enter any additional information to help with researching your issue, including screeshots. For example, if you know where the revenue seems to be missing based on your investigation, state the system(s), i.e. MSXi, C&AI Portal, GPS Insights.",
+          "placeholderText": "Description"
+        },
+        "Additional visibility (CC)": {
+          "fieldName": "Additional visibility (CC)",
+          "fieldType": "Dynamic Dropdown",
+          "selectionType": "Multi Select",
+          "dependencies": "None",
+          "editable": true,
+          "required": false,
+          "values": [],
+          "hooverText": "Add names/aliases of individuals that should be involved in all communications unique to this incident, i.e., managers, other team members, individuals providing support",
+          "placeholderText": "Additional visibility"
+        }
+      }
+    }
+  },
+  "Field BI and Enablement Requests - Report Walkthrough": {
+    "Category": "Field BI and Enablement Requests",
+    "typeOfRequest": {
+      "Report Walkthrough": {
+        "fieldType": "Dropdown",
+        "selectionType": "Single Value",
+        "dependencies": "none",
+        "editable": true,
+        "required": true,
+        "value": [
+          {
+            "key": "Report Walkthrough",
+            "text": "Report Walkthrough"
+          }
+        ],
+        "hooverText": "Request Type",
+        "Request Title": {
+          "fieldName": "Request Title",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": "",
+          "hooverText": "",
+          "placeholderText": "Title"
+        },
+        "Subcategory": {
+          "fieldName": "Subcategory",
+          "fieldType": "Drop-down",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": [
+            {
+              "key": "Live Training",
+              "text": "Live Training"
+            },
+            {
+              "key": "Cheat Sheet",
+              "text": "Cheat Sheet"
+            }
+          ],
+          "hooverText": "Subcategory*",
+          "placeholderText": "Subcategory*"
+        },
+        "Priority": {
+          "fieldName": "Priority",
+          "fieldType": "Dropdown",
+          "selectionType": "Single Value",
+          "dependencies": "None",
+          "editable": true,
+          "required": true,
+          "values": [
+            {
+              "key": "P1 - Critical",
+              "text": "P1 - Critical"
+            },
+            {
+              "key": "P2 - High",
+              "text": "P2 - High"
+            },
+            {
+              "key": "P3 - Medium",
+              "text": "P3 - Medium"
+            },
+            {
+              "key": "P4 - Low",
+              "text": "P4 - Low"
+            }
+          ],
+          "notes": "Default to 'P4 - Low'",
+          "hooverText": "Priority 1 - Urgency: High (1 - 3 days) + Impact: High\nPriority 2 - Urgency: High (4 – 14 days) + Impact: High\nPriority 3 - Urgency: Medium + Impact: Medium\nPriority 4 - Urgency: Low + Impact: Low",
+          "placeholderText": "P4 - Low"
+        },
+        "Business Area": {
+          "fieldName": "Business Area",
+          "fieldType": "Drop-down",
+          "selectionType": "Single Value",
+          "dependencies": "Request Type = Report Walkthrough",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": [
+            {
+              "key": "Azure",
+              "text": "Azure"
+            },
+            {
+              "key": "Modern Work & Security",
+              "text": "Modern Work & Security"
+            },
+            {
+              "key": "Surface",
+              "text": "Surface"
+            },
+            {
+              "key": "Business Applications",
+              "text": "Business Applications"
+            },
+            {
+              "key": "Cross",
+              "text": "Cross"
+            }
+          ],
+          "hooverText": "Business Area",
+          "placeholderText": "Business Area"
+        },
+        "Business Topic": {
+          "fieldName": "Business Topic",
+          "fieldType": "Dropdown​",
+          "selectionType": "Single Value",
+          "dependencies": "Request Type = Report Walkthrough",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": [
+            {
+              "key": "Pipe",
+              "text": "Pipe"
+            },
+            {
+              "key": "Forecast",
+              "text": "Forecast"
+            },
+            {
+              "key": "Revenue",
+              "text": "Revenue"
+            },
+            {
+              "key": "Consumption",
+              "text": "Consumption"
+            },
+            {
+              "key": "Funding",
+              "text": "Funding"
+            },
+            {
+              "key": "Annuity",
+              "text": "Annuity"
+            },
+            {
+              "key": "Sales Play",
+              "text": "Sales Play"
+            },
+            {
+              "key": "Planning",
+              "text": "Planning"
+            },
+            {
+              "key": "Other",
+              "text": "Other"
+            }
+          ],
+          "hooverText": "Business Topic",
+          "placeholderText": "Business Topic"
+        },
+        "MSXi Report Name": {
+          "fieldName": "MSXi Report Name",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "Request Type = Report Walkthrough",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": "",
+          "hooverText": "MSXi Report Name",
+          "placeholderText": "MSXi Report Name"
+        },
+        "MSXi Report Link": {
+          "fieldName": "MSXi Report Link",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "Request Type = Report Walkthrough",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": "",
+          "hooverText": "MSXi Report Link",
+          "placeholderText": "MSXi Report Link"
+        },
+        "Description": {
+          "fieldName": "Description",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "None",
+          "editable": true,
+          "required": true,
+          "values": "",
+          "notes": "",
+          "hooverText": "Enter any additional information to help with researching your issue, including screeshots. For example, if you know where the revenue seems to be missing based on your investigation, state the system(s), i.e. MSXi, C&AI Portal, GPS Insights.",
+          "placeholderText": "Description"
+        },
+        "Additional visibility (CC)": {
+          "fieldName": "Additional visibility (CC)",
+          "fieldType": "Dynamic Dropdown",
+          "selectionType": "Multi Select",
+          "dependencies": "None",
+          "editable": true,
+          "required": false,
+          "values": [],
+          "hooverText": "Add names/aliases of individuals that should be involved in all communications unique to this incident, i.e., managers, other team members, individuals providing support",
+          "placeholderText": "Additional visibility"
+        }
+      }
+    }
+  },
+  "Field BI and Enablement Requests - Process Walkthrough": {
+    "Category": "Field BI and Enablement Requests",
+    "typeOfRequest": {
+      "Process Walkthrough": {
+        "fieldType": "Dropdown",
+        "selectionType": "Single Value",
+        "dependencies": "none",
+        "editable": true,
+        "required": true,
+        "value": [
+          {
+            "key": "Process Walkthrough",
+            "text": "Process Walkthrough"
+          }
+        ],
+        "hooverText": "Request Type",
+        "Request Title": {
+          "fieldName": "Request Title",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": "",
+          "hooverText": "",
+          "placeholderText": "Title"
+        },
+        "Subcategory": {
+          "fieldName": "Subcategory",
+          "fieldType": "Drop-down",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": true,
+          "required": true,
+          "notes": "",
+          "value": [
+            {
+              "key": "Live Training",
+              "text": "Live Training"
+            },
+            {
+              "key": "Cheat Sheet",
+              "text": "Cheat Sheet"
+            }
+          ],
+          "hooverText": "Subcategory*",
+          "placeholderText": "Subcategory*"
+        },
+        "Priority": {
+          "fieldName": "Priority",
+          "fieldType": "Dropdown",
+          "selectionType": "Single Value",
+          "dependencies": "None",
+          "editable": true,
+          "required": true,
+          "values": [
+            {
+              "key": "P1 - Critical",
+              "text": "P1 - Critical"
+            },
+            {
+              "key": "P2 - High",
+              "text": "P2 - High"
+            },
+            {
+              "key": "P3 - Medium",
+              "text": "P3 - Medium"
+            },
+            {
+              "key": "P4 - Low",
+              "text": "P4 - Low"
+            }
+          ],
+          "notes": "Default to 'P4 - Low'",
+          "hooverText": "Priority 1 - Urgency: High (1 - 3 days) + Impact: High\nPriority 2 - Urgency: High (4 – 14 days) + Impact: High\nPriority 3 - Urgency: Medium + Impact: Medium\nPriority 4 - Urgency: Low + Impact: Low",
+          "placeholderText": "P4 - Low"
+        },
+        "Process Area": {
+          "fieldName": "Process Area",
+          "fieldType": "Dropdown",
+          "selectionType": "Single Value",
+          "dependencies": "Request Type = Process Walkthrough",
+          "editable": true,
+          "required": true,
+          "values": [
+            {
+              "key": "MSX D365 CRM",
+              "text": "MSX D365 CRM"
+            },
+            {
+              "key": "Social Selling",
+              "text": "Social Selling"
+            },
+            {
+              "key": "Prospecting & Digital Selling",
+              "text": "Prospecting & Digital Selling"
+            },
+            {
+              "key": "Account Planning",
+              "text": "Account Planning"
+            },
+            {
+              "key":"Consumption Planning",
+              "text":"Consumption Planning"
+            },
+            {
+              "key":"MSX",
+              "text":"MSX"
+            }
+          ],
+          "notes": "",
+          "hooverText": "Process Area",
+          "placeholderText": "Process Area"
+        },
+        "Process Name": {
+          "fieldName": "Process Name*",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "Request Type = Process Walkthrough",
+          "editable": true,
+          "required": true,
+          "values": "",
+          "notes": "",
+          "hooverText": "Process Name",
+          "placeholderText": "Process Name"
+        },
+        "Description": {
+          "fieldName": "Description",
+          "fieldType": "Text Field",
+          "selectionType": "Single Value",
+          "dependencies": "None",
+          "editable": true,
+          "required": true,
+          "values": "",
+          "notes": "",
+          "hooverText": "Enter any additional information to help with researching your issue, including screeshots. For example, if you know where the revenue seems to be missing based on your investigation, state the system(s), i.e. MSXi, C&AI Portal, GPS Insights.",
+          "placeholderText": "Description"
+        },
+        "Additional visibility (CC)": {
+          "fieldName": "Additional visibility (CC)",
+          "fieldType": "Dynamic Dropdown",
+          "selectionType": "Multi Select",
+          "dependencies": "None",
+          "editable": true,
+          "required": false,
+          "values": [],
+          "hooverText": "Add names/aliases of individuals that should be involved in all communications unique to this incident, i.e., managers, other team members, individuals providing support",
+          "placeholderText": "Additional visibility"
+        }
+      }
+    }
+  }
+}

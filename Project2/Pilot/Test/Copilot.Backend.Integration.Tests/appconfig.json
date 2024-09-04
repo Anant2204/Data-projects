@@ -1,0 +1,27 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "CopilotApiBaseUrl": "https://app-virtuoso-copilotapi-buddy-eastus.azurewebsites.net/api/", //"https://virtuoso-app-copilot-buddy.azurewebsites.net/api/",
+    "CopilotApi-Resource": "api://dd95f4e6-1439-46f7-a5af-29d9d54801cd",
+    "ADInstances": "https://login.microsoftonline.com/{0}",
+    "ClientId": "25e963b8-c693-4f1c-9f50-ee60a021ebdc",
+    "ClientSecret": "ClientSecret",
+    "DatabaseResourceUrl": "https://database.windows.net/",
+    "IsAzureKeyVaultEnabled": "true",
+    "HotfixKeyVaultName": "virtuoso-kv-sec-hf",
+    "BuddyKeyVaultName": "virtuoso-kv-sec-buddy",
+    "PerformanceTime": "2000",
+    "TenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AppInsights": {
+    "iKey": "778a60d1-25a9-44f1-8e94-f8058dec17a9"
+  }
+
+}

@@ -1,0 +1,308 @@
+body {
+  font-family: 'Segoe UI' !important;
+  font-size: 100%;
+  /* 100% is equivalent to the default font size */
+  margin: 0;
+  padding: 0;
+}
+
+.panelContainer {
+  max-width: 100%;
+  overflow: hidden;
+  /* Ensure the container doesn't exceed the viewport width */
+}
+
+.panelTitle {
+  padding-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.paneldevider {
+  border-bottom: 1px solid #E6DEDE;
+  position: relative;
+  left: 44%;
+  transform: translateX(-50%);
+  width: 200%;
+  margin: 0 auto;
+  margin-bottom: 2vw;
+}
+
+.panelContent {
+  padding-bottom: 10px;
+}
+
+.ms-Dialog .ms-Overlay--dark {
+  /* opacity: 0.50 !important; */
+  /* background-color:#b5b5b50f !important; */
+  background-color: #2e2c2c0f !important;
+}
+
+.ms-Dialog .ms-Dialog-main {
+  box-shadow: rgb(175 175 175 / 28%) 0px 2px 3px 0px, rgb(175 175 175 / 18%) 0px 1px 0px 0px !important;
+  ;
+}
+
+.customDropdown {
+  opacity: 2 !important;
+  margin-left: -5px;
+}
+
+span.ms-layer {
+  display: none;
+}
+
+.panelButton {
+  position: relative;
+  background-color: #106ebe;
+  /* Change the background color to white */
+  color: white;
+  /* Change the text color to blue */
+  border: none;
+  /* Remove the border */
+  padding: 0px 8px 2px 8px;
+  /* Add some padding to the button */
+  cursor: pointer;
+  /* Change the cursor to a pointer when hovering over the button */
+  font-weight: 600;
+  /* Make the text light */
+  border-radius: 5px;
+  /* Add some border radius to make the button round */
+}
+
+.panelLinkButton {
+  position: relative;
+  background-color: white;
+  /* Change the background color to white */
+  color: #106ebe;
+  /* Change the text color to blue */
+  border: none;
+  /* Remove the border */
+  padding: 0px 8px 2px 0px;
+  /* Add some padding to the button */
+  cursor: pointer;
+  /* Change the cursor to a pointer when hovering over the button */
+  font-weight: 600;
+  /* Make the text light */
+  border-radius: 5px;
+  /* Add some border radius to make the button round */
+  display: flex;
+  align-items: center;
+  /* Align items vertically in the center */
+  gap: 8px;
+  /* Adjust the gap between the icon and button as needed */
+
+}
+
+
+.panelFooter {
+  padding-bottom: 50px;
+  margin-top: 20px;
+  margin-left:4px;
+}
+
+.panelButtonSymbol {
+  font-size: 24px !important;
+  /* Change to the size you want */
+  margin-top: -7px;
+  /* Add some margin to separate the symbol from the text */
+  background-color: white;
+  /* Change the background color to white */
+  color: #106ebe;
+  /* Change the text color to blue */
+  display: inline-block;
+}
+
+.panelButtonContainer {
+  display: flex;
+  align-items: center;
+  /* Align items vertically in the center */
+  gap: 1px;
+  /* Adjust the gap between the icon and button as needed */
+}
+
+.panelLockText {
+  font-size: 0.875rem;
+}
+
+.panelContainer table {
+  width: 100% !important;
+  /* Make the table responsive */
+  border-collapse: collapse;
+}
+
+
+.panelContainer table td {
+  /* width: 50% !important; */
+  padding: 0px 7px 7px 0px !important;
+  border: 0 !important;
+  height: auto !important;
+  max-height: 300px !important;
+  vertical-align: top;
+}
+
+.onecolumn {
+  width: 100% !important;
+}
+
+
+.twocolumn {
+  width: 50% !important;
+}
+
+.one-column-table td {
+  width: 100% !important;
+}
+
+.ms-Panel-content {
+  padding-left: 27px !important;
+  padding-right: 25px !important;
+  padding-bottom: 20px !important;
+}
+
+.panelContent ul li {
+  margin-bottom: 0px !important;
+  margin-top: 0px !important;
+}
+
+#fluent-default-layer-host .service-info-panel .ms-Panel-main{
+  margin-right:10px;
+}
+#fluent-default-layer-host .service-info-panel-catalog .ms-Panel-main{
+  margin-right:0px;
+}
+
+#fluent-default-layer-host .panelHeaderText .ms-Panel-main{
+  margin-right:0px;
+}
+#fluent-default-layer-host .ProfileTab .ms-Panel-main{
+  margin-right:0px;
+}
+
+
+
+/* .ms-Dropdown {
+  margin-left: 5px;
+  } */
+
+.popup-field-profile .ms-Dropdown 
+{
+  margin-left: 0px !important;
+}
+
+.editProfile .ms-Dropdown 
+{
+  margin-left: 0px !important;
+}
+
+/* .ms-Dropdown .ms-Dropdown-title{
+margin-left: 5px;
+} */
+
+.serviceOwenrLabelStyle{
+  text-decoration: none ;
+  font-size: 14px;
+  font-weight: "400";
+  font-family: "Segoe UI";
+  cursor : pointer;
+  color: #323130;
+}
+
+@media screen and (min-width:400px) and (max-width:600px){
+  .serviceOwenrLabelStyle{
+    margin-top: -4px;
+    text-decoration: none ;
+  }
+
+  ._2apRz div[class^=ms-Panel-main-expand], ._2apRz>div {
+    min-width: 210px;
+  }
+
+  .ac-container .ac-adaptiveCard{
+    padding: 10px;
+  }
+  .webchat--css-ipmiy-zbyeql.webchat__stacked-layout.webchat__stacked-layout--hide-avatar .webchat__stacked-layout__avatar-gutter, .webchat--css-ipmiy-zbyeql.webchat__stacked-layout.webchat__stacked-layout--show-avatar .webchat__stacked-layout__avatar-gutter {
+    width: 0px;
+}
+}
+
+@media screen and (min-width: 300px) and (max-width: 800px) {
+
+  /* Adjust styles for small screens or high zoom levels */
+  .panelContainer table {
+    width: 100% !important;
+    font-size: 1.5vw;
+  }
+ 
+  .panelContainer span {
+    font-size: .3rem !important;
+    line-height: 1px;
+  }
+
+
+  .onecolumn {
+    width: 100% !important;
+  }
+
+
+  .twocolumn {
+    width: 50% !important;
+  }
+
+  .panelContainer table td {
+    /* width: 50% !important; */
+    font-size: .5rem !important;
+    height: auto !important;
+    max-height: 200px !important;
+    padding: 0px 7px 0px 2px !important;
+    border: 0 !important;
+    height: auto !important;
+    max-height: 300px !important;
+  }
+
+  .ms-Panel-content {
+    padding-left: 5px !important;
+    padding-right: 3px !important;
+    padding-bottom: 6px !important;
+  }
+
+  .panelButton {
+    position: relative;
+    margin-top: 2px;
+    background-color: #106ebe;
+    /* Change the background color to white */
+    color: white;
+    /* Change the text color to blue */
+    border: none;
+    /* Remove the border */
+    padding: 0px 4px 1px 3px;
+    /* Add some padding to the button */
+    cursor: pointer;
+    /* Change the cursor to a pointer when hovering over the button */
+    font-weight: 600;
+    /* Make the text light */
+    margin-bottom: 15%;
+    font-size: 0.5rem;
+    border-radius: 1px;
+  }
+
+  .panelContainer div {
+    width: 100% !important;
+    font-size: .5rem !important;
+    height: auto !important;
+  }
+
+}
+
+#fluent-default-layer-host .service-info-panel .ms-Panel-main{
+  margin-right:0px;
+}
+#fluent-default-layer-host .service-info-panel-catalog .ms-Panel-main{
+  margin-right:0px;
+}
+.infoPanelHeader{
+  margin-left: 31px!important;
+}
+
+.infoPanelContainer .ms-FocusZone{
+  margin-left: 6px;
+}

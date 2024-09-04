@@ -1,0 +1,26 @@
+{
+	"name": "DS_Lake_Handshake",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "HRDataLake_ADLSGen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "HRMD01/Handshake",
+				"fileSystem": "publish"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "LatestFolderName",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

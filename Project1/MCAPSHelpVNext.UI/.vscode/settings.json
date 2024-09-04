@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/dbe10480-e093-4f44-a29c-e69c0f44c583/resourceGroups/RG-MCAPSHELP-DEV/providers/Microsoft.Web/sites/mcapshelpdev",
+    "appService.deploySubpath": "stretchx-quickstart\\stretchx-quickstart\\portal\\build"
+}

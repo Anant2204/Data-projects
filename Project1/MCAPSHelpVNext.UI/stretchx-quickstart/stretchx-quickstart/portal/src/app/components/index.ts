@@ -1,0 +1,6 @@
+export * from './footer/AppFooter'
+export * from './header/AppHeader'
+export * from './settings/Settings'
+export * from './help/Help'
+export * from './main/main'
+export * from './About/About'

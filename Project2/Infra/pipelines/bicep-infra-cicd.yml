@@ -1,0 +1,32 @@
+trigger:
+- none
+
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    pool:
+      name: 'mct1espool'
+      image: mct1esptwindows
+      os: windows
+
+################ Linting and Validation #########
+    stages:
+    - stage: Publish
+      displayName: Publish Artifact
+      jobs:
+      - job: PublishArtifact
+        templateContext:
+          outputs:
+          - output: pipelineArtifact
+            targetPath: $(System.DefaultWorkingDirectory)
+            artifactName: deployArtifact
+
+ # ###################### Stage - Release MCT ##################
+    - template: /pipelines/mct/mct-infra-template-release.yml@self
+ 

@@ -1,0 +1,19 @@
+.dc-bot-trigger {
+    cursor: pointer;
+    width: 92px;
+    height: 92px;
+    background: #ffffff;
+    border-radius: 50%;
+    padding: 0px 0px 0px 0px;
+    position: fixed;
+    right: 15px;
+    bottom: 20px;
+    z-index: 9000;
+    box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    -moz-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    -o-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+.dc-bot-trigger-org {
+    width: 92px;
+}

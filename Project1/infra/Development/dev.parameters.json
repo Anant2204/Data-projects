@@ -1,0 +1,93 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "Env": {
+      "value": ""
+    },
+    "devASPlan": {
+      "value": ""
+    },
+    "devUIApp": {
+      "value": ""
+    },
+    "location": {
+      "value": ""
+    },
+    "pdevUIAppservice": {
+      "value": true
+    },
+    "frontdoorName": {
+      "value": ""
+    },
+    "devAFDEndpoint": {
+      "value": ""
+    },
+    "devoriginGroup": {
+      "value": ""
+    },
+    "devApiURL": {
+      "value": ""
+    },
+    "devwafPolicyName": {
+      "value": ""
+    },
+    "devwafMode": {
+      "value": ""
+    },
+    "devSecurityPolicy": {
+      "value": ""
+    },
+    "externalAPIEndpoint": {
+      "value": ""
+    },
+    "extoriginGroup": {
+      "value": ""
+    },
+    "extApiURL": {
+      "value": ""
+    },
+    "extwafPolicyName": {
+      "value": ""
+    },
+    "extwafMode": {
+      "value": ""
+    },
+    "extSecurityPolicy": {
+      "value": ""
+    },
+    "uatAFDEndpoint": {
+      "value": ""
+    },
+    "uatoriginGroup": {
+      "value": ""
+    },
+    "uatApiURL": {
+      "value": ""
+    },
+    "uatwafPolicyName": {
+      "value": ""
+    },
+    "uatwafMode": {
+      "value": ""
+    },
+    "uatSecurityPolicy": {
+      "value": ""
+    },
+    "devadministratorLoginPassword": {
+      "value": ""
+    },
+    "ProdWebAPI": {
+      "value": ""
+    },
+    "server_mcapshelp_name": {
+      "value": ""
+    },
+    "serverfarms_ASP_RGMCAPSHELPPROD": {
+      "value": ""
+    },
+    "vaults_MCAPSHELPKeyVaultDEV_name": {
+      "value": ""
+    }
+  }
+}

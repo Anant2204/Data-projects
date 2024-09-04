@@ -1,0 +1,36 @@
+   jobs:
+   - deployment: Whatif
+     templateContext:
+       type: releaseJob
+       isProduction: true
+       inputs:
+         - input: pipelineArtifact
+           artifactName: deployArtifact 
+           targetPath: $(System.DefaultWorkingDirectory)/deployArtifact
+     displayName: Whatif
+     timeoutInMinutes: 120
+     cancelTimeoutInMinutes: 1
+     environment: ${{ parameters.env }}
+     strategy:
+       runOnce:
+         deploy:
+           steps:
+             - task: AzureCLI@2
+               displayName: WhatIf Bicep templates
+               inputs:
+                 azureSubscription: ${{ parameters.azureSubscription }}
+                 scriptType: 'pscore'
+                 scriptLocation: 'inlineScript'
+                 inlineScript: |
+                  az bicep upgrade
+                 workingDirectory: '$(System.DefaultWorkingDirectory)/deployArtifact/source'
+##Az CLI task to whatif all resources except network components using Bicep Templates
+             - task: AzureCLI@2
+               displayName: WhatIf Bicep templates
+               inputs:
+                 azureSubscription: ${{ parameters.azureSubscription }}
+                 scriptType: 'pscore'
+                 scriptLocation: 'inlineScript'
+                 inlineScript: |
+                   az deployment sub what-if --name mctbicepwhat-if${{ parameters.dateTime }} --location ${{ parameters.location }} --template-file mct.bicep --parameters parameters/mct/${{ parameters.env }}.json
+                 workingDirectory: '$(System.DefaultWorkingDirectory)/deployArtifact/Infra/source'

@@ -1,0 +1,52 @@
+/* RequestAccessStyles.css */
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Center the content vertically on the page */
+  }
+  
+  .ms-core-pageTitle {
+    font-size: 2.77em;
+    white-space: nowrap;
+    font-family: "Segoe UI Light","Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;
+    color: #262626;
+    text-align: left; /* Center the text horizontally */
+    margin-right: 10rem;
+  }
+  
+  .textarea-button-container {
+    display: flex;
+    flex-direction: column;
+    border: black;
+    align-items: center;
+    text-align: center; /* Center the content horizontally */
+  }
+  
+  textarea {
+    font-family: "Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;
+    font-size: 13px;
+    width: 400%;
+    height: 100%; /* Set the width to 100% to match the title's width */
+    min-height: 100px; /* Adjust as needed */
+    margin: 10px; /* Add some margin for spacing */
+    padding: 10px; /* Add some padding for spacing */
+    resize: vertical; /* Allow vertical resizing */
+  }
+  
+  .request-access {
+    min-width: 6em;
+    padding: 7px 10px;
+    border: 1px solid #ababab;
+    background-color: #fdfdfd;
+    font-family: "Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;
+    font-size: 11px;
+    color: #444;
+    margin: 10px; /* Add some margin for spacing */
+    align-self: flex-end; /* Position button to the bottom right */
+    margin-left: 10px;
+
+  }
+  

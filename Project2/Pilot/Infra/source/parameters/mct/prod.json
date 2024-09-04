@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "resourceGroupName": {
+      "value": "mct-rg-copilot-prod"
+    },
+   "resourceGroupNamereference": {
+        "value": "mct-rg-prod"
+    },
+    "serviceConnectionPrincipleId": {
+      "value": "d504acb6-d0d4-4b33-afd2-cf141079d56f"
+    },
+    "location": {
+      "value": "westus"
+    },
+    "deployEnvironment": {
+      "value": "PROD"
+    },
+    "appInsightsName": {
+      "value": "mct-prod-ai-shared"
+    },
+    "keyVaultName": {
+      "value": "mct-kv-copilot-prod"
+    },
+    "appServicePlanNameApi": {
+      "value": "asp-mct-copilot-prod"
+    },
+    "appServiceskuNameApi" :{
+      "value": "S1"
+    },
+    "appServiceLocationApi": {
+      "value": "westus"
+    },
+    "logAnalyticsWorkspaceName" :{
+        "value": "mct-prod-laws-diag"
+    },
+    "webAppNameApiApp": {
+      "value": "mct-copilotapi-prod"
+    },
+    "managedIdentityName": {
+      "value": "mct-mi-prod-copilot"
+    }
+
+  }
+}

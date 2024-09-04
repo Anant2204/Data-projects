@@ -1,0 +1,494 @@
+.container1 {
+  padding: 10px;
+  background-color: white;
+  /* Change the background color to white */
+  color: #0078D4;
+  /* Change the text color to blue */
+  width: 227px;
+  /* min-width: 356px; */
+  /* height:246px !important; */
+}
+.colIndicatorsNews .ms-Icon {
+  font-size: 9px!important;
+}
+
+.newsContainer {
+  /* width: 486px; */
+  height: 200px;
+  top: 172px;
+  /* left: 1068px; */
+  border-radius: 4px;
+  border: 1px solid #FFFFFF;
+  background: #FFFFFF;
+  align-items: center;
+  justify-content: start;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.newsHeader {
+  display: flex;
+  justify-content: start;
+  width: 365px;
+  padding: 15px 15px 7px 29px;
+}
+
+/* .newsContent {
+  display: flex;
+  width: 365px;
+} */
+.newsContent {
+  display: flex;
+  width: 375px;
+}
+
+.iconFontSize{
+  font-size: 10px;
+}
+
+.iconLeft{
+  width:5px;
+  padding-top: 30px;
+  margin:0 3px;
+}
+
+.imageAndDesc {
+  width: 335px;
+  height: 115px;
+  display: flex;
+  padding-left: 24px;
+}
+.iconRight{
+  width:5px;
+  padding-top: 30px;
+}
+.imageAndDesc  .ms-Button--icon{
+  width: 20px !important;
+}
+.flex-left {
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  width: 100%;
+}
+
+.flex-right {
+  height: 115px;
+  gap: 8px;
+}
+
+.totalTicket {
+  width: 200px;
+  cursor: pointer;
+}
+
+.flex-container {
+  width: 365px;
+  height: 200px;
+  top: 172px;
+  left: 1068px;
+  border-radius: 4px;
+  border: 1px solid #FFFFFF;
+  background: #FFFFFF;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+}
+
+.containerBox {
+  width: 365px;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+}
+
+
+.colIndicatorsNews {
+  margin-left: -360px;
+}
+.iconSecond .ms-Button--icon
+{
+  padding-right: 29px;
+  padding-left: 0px;
+}
+.iconSecond 
+{
+margin-right: -14px;
+}
+.iconthird .ms-Button--icon
+{
+  padding-right: 29px;
+  padding-left: 0px;
+}
+.colIndicatorsNews .ms-Button--icon {
+  font-size: 9px;
+  height: 10px;
+font-weight: bold;
+color: rgb(209, 209, 209);
+}
+
+.title {
+  font-family: Segoe UI;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  width: 160px;
+  height: 40px;
+ padding-left: 20px;
+padding-bottom: 20px;
+
+}
+.imageAndDesc a{
+  display:block;
+  text-decoration:none;
+}
+.itemDescription {
+  font-family: Segoe UI;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  width: 160px;
+  height: 67px;
+  padding-left: 20px;
+  margin-top: 0px;
+}
+
+.container2 {
+  display: flex;
+  flex:1 1;
+  padding: 15px;
+  /* Add this line to make the container take up the rest of the page width */
+  /* margin-left: 40px !important;
+  margin-right: 50px; */
+  height: 200px;
+  border-radius: 4px;
+  margin-left: 0px !important;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.container3 {
+  padding: 15px;
+  width: 149px;
+  /* Add this line to make the container take up the rest of the page width */
+  /* margin-left: 40px !important;
+  margin-right: 50px; */
+  height: 110px;
+  border-radius: 4px;
+  margin-left: 0px !important;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.container2 button {
+
+  width: 15px !important;
+}
+
+.container2 .ms-Icon {
+  font-size: 9px !important;
+}
+
+.colIcon .icon-302 {
+  font-size: 7px !important;
+}
+
+.ticketNumber {
+  font-size: 20px;
+  /* Change to a smaller size */
+}
+
+.hideElement {
+  color: white;
+  width: 0px;
+}
+
+
+/* .ms-Panel-headerText {
+  display: none;
+} */
+
+.ticketNumber {
+  /*font-size: 20px; /* Change to a smaller size */
+  width: 81.3px;
+  height: 70.35px;
+  top: 231px;
+  left: 86.76px;
+  font-family: Segoe UI;
+  font-size: 48px;
+  font-weight: 350;
+  line-height: 67px;
+  letter-spacing: 0.01em;
+  text-align: left;
+  padding: 5px;
+
+  a {
+    color: #323130;
+  }
+
+  a:link {
+    text-decoration: none;
+    color: #323130;
+  }
+
+
+}
+
+.hideElement {
+  color: white;
+  width: 0px;
+}
+
+#Panel21-headerText {
+  display: none;
+}
+
+
+.ticketNumberopen {
+  width: 45px;
+  height: 47.25px;
+  top: 319.2px;
+  left: 86.76px;
+  font-family: Segoe UI;
+  font-size: 36px;
+  font-weight: 350;
+  line-height: 45px;
+  letter-spacing: 0.01em;
+  text-align: left;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: #005A9E;
+
+  a:link {
+    text-decoration: none;
+    color: #323130;
+  }
+
+  a {
+    /*color: #323130;*/
+    color: #005A9E;
+  }
+}
+
+.status-circle-summary {
+  float: left;
+}
+
+.ticketNumberactionRequired {
+  width: 45px;
+  height: 47.25px;
+  top: 319.2px;
+  left: 188.46px;
+  font-family: Segoe UI;
+  font-size: 32px;
+  font-weight: 350;
+  line-height: 45px;
+  letter-spacing: 0.01em;
+  text-align: left;
+  margin-bottom: 5px;
+  cursor: pointer;
+
+  a:link {
+    text-decoration: none;
+    color: #323130;
+  }
+
+  a {
+    /*color: #323130;*/
+    color: #005A9E;
+  }
+}
+
+.ticketNumberclosed {
+  width: 45px;
+  height: 47.25px;
+  top: 319.2px;
+  left: 323.46px;
+  font-family: Segoe UI;
+  font-size: 36px;
+  font-weight: 350;
+  line-height: 45px;
+  letter-spacing: 0.01em;
+  text-align: left;
+  margin-bottom: 5px;
+  cursor: pointer;
+  color: #005A9E;
+
+  a {
+    /*color: #323130;*/
+    color: #005A9E;
+  }
+
+  a:link {
+    text-decoration: none;
+    color: #323130;
+  }
+}
+
+h5.headerDashboard {
+  width: 235.16px;
+  height: 21px;
+  top: 188px;
+  left: 82.86px;
+  font-family: Segoe UI;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: rgb(50, 49, 48);
+  padding: 10px;
+
+}
+
+/*Add bullets*/
+.myhelpdashboard li {
+  position: relative;
+  list-style: none;
+  margin: 10px 0 0 0;
+}
+
+.myhelpdashboard li::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: -25px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: 2px solid #0bb5f4
+}
+
+.myhelpdashboard li::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: -21px;
+  width: 2px;
+  height: 75px;
+  background: #0bb5f4
+}
+
+.myhelpdashboard {
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.status {
+  padding-left: 27px;
+
+  margin-top: -25px;
+}
+
+.status span {
+  position: relative;
+}
+
+.status span::before {
+  content: '';
+  position: absolute;
+  background: #797775;
+  width: 5px;
+  height: 5px;
+  left: -13px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+
+
+}
+
+
+
+.status span.open::before {
+  content: '';
+  position: absolute;
+  /*background: #EE984A;*/
+  background: #DFF6DD;
+  width: 12px;
+  height: 12px;
+  left: -15px;
+
+  transform: translateY(-50%);
+  border-radius: 40px;
+  gap: 10px;
+  /* background: #DFF6DD;
+  width: '16px';
+  height: '16px';
+  top: 367px;
+  left: 87px;
+  padding: 10px;
+  border-radius: 40px;
+  gap: 10px;*/
+}
+
+.status span.cancelled::before {
+  content: '';
+  position: absolute;
+  /*background: #EE984A;*/
+  background: #FFDEE1;
+  width: 12px;
+  height: 12px;
+  left: -25px;
+
+  transform: translateY(-50%);
+  border-radius: 40px;
+  gap: 10px;
+  /* background: #DFF6DD;
+  width: '16px';
+  height: '16px';
+  top: 367px;
+  left: 87px;
+  padding: 10px;
+  border-radius: 40px;
+  gap: 10px;*/
+}
+
+.status span.closed::before {
+  content: '';
+  position: absolute;
+  /*background: #EE984A;*/
+  background: #D7EBFF;
+  width: 12px;
+  height: 12px;
+  left: -25px;
+  transform: translateY(-50%);
+  border-radius: 40px;
+  gap: 10px;
+  /* background: #DFF6DD;
+  width: '16px';
+  height: '16px';
+  top: 367px;
+  left: 87px;
+  padding: 10px;
+  border-radius: 40px;
+  gap: 10px;*/
+}
+
+.status span.open {
+  position: relative;
+  /* padding-right:5px; */
+
+}
+
+.status span.cancelled {
+  position: relative;
+
+}
+
+.status span.closed {
+  position: relative;
+
+}
+
+.status span.open::after {
+  margin-right: 5px;
+
+}
+
+[data-icon-name="ChevronLeft"], [data-icon-name="ChevronRight"] {
+  font-size: 9px !important;
+}

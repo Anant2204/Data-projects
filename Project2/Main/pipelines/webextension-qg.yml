@@ -1,0 +1,70 @@
+trigger: none    
+pr: none   
+
+schedules:
+- cron: '0 0 * * *'
+  displayName: Daily midnight build
+  branches:
+    include:
+    - dev
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+variables:
+  uirootfolderpath: '$(Build.SourcesDirectory)\src\webextension\'
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    pool:
+      name: 'mct1espool'
+      image: mct1esptwindows
+      os: windows   
+    stages:
+    - stage: stage
+      displayName: QG
+      jobs:
+      - job: job
+        displayName: Job
+        steps:
+        - task: SonarQubePrepare@5
+          displayName: Prepare Sonar Analysis
+          inputs:
+            SonarQube: 'mct-portal-sonar'
+            scannerMode: 'CLI'
+            configMode: 'manual'
+            cliProjectKey: 'MCT_vNext_Portal'
+            cliProjectName: 'MCT_vNext_Portal_#Tools'
+            cliProjectVersion: '$(Build.BuildId)'
+            cliSources: '.'
+        - task: NodeTool@0
+          displayName: 'Install Node.js'
+          inputs:
+            versionSource: 'spec'
+            versionSpec: '22.0.0'
+            checkLatest: true
+        - task: Npm@1
+          displayName: 'npm cache clean'
+          inputs:
+            command: 'custom'
+            workingDir: $(uirootfolderpath)
+            verbose: false
+            customCommand: 'cache clean --force'
+        - task: Npm@1
+          displayName: 'npm install'
+          inputs:
+            command: 'install'
+            workingDir: $(uirootfolderpath)
+        - script: |
+            pushd $(uirootfolderpath) && npm run build:DEV1  && popd
+          displayName: 'npm build'
+        - task: SonarQubeAnalyze@5
+          displayName: 'Run SonarQube Analysis'
+          inputs:
+            jdkversion: 'JAVA_HOME_21_X64'
+        - task: SonarQubePublish@5
+          displayName: 'Publish Sonar Report'
+          inputs:
+            pollingTimeoutSec: '300'

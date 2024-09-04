@@ -1,0 +1,146 @@
+{
+	"name": "Isp_incentiveplan_AzureSqlTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "pac_sql_prd",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "createdby",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "createdbyname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "createdbyyominame",
+				"type": "nvarchar"
+			},
+			{
+				"name": "createdon",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "createdonbehalfby",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "createdonbehalfbyname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "createdonbehalfbyyominame",
+				"type": "nvarchar"
+			},
+			{
+				"name": "importsequencenumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "isp_enddate",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "isp_incentivecode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "isp_incentiveplanid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "isp_incentiveplantype",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "isp_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "isp_startdate",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "modifiedby",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "modifiedbyname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "modifiedbyyominame",
+				"type": "nvarchar"
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "modifiedonbehalfby",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "modifiedonbehalfbyname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "modifiedonbehalfbyyominame",
+				"type": "nvarchar"
+			},
+			{
+				"name": "organizationid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "organizationidname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "overriddencreatedon",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "statecode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "statuscode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "timezoneruleversionnumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "utcconversiontimezonecode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "versionnumber",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "isp_incentiveplan_staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

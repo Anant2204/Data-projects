@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="aboutKey1" xml:space="preserve">
+    <value>"About/GetHtmlContent"</value>
+  </data>
+  <data name="announcementKey" xml:space="preserve">
+    <value>"Announcement/GetAnnouncements"</value>
+  </data>
+  <data name="areaInvalidKey" xml:space="preserve">
+    <value>"Invalid ObjId value"</value>
+  </data>
+  <data name="areaKey1" xml:space="preserve">
+    <value>"Area/GetAll"</value>
+  </data>
+  <data name="areaKey2" xml:space="preserve">
+    <value>"Area/Add"</value>
+  </data>
+  <data name="areaKey3" xml:space="preserve">
+    <value>"Area/GetById"</value>
+  </data>
+  <data name="areaKey4" xml:space="preserve">
+    <value>"Area/Update"</value>
+  </data>
+  <data name="areaKey5" xml:space="preserve">
+    <value>"Area/Delete"</value>
+  </data>
+  <data name="cdnTokenKey" xml:space="preserve">
+    <value>"CDNToken/cdnKeyVaultName"</value>
+  </data>
+  <data name="configInvalidKey" xml:space="preserve">
+    <value>"Invalid ObjId value."</value>
+  </data>
+  <data name="configKey1" xml:space="preserve">
+    <value>"Config/GetAll"</value>
+  </data>
+  <data name="configKey2" xml:space="preserve">
+    <value>"Config/Add"</value>
+  </data>
+  <data name="configKey3" xml:space="preserve">
+    <value>"Config/GetById"</value>
+  </data>
+  <data name="configKey4" xml:space="preserve">
+    <value>"Config/Update"</value>
+  </data>
+  <data name="configKey5" xml:space="preserve">
+    <value>"Config/Delete"</value>
+  </data>
+  <data name="feedbackKey" xml:space="preserve">
+    <value>"Feedback/Add"</value>
+  </data>
+  <data name="graphKey1" xml:space="preserve">
+    <value>"AccessTokenGenerator"</value>
+  </data>
+  <data name="graphKey2" xml:space="preserve">
+    <value>"GetGraphUsersNames"</value>
+  </data>
+  <data name="httpClientWrapperKey" xml:space="preserve">
+    <value>"Execution of command failed"</value>
+  </data>
+  <data name="newsKey" xml:space="preserve">
+    <value>"News/GetAll"</value>
+  </data>
+  <data name="roleInvalidKey" xml:space="preserve">
+    <value>"Invalid ObjId value."</value>
+  </data>
+  <data name="roleKey1" xml:space="preserve">
+    <value>"Role/GetAll"</value>
+  </data>
+  <data name="roleKey2" xml:space="preserve">
+    <value>"Service/Add"</value>
+  </data>
+  <data name="roleKey3" xml:space="preserve">
+    <value>"Role/GetByID"</value>
+  </data>
+  <data name="roleKey4" xml:space="preserve">
+    <value>"Role/Update"</value>
+  </data>
+  <data name="roleKey5" xml:space="preserve">
+    <value>"Role/Delete"</value>
+  </data>
+  <data name="segmentKey1" xml:space="preserve">
+    <value>"Segment/GetAll"</value>
+  </data>
+  <data name="segmentKey2" xml:space="preserve">
+    <value>"Segment/GetByID"</value>
+  </data>
+  <data name="segmentKey3" xml:space="preserve">
+    <value>"Segment/GetAllSegmentByRole"</value>
+  </data>
+  <data name="segmentKey4" xml:space="preserve">
+    <value>"Segment/Add"</value>
+  </data>
+  <data name="segmentKey5" xml:space="preserve">
+    <value>"Segment/Update"</value>
+  </data>
+  <data name="segmentKey6" xml:space="preserve">
+    <value>"Segment/Delete"</value>
+  </data>
+  <data name="serviceMapKey1" xml:space="preserve">
+    <value>"ServiceMapping/GetAll"</value>
+  </data>
+  <data name="serviceMapKey2" xml:space="preserve">
+    <value>"ServiceMapping/Add"</value>
+  </data>
+  <data name="serviceMapKey3" xml:space="preserve">
+    <value>"ServiceMapping/GetAll"</value>
+  </data>
+  <data name="serviceMapKey4" xml:space="preserve">
+    <value>"ServiceMapping/Delete"</value>
+  </data>
+  <data name="serviceMapKey5" xml:space="preserve">
+    <value>"ServiceMapping/Update"</value>
+  </data>
+  <data name="serviceOwnerInvalidKey" xml:space="preserve">
+    <value>"Invalid ObjId value."</value>
+  </data>
+  <data name="serviceOwnerKey1" xml:space="preserve">
+    <value>"ServiceOwner/GetAll"</value>
+  </data>
+  <data name="serviceOwnerKey2" xml:space="preserve">
+    <value>"ServiceOwner/Add"</value>
+  </data>
+  <data name="serviceOwnerKey3" xml:space="preserve">
+    <value>"ServiceOwner/GetById"</value>
+  </data>
+  <data name="serviceOwnerKey4" xml:space="preserve">
+    <value>"ServiceOwner/Update"</value>
+  </data>
+  <data name="serviceOwnerKey5" xml:space="preserve">
+    <value>"ServiceOwner/Delete"</value>
+  </data>
+  <data name="serviceOwnerServiceInvalidKey" xml:space="preserve">
+    <value>"Invalid ObjId value."</value>
+  </data>
+  <data name="serviceOwnerServiceKey1" xml:space="preserve">
+    <value>"ServiceOwnerService/GetAll"</value>
+  </data>
+  <data name="serviceOwnerServiceKey2" xml:space="preserve">
+    <value>"ServiceOwnerService/Add"</value>
+  </data>
+  <data name="serviceOwnerServiceKey3" xml:space="preserve">
+    <value>"ServiceOwnerService/GetById"</value>
+  </data>
+  <data name="serviceOwnerServiceKey4" xml:space="preserve">
+    <value>"ServiceOwnerService/Update"</value>
+  </data>
+  <data name="serviceOwnerServiceKey5" xml:space="preserve">
+    <value>"ServiceOwnerService/Delete"</value>
+  </data>
+  <data name="servicesKey1" xml:space="preserve">
+    <value>"Service/GetAllServices"</value>
+  </data>
+  <data name="servicesKey10" xml:space="preserve">
+    <value>"GetCatalogFilters"</value>
+  </data>
+  <data name="servicesKey2" xml:space="preserve">
+    <value>"Service/GetAllServicesWithSearch"</value>
+  </data>
+  <data name="servicesKey3" xml:space="preserve">
+    <value>"Service/GetAllServicesGroups"</value>
+  </data>
+  <data name="servicesKey4" xml:space="preserve">
+    <value>"Service/GetByID"</value>
+  </data>
+  <data name="servicesKey5" xml:space="preserve">
+    <value>"Service/Add"</value>
+  </data>
+  <data name="servicesKey6" xml:space="preserve">
+    <value>"Service/Update"</value>
+  </data>
+  <data name="servicesKey7" xml:space="preserve">
+    <value>"Service/Delete"</value>
+  </data>
+  <data name="servicesKey8" xml:space="preserve">
+    <value>"Service/GetAllLoggedInService"</value>
+  </data>
+  <data name="servicesKey9" xml:space="preserve">
+    <value>"Service/GetAllLoggedInServiceById"</value>
+  </data>
+  <data name="subSegmentInvalidKey" xml:space="preserve">
+    <value>"Invalid ObjId value."</value>
+  </data>
+  <data name="subSegmentKey1" xml:space="preserve">
+    <value>"SubSegment/GetAll"</value>
+  </data>
+  <data name="subSegmentKey2" xml:space="preserve">
+    <value>"SubSegment/Add"</value>
+  </data>
+  <data name="subSegmentKey3" xml:space="preserve">
+    <value>"GetAllSubSegmentBySegmentId/Id"</value>
+  </data>
+  <data name="subSegmentKey4" xml:space="preserve">
+    <value>"SubSegment/GetById"</value>
+  </data>
+  <data name="subSegmentKey5" xml:space="preserve">
+    <value>"SubSegment/Update"</value>
+  </data>
+  <data name="subSegmentKey6" xml:space="preserve">
+    <value>"SubSegment/Delete"</value>
+  </data>
+  <data name="userADGroupKey1" xml:space="preserve">
+    <value>"UserADGroup/GetAll"</value>
+  </data>
+  <data name="userADGroupKey2" xml:space="preserve">
+    <value>"UserADGroup/Add"</value>
+  </data>
+  <data name="userADGroupKey3" xml:space="preserve">
+    <value>"UserADGroup/GetById"</value>
+  </data>
+  <data name="userADGroupKey4" xml:space="preserve">
+    <value>"UserADGroup/Update"</value>
+  </data>
+  <data name="userADGroupKey5" xml:space="preserve">
+    <value>"UserADGroup/Delete"</value>
+  </data>
+  <data name="userADInvalidKey" xml:space="preserve">
+    <value>"Invalid ObjId value."</value>
+  </data>
+  <data name="userGroupProgramKey1" xml:space="preserve">
+    <value>"getTheGroupsFromEndPoint"</value>
+  </data>
+  <data name="userGroupProgramKey2" xml:space="preserve">
+    <value>"AddTheUserInfo"</value>
+  </data>
+  <data name="userGroupProgramKey3" xml:space="preserve">
+    <value>"AccessTokenGenerator"</value>
+  </data>
+  <data name="userGroupProgramKey4" xml:space="preserve">
+    <value>"ConnectionEstablished"</value>
+  </data>
+  <data name="userGroupProgramKey5" xml:space="preserve">
+    <value>"getTheGroupsFromEndPoint"</value>
+  </data>
+  <data name="userInvalidKey" xml:space="preserve">
+    <value>"Invalid ObjId value."</value>
+  </data>
+  <data name="userKey1" xml:space="preserve">
+    <value>"User/GetAll"</value>
+  </data>
+  <data name="userKey2" xml:space="preserve">
+    <value>"User/Add"</value>
+  </data>
+  <data name="userKey3" xml:space="preserve">
+    <value>"User/Update"</value>
+  </data>
+  <data name="userKey4" xml:space="preserve">
+    <value>"User/Delete"</value>
+  </data>
+  <data name="userKey5" xml:space="preserve">
+    <value>"User/GetUserByEmailId"</value>
+  </data>
+  <data name="userKey6" xml:space="preserve">
+    <value>"User/GetUserByEmailIdPerf"</value>
+  </data>
+  <data name="userKey7" xml:space="preserve">
+    <value>"User/GetById"</value>
+  </data>
+  <data name="userWorkspaceInvalidKey" xml:space="preserve">
+    <value>"Invalid ObjId value."</value>
+  </data>
+  <data name="userWorkspaceKey1" xml:space="preserve">
+    <value>"UserWorkSpace/Add"</value>
+  </data>
+  <data name="userWorkspaceKey2" xml:space="preserve">
+    <value>"UserWorkSpace/GetById"</value>
+  </data>
+  <data name="userWorkspaceKey3" xml:space="preserve">
+    <value>"UserWorkSpace/Update"</value>
+  </data>
+  <data name="userWorkspaceKey4" xml:space="preserve">
+    <value>"UserWorkSpace/Delete"</value>
+  </data>
+  <data name="userWorkspaceKey5" xml:space="preserve">
+    <value>"GetAllWorkspaces"</value>
+  </data>
+</root>

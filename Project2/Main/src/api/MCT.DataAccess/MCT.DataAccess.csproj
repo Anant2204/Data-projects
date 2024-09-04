@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>.</DockerfileContext>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Remove="stylecop.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AdditionalFiles Include="stylecop.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="EntityFramework" Version="6.4.4" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.6" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
+		<PackageReference Include="Azure.Identity" Version="1.11.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+
+		<PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+
+		<PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+
+		<PackageReference Include="System.Drawing.Common" Version="8.0.6" />
+
+		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Entity\" />
+	</ItemGroup>
+</Project>

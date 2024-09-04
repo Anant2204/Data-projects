@@ -1,0 +1,1 @@
+export const SERVICE_NAME_REQ_TYPE = (selectedRequestType)=> `Employee Assignment Support - ${selectedRequestType}`

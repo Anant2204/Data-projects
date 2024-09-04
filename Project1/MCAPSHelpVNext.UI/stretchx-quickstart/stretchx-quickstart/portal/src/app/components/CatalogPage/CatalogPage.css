@@ -1,0 +1,97 @@
+.Catalog_Services {
+  padding: 10px;
+  margin-right: 45px;
+}
+
+.Catalog_allServicesLabel {
+  font-family: Segoe UI;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+
+}
+
+.catalogBottomContainer {
+  padding: 0px 0px 20px 10px;
+  width: 60%;
+  margin-top: 32px;
+}
+
+.catalogBottomContainer_text{
+  font-family: 'Segoe UI';
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: #0078d4;
+  color: white;
+  width: fit-content;
+  padding: 5px 12px;
+  border:0px;
+  border-radius: 4px;
+  transition: background-color -0.9s ease-in-out -0.9s;
+  margin-top: 10px;
+}
+
+.buttonContainer:hover {
+  background-color: #106ebe;
+}
+
+.forwardIcon {
+  margin-left: 5px;
+}
+
+.success-message {
+  background-color: #9FD89F; /* Green color */
+  color: #242424;
+  padding: 15px;
+  text-align: center;
+}
+
+.success-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.no-services {
+  margin-top: 50px;
+  text-align: center;
+  margin-left: 40%;
+}
+
+/* Style for the image */
+.no-services img {
+  max-width: 100%;
+  height: auto; 
+}
+
+.no-services-title
+{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.ms-Grid-col.ms-lg3.LeftPanelfilter {
+  padding-right: 29px !important;
+  width:23%!important;
+  margin-right: 20px!important;
+}
+/* .ms-Grid-col.ms-lg3.LeftPanelfilter .is-checked span{
+  background-color: unset!important;
+  color: unset!important;
+} */
+/* .ms-SearchBox.catalogSearch,
+.ms-SearchBox.is-active.catalogSearch
+ {
+  max-width: calc(45% - 10px);
+  width: 100%;
+} */

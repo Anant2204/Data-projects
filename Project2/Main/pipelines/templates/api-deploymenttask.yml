@@ -1,0 +1,48 @@
+parameters:
+- name: serviceConnection
+  type: string
+- name: containerRegistry
+  type: string
+- name: azureSubscription
+  type: string
+- name: appName
+  type: string
+- name: keyVaultName
+  type: string
+- name: environment
+  type: string
+- name: location
+  type: string
+
+jobs:
+- deployment: DeployAPI
+  displayName: Deploy MCT API
+  environment: ${{ parameters.environment }}
+  templateContext:
+      authenticatedContainerRegistries:
+      - registry: ${{ parameters.containerRegistry }}
+        identity: ManagedIdentity
+      - serviceConnection: ${{ parameters.serviceConnection }}
+  strategy:
+   runOnce:
+     deploy:
+      steps:
+      - task: Bash@3
+        displayName: Load and Tag Docker Image
+        inputs:
+          targetType: 'inline'
+          script: |
+            docker load --input $(Pipeline.Workspace)/drop/$(artifactName)
+            docker tag $(imageRepository):$(tag) ${{ parameters.containerRegistry }}/$(imageRepository):$(tag)
+
+      - task: 1ES.PushContainerImage@1
+        inputs:
+          image: '$(imageRepository):$(tag)'
+          remoteImage: '${{ parameters.containerRegistry }}/$(imageRepository):$(tag)'
+      - task: AzureWebAppContainer@1
+        displayName: Deploy Web
+        inputs:
+          azureSubscription: '${{ parameters.azureSubscription }}'
+          appName: '${{ parameters.appName }}'
+          containers: '${{ parameters.containerRegistry }}/$(imageRepository):$(tag)'
+          appSettings: '-KeyVaultName ${{ parameters.keyVaultName }}'

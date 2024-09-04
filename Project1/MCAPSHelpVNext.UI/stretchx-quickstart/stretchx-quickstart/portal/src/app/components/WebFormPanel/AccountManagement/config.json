@@ -1,0 +1,1120 @@
+{
+    "Category": "Account management Support",
+    "RequestTypeOptions": [
+      {
+        "key": "Raise Parenting/Segmentation Query",
+        "text": "Parenting/Segmentation",
+        "group":"Account Management"
+      },
+      {
+        "key": "Raise Account Management Tool Access, Error or Query",
+        "text": "Account Management Tool Access or Error",
+        "group":"Account Management"
+      },
+      {
+        "key":"Raise WW Policy or Business Rules Query",
+        "text":"WW Policy or Business Rules",
+        "group":"Account Management"
+      },
+      {
+        "key":"Raise CRM ID or Account Attribute Updates",
+        "text":"CRM ID or Account Attribute Updates",
+        "group":"Account Management"
+      },
+      {
+        "key":"Raise Deadlines Query",
+        "text":"Deadlines",
+        "group":"Account Management"
+      },
+      {
+        "key":"Raise Future Year Query",
+        "text":"Future Year",
+        "group":"Account Management"
+      },
+      {
+        "key":"Raise Split Decision Response Query",
+        "text":"Split Decision Response",
+        "group":"Update Account Attributes"
+      }
+    ],
+    "Account management Support - Parenting/Segmentation Question": {
+      "Category": "Account management Support",
+      "typeOfRequest": {
+        "Parenting/Segmentation Question": {
+          "fieldType": "Dropdown",
+          "selectionType": "Single Value",
+          "dependencies": "",
+          "editable": true,
+          "required": true,
+          "value":  [
+            {
+              "key": "Parenting/SegmentationQuestion",
+              "text": "Parenting/Segmentation Question"
+            }
+          ],
+          "hooverText": "Request Type",
+          "Information": {
+            "fieldName": "Type Of Request Information ",
+            "fieldType": "Information Text",
+            "selectionType": "Single Value",
+            "dependencies": "Type of Request = Parenting/Segmentation Question",
+            "editable": false,
+            "required": false,
+            "notes": "Directions on how to submit this type of request. With additional links to external sources ",
+            "value":"<p>This form cannot be used to initiate in-year parenting/segmentation requests. If you need to create a new in-year parenting/segmentation request:<br/> To initiate a parenting/segmentation request for SMC-C please go to MicrosoftAmericasRevexSupport<br/>For EC or HSPI: reserarch questions can be submitted through MicrosoftAmericasRevexSupport, or managers should submit new requests directly into the Microsoft Americas BSO Account Management tool (AM Tool). Use this form if you have a segmentation question that you cannot address through the tool.</p> ",
+            "hooverText": "",
+            "placeholderText": "Type Of Request Information "
+          },
+          "Ticket Subject":{
+            "fieldName": "Ticket Subject",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": ""
+
+          },
+          "Is your question about a new or existing Account Management Tool request?": {
+            "fieldName": "Is your question about a new or existing Account Management Tool request? ",
+            "fieldType": "Drop-down",
+            "selectionType": "Single Value",
+            "dependencies": "Type of Request = Parenting/Segmentation Question",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":[
+              {
+                "key":"New Request",
+                "text":"New Request"
+              },{
+                "key":"Existing Request",
+                "text":"Existing Request"
+              }
+            ],
+            "New Request":{
+              "What is your specific question or issue?": {
+                "fieldName": "What is your specific question or issue?",
+                "fieldType": "Drop-down",
+                "selectionType": "Single Value",
+                "dependencies": "Is your question about a new or existing Account Management Tool request? = New Request ",
+                "editable": true,
+                "required": true,
+                "notes": "Values in dropdown are depending when \"New Request\"",
+                "value":[
+                  {
+                    "key":"Need Top Parent ID or Org ID added to the Account Management Tool",
+                    "text":"Need Top Parent ID or Org ID added to the Account Management Tool"
+                  },{
+                    "key":"Devices Bulk Submission",
+                    "text":"Devices Bulk Submission"
+                  },{
+                    "key":"General Question",
+                    "text":"General Question"
+                  }
+                ],
+                "hooverText": "What is your specific question or issue?",
+                "placeholderText": "Type Of Issue"
+              }
+
+            },
+            "Existing Request":{
+              "What is your specific question or issue?": {
+                "fieldName": "What is your specific question or issue?",
+                "fieldType": "Drop-down",
+                "selectionType": "Single Value",
+                "dependencies": "Is your question about a new or existing Account Management Tool request? = Existing Request",
+                "editable": true,
+                "required": true,
+                "notes": "Values in dropdown are depending when \"Existing Request\"",
+                "value":[
+                  {
+                    "key":"Need to cancel an existing request",
+                    "text":"Need to cancel an existing request"
+                  },
+                  {
+                    "key":"Add an attachment to an existing request",
+                    "text":"Add an attachment to an existing request"
+                  },
+                  {
+                    "key":"Update the business justification",
+                    "text":"Update the business justification"
+                  },
+                  {
+                    "key":"Update existing request details",
+                    "text":"Update existing request details"
+                  },
+                  {
+                    "key":"Request Extension",
+                    "text":"Request Extension"
+                  },
+                  {
+                    "key":" Queue for Future Year",
+                    "text":" Queue for Future Year"
+                  },
+                  {
+                    "key":"Escalate Split Decision",
+                    "text":"Escalate Split Decision"
+                  },
+                  {
+                    "key":"General questions about an existing request",
+                    "text":"General questions about an existing request"
+                  }
+                ],
+                "hooverText": "What is your specific question or issue?",
+                "placeholderText": "Type Of Issue"
+              }
+
+            },
+            "hooverText": "Is your question about a new or existing request? ",
+            "placeholderText": "Type Of Question"
+          },
+          "Related ID Type": {
+            "fieldName": "Related ID Type (That will help with research or resolve the issue)",
+            "fieldType": "Drop-down",
+            "selectionType": "Single Value",
+            "dependencies": "Is your question about a new or existing Account Management Tool request? = New Request AND What is your specific Question or issue? = Need top parent ID or Org ID added to the account management tool",
+            "editable": true,
+            "required": true,
+            "notes": "Values in dropdown are depending when \"Existing Request\"",
+            "value": [
+                {
+                  "key": "Top Parent",
+                  "text": "Top Parent"
+                },
+                {
+                  "key": "Org ID",
+                  "text": "Org ID"
+                }
+              ],
+            "hooverText": "Related ID Type (That will help with research or resolve the issue)",
+            "placeholderText": "ID type"
+          }, 
+          "Request ID": {
+            "fieldName": "Request ID",
+            "fieldType": "Number",
+            "selectionType": "Single Value",
+            "dependencies": "Is your question about a new or existing Account Management Tool request? = Existing Request",
+            "editable": true,
+            "required": true,
+            "notes": "Note sure where this data comes from",
+            "value":"User will enter value",
+            "hooverText": "Request ID",
+            "placeholderText": "AM Tool RequestID"
+          },
+          "Priority": {
+            "fieldName": "Priority",
+            "fieldType": "Dropdown",
+            "selectionType": "Single Value",
+            "dependencies": "None",
+            "editable": true,
+            "required": true,
+            "values": [
+              {
+                "key": "P1 - Critical",
+                "text": "P1 - Critical"
+              },
+              {
+                "key": "P2 - High",
+                "text": "P2 - High"
+              },
+              {
+                "key": "P3 - Medium",
+                "text": "P3 - Medium"
+              },
+              {
+                "key": "P4 - Low",
+                "text": "P4 - Low"
+              }
+            ],
+            "notes": "Default to 'P4 - Low'",
+            "hooverText": "Priority 1 - Urgency: High (1 - 3 days) + Impact: High\nPriority 2 - Urgency: High (4 – 14 days) + Impact: High\nPriority 3 - Urgency: Medium + Impact: Medium\nPriority 4 - Urgency: Low + Impact: Low",
+            "placeholderText": "P4 - Low"
+          },
+          "Sales Unit": {
+            "fieldName": "Sales Unit",
+            "fieldType": "Dropdown",
+            "selectionType": "Single Value",
+            "dependencies": "None",
+            "editable": true,
+            "required": true,
+            "values":[],
+            "notes": "",
+            "hooverText": "Sales Unit",
+            "placeholderText": "Sales Unit"
+          },
+          "Additional visibility (CC)": {
+            "fieldName": "Additional visibility (CC)",
+            "fieldType": "Dynamic Dropdown",
+            "selectionType": "Multi Select",
+            "dependencies": "None",
+            "editable": true,
+            "required": false,
+            "values": [],
+            "hooverText": "Add names/aliases of individuals that should be involved in all communications unique to this incident, i.e., managers, other team members, individuals providing support",
+            "placeholderText": "Additional visibility"
+          },
+          "TPID Values": {
+            "fieldName": "TPID Values",
+            "fieldType": "Dynamic Dropdown",
+            "selectionType": "Multi Select",
+            "dependencies": "Is Is your question about a new or existing Account Management Tool request? = New Request AND What is your specific Question or issue? = Need top parent ID or Org ID added to the account management tool AND Related ID Type = Top Parent",
+            "editable": true,
+            "required": true,
+            "notes": "Field only shows based on Dependency",
+            "value":[],
+            "hooverText": "TPID Values",
+            "placeholderText": "TPID/TPName"
+          }, 
+          "ORG ID Value": {
+            "fieldName": "ORG ID Value",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "Is Is your question about a new or existing Account Management Tool request? = New Request AND What is your specific Question or issue? = Need top parent ID or Org ID added to the account management tool AND Related ID Type = Org ID",
+            "editable": true,
+            "required": true,
+            "notes": "Field only shows based on Dependency",
+            "value":"",
+            "hooverText": "ORG ID Value",
+            "placeholderText": "ID Value"
+          }, 
+          "What is your question/request?": {
+            "fieldName": "What is your question/request?",
+            "fieldType": "Memo Field",
+            "selectionType": "Single Value",
+            "dependencies": "none",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": "What is your question/request?",
+            "placeholderText": "Description"
+          }
+        }
+      }
+    },
+    "Account management Support - Account Management tool Access": {
+        "Category": "Account management Support",
+        "typeOfRequest": {
+          "Account Management tool Access": {
+            "fieldType": "Dropdown",
+            "selectionType": "Single Value",
+            "dependencies": "none",
+            "editable": true,
+            "required": true,
+            "value": [
+                {
+                  "key": "Parenting/SegmentationQuestion",
+                  "text": "Parenting/Segmentation Question"
+                },
+                {
+                  "key": "AccountManagementtoolAccess",
+                  "text": "Account Management tool Access"
+                }
+              ],
+            "hooverText": "Request Type",
+            "Information": {
+              "fieldName": "Type Of Request Information ",
+              "fieldType": "Information Text",
+              "selectionType": "Single Value",
+              "dependencies": "Type of Request = Account Management tool Access",
+              "editable": false,
+              "required": false,
+              "notes": "Directions on how to submit this type of request. With additional links to external sources ",
+              "value":"<p> Use this form to request assistance on Microsoft Americas BSO Account Management tool related tools. If you do not see the tool listed that you are looking for help on, use a different Help Category. For SPM access: by default, everyone connected to corpnet has read access to SPM. To request additional access to SPM reporting, utilize the link on the <a>SPM Reports page</a> . </p>",
+              "hooverText": "",
+              "placeholderText": "Type Of Request Information "
+            },
+            "Ticket Subject":{
+              "fieldName": "Ticket Subject",
+              "fieldType": "Text Field",
+              "selectionType": "Single Value",
+              "dependencies": "",
+              "editable": true,
+              "required": true,
+              "notes": "",
+              "value":"",
+              "hooverText": ""
+  
+            },
+            "Which part of the Account Mgmt Tool is your question about?": {
+              "fieldName": "Which part of the Account Mgmt Tool is your question about?",
+              "fieldType": "Drop-down",
+              "selectionType": "Single Value",
+              "dependencies": "Type of Request = Account Management tool Access, Error or Question",
+              "editable": true,
+              "required": true,
+              "notes": "",
+              "value":[
+                {
+                  "key":"US BSO Account Management Tool",
+                  "text":"US BSO Account Management Tool"
+                },
+                {
+                  "key":"US BSO Account Management Dashboard",
+                  "text":"US BSO Account Management Dashboard"
+                }
+              ],
+              "hooverText": "Which part of the Account Mgmt Tool is your question about?",
+              "placeholderText": "Type Of Question"
+            },
+            "What kind of issue are you facing?": {
+              "fieldName": "What kind of issue are you facing?",
+              "fieldType": "Drop-down",
+              "selectionType": "Single Value",
+              "dependencies": "Type of Request = Account Management tool Access, Error or Question",
+              "editable": true,
+              "required": true,
+              "notes": "Values in dropdown are depending when \"New Request\"",
+              "value":[
+                {
+                  "key":"AM Tool access",
+                  "text":"AM Tool access"
+                },
+                {
+                  "key":"Approver change needed",
+                  "text":"Approver change needed"
+                },
+                {
+                  "key":"Error message - please attach a screenshot of error message",
+                  "text":"Error message - please attach a screenshot of error message"
+                },
+                {
+                  "key":"Need TPID/Org ID added to the AM Tool",
+                  "text":"Need TPID/Org ID added to the AM Tool"
+                },
+                {
+                  "key":"Incorrect information in AM Tool - Please attach a screenshot of incorrect information",
+                  "text":"Incorrect information in AM Tool - Please attach a screenshot of incorrect information"
+                },
+                {
+                  "key":"Help needed - unsure how to use AM Tool",
+                  "text":"Help needed - unsure how to use AM Tool"
+                },
+                {
+                  "key":"Request for future tool enhancement",
+                  "text":"Request for future tool enhancement"
+                }
+              ],
+              "hooverText": "What kind of issue are you facing?",
+              "placeholderText": "Type Of Issue"
+            },
+            "Please provide additional details on the issue you are facing": {
+              "fieldName": "Please provide additional details on the issue you are facing",
+              "fieldType": "Memo Field",
+              "selectionType": "Single Value",
+              "dependencies": "none",
+              "editable": true,
+              "required": true,
+              "notes": "Values in dropdown are depending when \"Existing Request\"",
+              "value":[],
+              "hooverText": "Please provide additional details on the issue you are facing",
+              "placeholderText": "Description"
+            },
+            "Priority": {
+              "fieldName": "Priority",
+              "fieldType": "Dropdown",
+              "selectionType": "Single Value",
+              "dependencies": "None",
+              "editable": true,
+              "required": true,
+              "values": [
+                {
+                  "key": "P1 - Critical",
+                  "text": "P1 - Critical"
+                },
+                {
+                  "key": "P2 - High",
+                  "text": "P2 - High"
+                },
+                {
+                  "key": "P3 - Medium",
+                  "text": "P3 - Medium"
+                },
+                {
+                  "key": "P4 - Low",
+                  "text": "P4 - Low"
+                }
+              ],
+              "notes": "Default to 'P4 - Low'",
+              "hooverText": "Priority 1 - Urgency: High (1 - 3 days) + Impact: High\nPriority 2 - Urgency: High (4 – 14 days) + Impact: High\nPriority 3 - Urgency: Medium + Impact: Medium\nPriority 4 - Urgency: Low + Impact: Low",
+              "placeholderText": "P4 - Low"
+            },
+            "Sales Unit": {
+              "fieldName": "Sales Unit",
+              "fieldType": "Dropdown",
+              "selectionType": "Single Value",
+              "dependencies": "None",
+              "editable": true,
+              "required": true,
+              "values":[],
+              "notes": "",
+              "hooverText": "Sales Unit",
+              "placeholderText": "Sales Unit"
+            },
+            "Additional visibility (CC)": {
+              "fieldName": "Additional visibility (CC)",
+              "fieldType": "Dynamic Dropdown",
+              "selectionType": "Multi Select",
+              "dependencies": "None",
+              "editable": true,
+              "required": false,
+              "values": [],
+              "hooverText": "Add names/aliases of individuals that should be involved in all communications unique to this incident, i.e., managers, other team members, individuals providing support",
+              "placeholderText": "Additional visibility"
+            }
+          }
+        }
+    },
+    "Account management Support - WW Policy or Business Rules Question": {
+      "Category": "Account management Support",
+      "typeOfRequest": {
+        "WW Policy or Business Rules Question": {
+          "fieldName":"Type of Request",
+          "fieldType": "Dropdown",
+          "selectionType": "Single Value",
+          "dependencies": "none",
+          "editable": true,
+          "required": true,
+          "value": [
+              {
+                "key": "WW Policy or Business Rules Question",
+                "text": "WW Policy or Business Rules Question"
+              }
+            ],
+          "hooverText": "Type Of Request",
+          "placeholderText":"Type Of Request ",
+          
+          "Ticket Subject":{
+            "fieldName": "Ticket Subject",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": ""
+
+          },
+          "Type Of Request Information": {
+            "fieldName": "Type Of Request Information",
+            "fieldType": "Information Text",
+            "selectionType": "Single Value",
+            "dependencies": "Type of Request = WW Policy or Business Rules Question",
+            "editable": false,
+            "required": false,
+            "notes": "Directions on how to submit this type of request. With additional links to external sources",
+            "value":"<p> Link to WW Field Policy: <a>wwmofieldguide</a><br/>Link to Microsoft Americas Sales perations Process: <a>MicrosoftAmericasSalesOperationsProcess</a> </p>",
+            "hooverText": "NA",
+            "placeholderText": "Type Of Request Information"
+          },
+          "Priority": {
+            "fieldName": "Priority",
+            "fieldType": "Dropdown",
+            "selectionType": "Single Value",
+            "dependencies": "None",
+            "editable": true,
+            "required": true,
+            "values": [
+              {
+                "key": "P1 - Critical",
+                "text": "P1 - Critical"
+              },
+              {
+                "key": "P2 - High",
+                "text": "P2 - High"
+              },
+              {
+                "key": "P3 - Medium",
+                "text": "P3 - Medium"
+              },
+              {
+                "key": "P4 - Low",
+                "text": "P4 - Low"
+              }
+            ],
+            "notes": "Default to 'P4 - Low'",
+            "hooverText": "Priority 1 - Urgency: High (1 - 3 days) + Impact: High\nPriority 2 - Urgency: High (4 – 14 days) + Impact: High\nPriority 3 - Urgency: Medium + Impact: Medium\nPriority 4 - Urgency: Low + Impact: Low",
+            "placeholderText": "P4 - Low"
+          },
+          "What is your question/request?":{
+            "fieldName":"What is your question/request?",
+            "fieldType":"Memo Field",
+            "selectionType":"Single Value",
+            "dependencies":"none",
+            "editable":true,
+            "required":true,
+            "notes":"",
+            "value":"",
+            "hooverText":"What is your question/request?",
+            "placeholderText":"Description"
+          },
+          "Additional visibility (CC)": {
+            "fieldName": "Additional visibility (CC)",
+            "fieldType": "Dynamic Dropdown",
+            "selectionType": "Multi Select",
+            "dependencies": "None",
+            "editable": true,
+            "required": false,
+            "values": [],
+            "hooverText": "Add names/aliases of individuals that should be involved in all communications unique to this incident, i.e., managers, other team members, individuals providing support",
+            "placeholderText": "Additional visibility"
+          }
+        }
+      }
+    },
+    "Account management Support -  CRM ID or Account Attribute Updates": {
+      "Category": "Account management Support",
+      "typeOfRequest": {
+        "CRM ID or Account Attribute Updates": {
+          "fieldType": "Dropdown",
+          "selectionType": "Single Value",
+          "dependencies": "none",
+          "editable": true,
+          "required": true,
+          "value": [
+              {
+                "key": "CRM ID or Account Attribute Updates",
+                "text": "CRM ID or Account Attribute Updates"
+              }
+            ],
+          "hooverText": "Request Type",
+          "Ticket Subject":{
+            "fieldName": "Ticket Subject",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": ""
+
+          },
+          "Type Of Request Information": {
+            "fieldName": "Type Of Request Information",
+            "fieldType": "Information Text",
+            "selectionType": "Single Value",
+            "dependencies": "Type of Request = CRM ID or Account Attribute Updates",
+            "editable": false,
+            "required": false,
+            "notes": "Directions on how to submit this type of request. With additional links to external sources",
+            "value":"<p>Use this form to request account attribute changes; some Updates will require additional approvals prior to processing due to potential impact to compensation.</p>",
+            "hooverText": "NA",
+            "placeholderText": "Type Of Request Information"
+          },
+          "What action do I want to take?": {
+            "fieldName": "What action do I want to take?",
+            "fieldType": "Drop-down",
+            "selectionType": "Single Value",
+            "dependencies": "Type of Request = CRM ID or Account Attribute Updates",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":[
+              {
+                "key":"Create, attach or remap a CRM ID",
+                "text":"Create, attach or remap a CRM ID"
+              },
+              {
+                "key":"Update the account address",
+                "text":"Update the account address"
+              },
+              {
+                "key":"Update the account name",
+                "text":"Update the account name"
+              },
+              {
+                "key":"Update the PC Count",
+                "text":"Update the PC Count"
+              },
+              {
+                "key":"Update Industry or other Tags",
+                "text":"Update Industry or other Tags"
+              },
+              {
+                "key":"Change the EDU POD or SMB Managed Flag",
+                "text":"Change the EDU POD or SMB Managed Flag"
+              }
+            ],
+            "hooverText": "Which part of the Account Mgmt Tool is your question about?",
+            "placeholderText": "Type Of Question"
+          },
+          "What kind of issue are you facing?": {
+            "fieldName": "What kind of issue are you facing?",
+            "fieldType": "Drop-down",
+            "selectionType": "Single Value",
+            "dependencies": "Type of Request = CRM ID or Account Attribute Updates",
+            "editable": true,
+            "required": true,
+            "notes": "Values in dropdown are depending when \"New Request\"",
+            "value":[
+              {
+                "key":"AM Tool access",
+                "text":"AM Tool access"
+              },
+              {
+                "key":"Approver change needed",
+                "text":"Approver change needed"
+              },
+              {
+                "key":" Error message - please attach a screenshot of error message",
+                "text":" Error message - please attach a screenshot of error message"
+              },
+              {
+                "key":"Need TPID/Org ID added to the AM Tool",
+                "text":"Need TPID/Org ID added to the AM Tool"
+              },
+              {
+                "key":" Incorrect information in AM Tool - Please attach a screenshot of incorrect information",
+                "text":" Incorrect information in AM Tool - Please attach a screenshot of incorrect information"
+              },
+              {
+                "key":"Help needed - unsure how to use AM Tool",
+                "text":"Help needed - unsure how to use AM Tool"
+              },
+              {
+                "key":"Request for future tool enhancement",
+                "text":"Request for future tool enhancement"
+              }
+            ],
+            "hooverText": "What kind of issue are you facing?",
+            "placeholderText": "Type Of Issue"
+          },
+          "Impacted TPID/OrgID/CRMID":{
+            "fieldName":"Impacted TPID/OrgID/CRMID",
+            "fieldType":"Text Field",
+            "selectionType":"Single Value",
+            "dependencies":"Type of Request = CRM ID or Account Attribute Updates AND What kind of issue are you facing? DOES NOT EQUAL Create, attach or remap a CRM ID",
+            "editable":true,
+            "required":true,
+            "value":"",
+            "note":"Field is visible for everything except \"Create, attach or remap a CRM ID\" dropdown value",
+            "hooverText":"Impacted TPID/OrgID/CRMID",
+            "placeholderText":"Impacted Account ID"
+          },
+          "Street address, city, state, Zip, URL for verification":{
+            "fieldName":"Street address, city, state, Zip, URL for verification",
+            "fieldType":"Text Field",
+            "selectionType":"Single Value",
+            "dependencies":"Type of Request = CRM ID or Account Attribute Updates AND What kind of issue are you facing? = Update the account address",
+            "editable":true,
+            "required":true,
+            "value":"",
+            "note":"Field is visible for only \"Update the account address\"",
+            "hooverText":"Street address, city, state, Zip, URL for verification",
+            "placeholderText":"Details (Name/Address/URL)"
+          },
+          "Desired Account Name":{
+            "fieldName":"Desired Account Name",
+            "fieldType":"Text Field",
+            "selectionType":"Single Value",
+            "dependencies":"Type of Request = CRM ID or Account Attribute Updates AND What kind of issue are you facing? = Update the PC Count",
+            "editable":true,
+            "required":true,
+            "value":"",
+            "note":"Field is visible for only \"Update the account name\"",
+            "hooverText":"Desired Account Name",
+            "placeholderText":"Details (Name/Address/URL)"
+          },
+          "Information":{
+            "fieldName":"Information",
+            "fieldType":"Information Text",
+            "selectionType":"Single Value",
+            "dependencies":"Type of Request = CRM ID or Account Attribute Updates AND What kind of issue are you facing? = Update the pc count or Update Industry or other tags",
+            "editable":false,
+            "required":true,
+            "Update the pc count":{
+              "dependencies":"Type of Request = CRM ID or Account Attribute Updates AND What kind of issue are you facing? = Update the pc count",
+              "value":"<p><a href=\"https://microsoft.sharepoint.com/:x:/t/MSUSBSO/EQ5oeodoWxNEib0nvgkPjPkBhlvWiemJYa9GM5S2E6Bt9g?e=aHaSgW\">Click here to be redirected to the form you will need to complete and send to CleanMAL</a></p>",
+              "note":"Field is visible for only \"Update the PC Count\"",
+              "hooverText":"Information",
+              "placeholderText":"Click here to be redirected to the form you will need to complete and send to CleanMAL"
+            },
+            "Update Industry or other Tags":{
+              "dependencies":"Type of Request = CRM ID or Account Attribute Updates AND What kind of issue are you facing? = Update Industry or other Tags",
+              "value":"<p><a href=\"https://microsoft.sharepoint.com/teams/MXPADigitalOperationsInternal-SupporttoolSimplification/Shared Documents/Requirements/Americas/MSNA Intelligent Hub/Americas Webforms/../../../../../../../:x:/r/teams/MSUSBSO/_layouts/15/Doc.aspx?sourcedoc=%7BD27B43EF-82B4-4E17-955E-5BABECBB27A5%7D&file=FY22%20Industry%20Taxonomy.xlsx&wdLOR=c9C1E79CB-608E-4683-9A29-338ACA8BC6F0&action=default&mobileredirect=true\">Click here to update the Industry Tags</a></p>",
+              "note":"Field is visible for only \"Update the PC Count\"",
+              "hooverText":"Information",
+              "placeholderText":"Click here to update the Industry Tags"
+            }
+           
+          },
+          "Type of change required":{
+            "fieldName":"Type of change required",
+            "fieldType":"Drop-down",
+            "selectionType":"Single Value",
+            "dependencies":"Type of Request = CRM ID or Account Attribute Updates AND What kind of issue are you facing? = Change the EDU POD or SMB Managed Flag",
+            "editable":true,
+            "required":false,
+            "value":[
+              {
+                "key":"Set SMB Managed Flag to Yes",
+                "text":"Set SMB Managed Flag to Yes"
+              },
+              {
+                "key":"Set SMB Managed Flag to No",
+                "text":"Set SMB Managed Flag to No"
+              }
+            ],
+            "note":"Field is visible for only \"Change the EDU POD or SMB Managed Flag\"",
+            "hooverText":"Type of change required",
+            "placeholderText":"Type of change required"
+          },
+          "Note":{
+            "fieldName":"Note",
+            "fieldType":"Information Text",
+            "selectionType":"Single Value",
+            "dependencies":"Type of Request = CRM ID or Account Attribute Updates AND What kind of issue are you facing? = Change the EDU POD or SMB Managed Flag",
+            "editable":false,
+            "required":false,
+            "value":"Please keep in mind that these changes can have both a quota/comp and assignment impact and you should be sure to consider that potential impact before requesting a change. You may update multiple accounts at once, but they must all be the same Tag values. If you need to update multiple accounts to multiple tag values, please submit multiple forms.",
+            "note":"Field is visible for only \"Change the EDU POD or SMB Managed Flag\"",
+            "hooverText":"Note",
+            "placeholderText":"Please keep in mind that these changes can have both a quota/comp and assignment impact and you should be sure to consider that potential impact before requesting a change. You may update multiple accounts at once, but they must all be the same Tag values. If you need to update multiple accounts to multiple tag values, please submit multiple forms."
+          },
+          "Please provide additional details on the issue you are facing": {
+            "fieldName": "Please provide additional details on the issue you are facing",
+            "fieldType": "Memo Field",
+            "selectionType": "Single Value",
+            "dependencies": "none",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": "Please provide additional details on the issue you are facing",
+            "placeholderText": "Description"
+          },
+          "Priority": {
+            "fieldName": "Priority",
+            "fieldType": "Dropdown",
+            "selectionType": "Single Value",
+            "dependencies": "None",
+            "editable": true,
+            "required": true,
+            "values": [
+              {
+                "key": "P1 - Critical",
+                "text": "P1 - Critical"
+              },
+              {
+                "key": "P2 - High",
+                "text": "P2 - High"
+              },
+              {
+                "key": "P3 - Medium",
+                "text": "P3 - Medium"
+              },
+              {
+                "key": "P4 - Low",
+                "text": "P4 - Low"
+              }
+            ],
+            "notes": "Default to 'P4 - Low'",
+            "hooverText": "Priority 1 - Urgency: High (1 - 3 days) + Impact: High\nPriority 2 - Urgency: High (4 – 14 days) + Impact: High\nPriority 3 - Urgency: Medium + Impact: Medium\nPriority 4 - Urgency: Low + Impact: Low",
+            "placeholderText": "P4 - Low"
+          },
+          "Sales Unit": {
+            "fieldName": "Sales Unit",
+            "fieldType": "Dropdown",
+            "selectionType": "Single Value",
+            "dependencies": "None",
+            "editable": true,
+            "required": true,
+            "values":[],
+            "notes": "",
+            "hooverText": "Sales Unit",
+            "placeholderText": "Sales Unit"
+          },
+          "Additional visibility (CC)": {
+            "fieldName": "Additional visibility (CC)",
+            "fieldType": "Dynamic Dropdown",
+            "selectionType": "Multi Select",
+            "dependencies": "None",
+            "editable": true,
+            "required": false,
+            "values": [],
+            "hooverText": "Add names/aliases of individuals that should be involved in all communications unique to this incident, i.e., managers, other team members, individuals providing support",
+            "placeholderText": "Additional visibility"
+          }
+        }
+      }
+    },
+    "Account management Support - Deadlines": {
+      "Category": "Account management Support",
+      "typeOfRequest": {
+        "Deadlines": {
+          "fieldName":"Type of Request",
+          "fieldType": "Dropdown",
+          "selectionType": "Single Value",
+          "dependencies": "none",
+          "editable": true,
+          "required": true,
+          "value": [
+              {
+                "key": "Deadlines",
+                "text": "Deadlines"
+              }
+            ],
+          "hooverText": "Type Of Request",
+          "placeholderText":"Type Of Request ",
+          
+          "Ticket Subject":{
+            "fieldName": "Ticket Subject",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": ""
+
+          },
+          "Type Of Request Information": {
+            "fieldName": "Type Of Request Information",
+            "fieldType": "Information Text",
+            "selectionType": "Single Value",
+            "dependencies": "Type of Request = Deadlines",
+            "editable": false,
+            "required": false,
+            "notes": "Directions on how to submit this type of request. With additional links to external sources",
+            "value":"<p style=\"font-size: 13px;\">For information about upcoming Parenting/Segmentation deadlines as well as Account Management Tool FAQs please refer here </p>",
+            "hooverText": "Type Of Request Information",
+            "placeholderText": "For information about upcoming Parenting/Segmentation deadlines as well as Account Management Tool FAQs please refer here"
+          },
+          "Priority": {
+            "fieldName": "Priority",
+            "fieldType": "Dropdown",
+            "selectionType": "Single Value",
+            "dependencies": "None",
+            "editable": true,
+            "required": true,
+            "values": [
+              {
+                "key": "P1 - Critical",
+                "text": "P1 - Critical"
+              },
+              {
+                "key": "P2 - High",
+                "text": "P2 - High"
+              },
+              {
+                "key": "P3 - Medium",
+                "text": "P3 - Medium"
+              },
+              {
+                "key": "P4 - Low",
+                "text": "P4 - Low"
+              }
+            ],
+            "notes": "Default to 'P4 - Low'",
+            "hooverText": "Priority 1 - Urgency: High (1 - 3 days) + Impact: High\nPriority 2 - Urgency: High (4 – 14 days) + Impact: High\nPriority 3 - Urgency: Medium + Impact: Medium\nPriority 4 - Urgency: Low + Impact: Low",
+            "placeholderText": "P4 - Low"
+          },
+          "Sales Unit": {
+            "fieldName": "Sales Unit",
+            "fieldType": "Dropdown",
+            "selectionType": "Single Value",
+            "dependencies": "None",
+            "editable": true,
+            "required": true,
+            "values":[],
+            "notes": "",
+            "hooverText": "Sales Unit",
+            "placeholderText": "Sales Unit"
+          },
+          "Additional visibility (CC)": {
+            "fieldName": "Additional visibility (CC)",
+            "fieldType": "Dynamic Dropdown",
+            "selectionType": "Multi Select",
+            "dependencies": "None",
+            "editable": true,
+            "required": false,
+            "values": [],
+            "hooverText": "Add names/aliases of individuals that should be involved in all communications unique to this incident, i.e., managers, other team members, individuals providing support",
+            "placeholderText": "Additional visibility"
+          }
+        }
+      }
+    },
+    "Account management Support - Future Year Question": {
+      "Category": "Account management Support",
+      "typeOfRequest": {
+        "Future Year Question": {
+          "fieldName":"Type of Request",
+          "fieldType": "Dropdown",
+          "selectionType": "Single Value",
+          "dependencies": "none",
+          "editable": true,
+          "required": true,
+          "value": [
+              {
+                "key": "Future Year Question",
+                "text": "Future Year Question"
+              }
+            ],
+          "hooverText": "Type Of Request",
+          "placeholderText":"Type Of Request ",
+          
+          "Ticket Subject":{
+            "fieldName": "Ticket Subject",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": ""
+
+          },
+        
+          "Priority": {
+            "fieldName": "Priority",
+            "fieldType": "Dropdown",
+            "selectionType": "Single Value",
+            "dependencies": "None",
+            "editable": true,
+            "required": true,
+            "values": [
+              {
+                "key": "P1 - Critical",
+                "text": "P1 - Critical"
+              },
+              {
+                "key": "P2 - High",
+                "text": "P2 - High"
+              },
+              {
+                "key": "P3 - Medium",
+                "text": "P3 - Medium"
+              },
+              {
+                "key": "P4 - Low",
+                "text": "P4 - Low"
+              }
+            ],
+            "notes": "Default to 'P4 - Low'",
+            "hooverText": "Priority 1 - Urgency: High (1 - 3 days) + Impact: High\nPriority 2 - Urgency: High (4 – 14 days) + Impact: High\nPriority 3 - Urgency: Medium + Impact: Medium\nPriority 4 - Urgency: Low + Impact: Low",
+            "placeholderText": "P4 - Low"
+          },
+          "What is your question/request?":{
+            "fieldName":"What is your question/request?",
+            "fieldType":"Memo Field",
+            "selectionType":"Single Value",
+            "dependencies":"none",
+            "editable":true,
+            "required":true,
+            "notes":"",
+            "value":"",
+            "hooverText":"What is your question/request?",
+            "placeholderText":"Description"
+          },
+          "Additional visibility (CC)": {
+            "fieldName": "Additional visibility (CC)",
+            "fieldType": "Dynamic Dropdown",
+            "selectionType": "Multi Select",
+            "dependencies": "None",
+            "editable": true,
+            "required": false,
+            "values": [],
+            "hooverText": "Add names/aliases of individuals that should be involved in all communications unique to this incident, i.e., managers, other team members, individuals providing support",
+            "placeholderText": "Additional visibility"
+          }
+        }
+      }
+    },
+    "Account management Support - Split Decision Response": {
+      "Category": "Account management Support",
+      "typeOfRequest": {
+        "Split Decision Response": {
+          "fieldName":"Type of Request",
+          "fieldType": "Dropdown",
+          "selectionType": "Single Value",
+          "dependencies": "none",
+          "editable": true,
+          "required": true,
+          "value": [
+              {
+                "key": "Split Decision Response",
+                "text": "Split Decision Response"
+              }
+            ],
+          "hooverText": "Type Of Request",
+          "placeholderText":"Type Of Request ",
+          
+          "Ticket Subject":{
+            "fieldName": "Ticket Subject",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": ""
+
+          },
+        
+          "Priority": {
+            "fieldName": "Priority",
+            "fieldType": "Dropdown",
+            "selectionType": "Single Value",
+            "dependencies": "None",
+            "editable": true,
+            "required": true,
+            "values": [
+              {
+                "key": "P1 - Critical",
+                "text": "P1 - Critical"
+              },
+              {
+                "key": "P2 - High",
+                "text": "P2 - High"
+              },
+              {
+                "key": "P3 - Medium",
+                "text": "P3 - Medium"
+              },
+              {
+                "key": "P4 - Low",
+                "text": "P4 - Low"
+              }
+            ],
+            "notes": "Default to 'P4 - Low'",
+            "hooverText": "Priority 1 - Urgency: High (1 - 3 days) + Impact: High\nPriority 2 - Urgency: High (4 – 14 days) + Impact: High\nPriority 3 - Urgency: Medium + Impact: Medium\nPriority 4 - Urgency: Low + Impact: Low",
+            "placeholderText": "P4 - Low"
+          },
+          "What is your question/request?":{
+            "fieldName":"What is your question/request?",
+            "fieldType":"Memo Field",
+            "selectionType":"Single Value",
+            "dependencies":"none",
+            "editable":true,
+            "required":true,
+            "notes":"",
+            "value":"",
+            "hooverText":"What is your question/request?",
+            "placeholderText":"Description"
+          },
+          "Additional visibility (CC)": {
+            "fieldName": "Additional visibility (CC)",
+            "fieldType": "Dynamic Dropdown",
+            "selectionType": "Multi Select",
+            "dependencies": "None",
+            "editable": true,
+            "required": false,
+            "values": [],
+            "hooverText": "Add names/aliases of individuals that should be involved in all communications unique to this incident, i.e., managers, other team members, individuals providing support",
+            "placeholderText": "Additional visibility"
+          }
+        }
+      }
+    }
+
+  }
+  

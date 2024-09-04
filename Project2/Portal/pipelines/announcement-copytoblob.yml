@@ -1,0 +1,117 @@
+trigger: 
+  branches:
+    include:
+    - dev
+    - release1/*
+
+  paths:
+    include:
+    - portal/announcements/*
+
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    pool:
+      name: 'mct1espool'
+      image: mct1esptwindows
+      os: windows
+
+    ##########Stage-Release##########
+    stages:
+    - stage: BUILD
+      displayName: Build Package
+      jobs:
+      - job: Build
+        templateContext:
+          outputs:
+          - output: pipelineArtifact
+            targetPath: $(Build.ArtifactStagingDirectory)
+            artifactName: drop
+            publishLocation: 'Container'
+        workspace:
+          clean: all
+        steps:
+        - checkout: self
+          clean: true
+          persistCredentials: true
+          
+        - task: ArchiveFiles@2
+          displayName: Archive Announcement files
+          inputs:
+            rootFolderOrFile: '$(Build.SourcesDirectory)/portal/announcements'
+            includeRootFolder: false
+            archiveType: 'zip'
+            archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+            replaceExistingArchive: true
+
+    #####Stage-DEV#####
+    - stage: DEV1
+      displayName: 'Deploy to DEV1'
+      dependsOn: BUILD 
+      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/dev'))  
+      jobs:
+      - template: /pipelines/templates/announcementcopytask.yml@self
+        parameters:
+          subscription: 'mct-dev1'
+          envName: 'DEV1'
+          storageAccountName: 'mctdev1saportal'
+          containerName: 'announcements'
+          resourceGroup: 'mct-rg-dev1'
+          cdnProfileName: 'mct-dev1-cdn-portal'
+          endpointName: 'mct-dev1-cde-portal'
+
+    #####Stage-UAT#####
+    - stage: UAT1
+      displayName: 'Deploy to UAT1'
+      dependsOn: BUILD 
+      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release1/'))
+      jobs:     
+      - template: /pipelines/templates/announcementcopytask.yml@self
+        parameters:
+          subscription: 'mct-uat1'
+          envName: 'UAT1'
+          storageAccountName: 'mctuat1saportal'
+          containerName: 'announcements'
+          resourceGroup: 'mct-rg-uat1'
+          cdnProfileName: 'mct-uat1-cdn-portal'
+          endpointName: 'mct-uat1-cde-portal'
+
+    #####Stage-PROD#####
+    - stage: PROD
+      displayName: 'Deploy to PROD'
+      dependsOn: UAT1
+      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release1/'))
+      jobs:     
+      - template: /pipelines/templates/announcementcopytask.yml@self
+        parameters:
+          subscription: 'mct-prod'
+          envName: 'PROD'
+          storageAccountName: 'mctprodsaportal'
+          containerName: 'announcements'
+          resourceGroup: 'mct-rg-prod'
+          cdnProfileName: 'mct-prod-cdn-portal'
+          endpointName: 'mct-prod-cde-portal'
+
+    - stage: PRODDR
+      displayName: 'Deploy to PRODDR'
+      dependsOn: UAT1
+      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release1/'))
+      jobs:     
+      - template: /pipelines/templates/announcementcopytask.yml@self
+        parameters:
+          subscription: 'mct-proddr'
+          envName: 'PRODDR'
+          storageAccountName: 'mctproddrsaportal'
+          containerName: 'announcements'
+          resourceGroup: 'mct-rg-proddr'
+          cdnProfileName: 'mct-proddr-cdn-portal'
+          endpointName: 'mct-proddr-cde-portal'
+
+
+    

@@ -1,0 +1,181 @@
+{
+  "catalogue": [],
+  "routes": [
+    {
+      "key": "4afa8f62-a142-11ed-a8fc-0242ac120002",
+      "name": "mct-send-stay",
+      "routePath": "mct-send-stay",
+      "active": true
+    },  
+    {
+      "key": "4afa8f62-a142-11ed-a8fc-0242ac120004",
+      "name": "mct-receive-conversation",
+      "routePath": "mct-receive-conversation",
+      "active": true
+    },
+    {
+      "key": "4afa8f62-a142-11ed-a8fc-0242ac120003",
+      "name": "mct-conversation-summary",
+      "routePath": "mct-conversation-summary",
+      "active": true
+    },
+    {
+      "key": "4afa8f62-a142-11ed-a8fc-0242ac120005",
+      "name": "edm-change-request",
+      "routePath": "edm-change-request",
+      "active": true
+    },
+    {
+      "key": "4afa8f62-a142-11ed-a8fc-0242ac120006",
+      "name": "conversation-script",
+      "routePath": "conversation-script",
+      "active": true
+    },
+    {
+      "key": "4afa8f62-a142-11ed-a8fc-0242ac120007",
+      "name": "import-conversation-script",
+      "routePath": "import-conversation-script",
+      "active": true
+    }
+  ],
+  "extensions": [
+    {
+      "key": "be299642-f32a-4e67-8ba8-13e1cb9c95ac",
+      "feedbackEmail": "",
+      "version": "1.0.0",
+      "name": "mct components",
+      "files": [
+        {
+          "name": "sw-mct.js",
+          "type": "module",
+          "url": "/extensions/",
+          "token":"",
+          "log": true,
+          "active": true
+        }
+      ],
+      "pages": [
+        {
+          "key": "4afa8f62-a142-11ed-a8fc-0242ac120003",
+          "name": "mct-conversation-summary",
+          "description": "Change Summary",
+          "showNavigation": true,
+          "icon": "StackedLineChart",
+          "routeKey": "4afa8f62-a142-11ed-a8fc-0242ac120003",
+          "tileKey": "4afa8f62-a142-11ed-a8fc-0242ac120003",
+          "search": "",
+          "component": "mct-conversation-summary",
+          "exclude": [],
+          "active": true
+        },
+        {
+          "key": "4afa8dbe-a142-11ed-a8fc-0242ac120002",
+          "name": "mct-send-stay",
+          "description": "Send/Stay Conversation",
+          "showNavigation": true,
+          "icon": "Send",
+          "routeKey": "4afa8f62-a142-11ed-a8fc-0242ac120002",
+          "tileKey": "4afa95c0-a142-11ed-a8fc-0242ac120002",
+          "search": "",
+          "component": "mct-send-stay",
+          "exclude": [],
+          "active": true
+        }, 
+        {
+          "key": "4afa8f62-a142-11ed-a8fc-0242ac120004",
+          "name": "mct-receive-conversation",
+          "description": "Receiving Conversation",
+          "showNavigation": true,
+          "icon": "AddFriend",
+          "routeKey": "4afa8f62-a142-11ed-a8fc-0242ac120004",
+          "tileKey": "4afa8f62-a142-11ed-a8fc-0242ac120004",
+          "search": "",
+          "component": "mct-receive-conversation",
+          "exclude": [],
+          "active": true
+        }, 
+        {
+          "key": "4afa8f62-a142-11ed-a8fc-0242ac120005",
+          "name": "edm-change-request",
+          "description": "EDM Change Requests",
+          "showNavigation": true,
+          "icon": "Contact",
+          "routeKey": "4afa8f62-a142-11ed-a8fc-0242ac120005",
+          "tileKey": "4afa8f62-a142-11ed-a8fc-0242ac120005",
+          "search": "",
+          "component": "edm-change-request",
+          "exclude": [],
+          "active": true
+        }, 
+        {
+          "key": "4afa8f62-a142-11ed-a8fc-0242ac120006",
+          "name": "admin-mct-conversation-script",
+          "description": "Conversation Script",
+          "showNavigation": true,
+          "icon": "Script",
+          "routeKey": "4afa8f62-a142-11ed-a8fc-0242ac120006",
+          "tileKey": "4afa8f62-a142-11ed-a8fc-0242ac120006",
+          "search": "",
+          "component": "mct-conversation-script",
+          "exclude": [],
+          "active": true
+        },
+        {
+          "key": "4afa8f62-a142-11ed-a8fc-0242ac120007",
+          "name": "admin-mct-import-conversation-script",
+          "description": "Import Script",
+          "showNavigation": true,
+          "icon": "Script",
+          "routeKey": "4afa8f62-a142-11ed-a8fc-0242ac120007",
+          "tileKey": "4afa8f62-a142-11ed-a8fc-0242ac120007",
+          "search": "",
+          "component": "mct-import-conversation-script",
+          "exclude": [],
+          "active": true
+        },
+        {
+          "key": "4afa8f62-a142-11ed-a8fc-0242ac120013",
+          "name": "admin-mct-edm-lead-assignment",
+          "description": "EDM Lead Assignment",
+          "showNavigation": true,
+          "icon": "Assign",
+          "routeKey": "4afa8f62-a142-11ed-a8fc-0242ac120013",
+          "tileKey": "4afa8f62-a142-11ed-a8fc-0242ac120013",
+          "search": "",
+          "component": "mct-edm-lead-assignment",
+          "exclude": [],
+          "active": true
+        },
+        {
+          "key": "4afa8f62-a142-11ed-a8fc-0242ac120011",
+          "name": "admin-mct-proxy",
+          "description": "Proxy Assignment",
+          "showNavigation": true,
+          "icon": "Plug",
+          "routeKey": "4afa8f62-a142-11ed-a8fc-0242ac120011",
+          "tileKey": "4afa8f62-a142-11ed-a8fc-0242ac120011",
+          "search": "",
+          "component": "mct-proxy",
+          "exclude": [],
+          "active": true
+        },
+        {
+          "key": "4afa8f62-a142-11ed-a8fc-0242ac120010",
+          "name": "admin-mct-reports",
+          "description": "Reports",
+          "showNavigation": true,
+          "icon": "Document",
+          "routeKey": "4afa8f62-a142-11ed-a8fc-0242ac120010",
+          "tileKey": "4afa8f62-a142-11ed-a8fc-0242ac120010",
+          "search": "",
+          "component": "mct-reports",
+          "exclude": [],
+          "active": true
+        }        
+      ],
+      "tiles": [
+      ],
+      "active": true
+    }
+  ]
+}

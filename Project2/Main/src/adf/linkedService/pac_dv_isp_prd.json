@@ -1,0 +1,23 @@
+{
+	"name": "pac_dv_isp_prd",
+	"properties": {
+		"parameters": {
+			"DataverseURI": {
+				"type": "String",
+				"defaultValue": "https://ispuat.crm.dynamics.com/"
+			}
+		},
+		"annotations": [],
+		"type": "CommonDataServiceForApps",
+		"typeProperties": {
+			"deploymentType": "Online",
+			"serviceUri": "@{linkedService().DataverseURI}",
+			"authenticationType": "ManagedIdentity",
+			"credential": {
+				"referenceName": "ISP",
+				"type": "CredentialReference"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
+}

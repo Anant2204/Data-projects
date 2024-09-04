@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>.</DockerfileContext>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<NoWarn>NU1701;NU1702;SA0001;AD0001</NoWarn>
+		<WarningLevel>6</WarningLevel>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<NoWarn>NU1701;NU1702;SA0001;AD0001</NoWarn>
+		<WarningLevel>6</WarningLevel>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Remove="stylecop.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="stylecop.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AdditionalFiles Include="stylecop.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.15" />
+		<PackageReference Include="OneEstimator.Infrastructure" Version="1.1.2" />
+		<PackageReference Include="Azure.Identity" Version="1.11.4" />
+		<PackageReference Include="Microsoft.Identity.Client" Version="4.61.3" />
+		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
+		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="8.0.0"/>
+
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\MCT.DataAccess\MCT.DataAccess.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,15 @@
+{
+	"name": "AzureBlobStorage",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"serviceEndpoint": "https://mctdev1saportal.blob.core.windows.net/",
+			"accountKind": "StorageV2",
+			"credential": {
+				"referenceName": "ISP",
+				"type": "CredentialReference"
+			}
+		}
+	}
+}

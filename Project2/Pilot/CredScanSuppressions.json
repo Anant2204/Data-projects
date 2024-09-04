@@ -1,0 +1,29 @@
+{
+    "tool": "Credential Scanner",
+    "suppressions": [
+        {
+            "file": "README.md",
+            "_justification": "The File does not contain any secrets. The Keywords used are causing cred scan to flag the file"
+        },
+        {
+            "hash": "5pB6P3ClUMTOwJvMx2H9Op7tQNqVUoQOo85NVpqj53A=",
+            "_justification": "The File does not contain any secrets. The Keywords used are causing cred scan to flag the file"
+        },
+        {
+            "hash": "2q7wnW3nI7KSMys9dLNJC4EiCEez7TTjefmwBLwBenw=",
+            "_justification": "The File does not contain any secrets. The Keywords used are causing cred scan to flag the file"
+        },
+        {
+            "hash": "42dsp+21XmEGHKbfUNoN5UjccUMIGzG8yIAjt0N/bCY=",
+            "_justification": "The File does not contain any secrets. The Keywords used are causing cred scan to flag the file"
+        },
+        {
+            "hash": "7nF4U4feolYnMqQHmYVvRlNPnfuapEdu2p42Lt9LvRM=",
+            "_justification": "The File does not contain any secrets. The Keywords used are causing cred scan to flag the file"
+        },
+        {
+            "hash": "Ut4ciwGEIe36j0+dzP57doRzNXXvBTan5gfK4Q9i+mA=",
+            "_justification": "The File does not contain any secrets. The Keywords used are causing cred scan to flag the file"
+        }
+    ]
+}

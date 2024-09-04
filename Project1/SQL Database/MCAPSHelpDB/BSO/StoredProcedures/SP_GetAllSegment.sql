@@ -1,0 +1,12 @@
+IF OBJECT_ID('[BSO].[GetAllSegment]', 'P') IS NOT NULL
+BEGIN
+    DROP PROCEDURE [BSO].[GetAllSegment];
+END
+GO
+CREATE PROCEDURE [BSO].[GetAllSegment]
+AS
+BEGIN
+    SET NOCOUNT ON;
+	SELECT [Id],[Name] FROM [BSO].[Segment]  WITH (NOLOCK) WHERE IsActive = 1 ORDER BY [Name]  
+END;
+GO

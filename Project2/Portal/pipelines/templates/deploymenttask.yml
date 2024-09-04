@@ -1,0 +1,91 @@
+parameters:
+- name: envName
+  type: string
+- name: appName
+  type: string
+- name: resourceGroupName
+  type: string
+- name: storageAccountName
+  type: string
+- name: containerName
+  type: string
+- name: serviceconnection
+  type: string
+
+jobs:  
+- deployment: Deploy
+  timeoutInMinutes: 30
+  cancelTimeoutInMinutes: 1
+  templateContext:
+    type: releaseJob
+    isProduction: true
+    inputs:
+    - input: pipelineArtifact
+      artifactName: drop 
+      targetPath: $(System.DefaultWorkingDirectory)/drop
+  workspace:
+    clean: all
+  environment: ${{ parameters.envName }}
+  variables: 
+    envFilePath: '$(Build.SourcesDirectory)\portal\.env.${{ parameters.envName }}'
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: ExtractFiles@1
+          displayName: Extract source
+          inputs:
+            archiveFilePatterns: '$(System.DefaultWorkingDirectory)/drop/$(Build.BuildId).zip'
+            destinationFolder: 'portal'
+            cleanDestinationFolder: true
+            overwriteExistingFiles: true
+        - task: AzureCLI@2
+          displayName: 'Download file from Azure blob and copy to artifacts'
+          inputs:
+            azureSubscription: '${{ parameters.serviceconnection }}'
+            scriptType: 'pscore'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              # Download the file from Azure blob storage
+              az storage blob download-batch --account-name ${{ parameters.storageAccountName }} --source "${{ parameters.containerName }}" --pattern "sw-*.js" --destination "$(Build.SourcesDirectory)/portal/public/extensions/" --auth-mode login
+ 
+        - task: NodeTool@0
+          displayName: 'Install Node 20.10.0'
+          inputs:
+            versionSpec: '20.10.0'
+
+        - task: Npm@1
+          displayName: 'npm cache clean'
+          inputs:
+            command: 'custom'
+            workingDir: 'portal'
+            verbose: false
+            customCommand: 'cache clean --force'
+
+        - task: Npm@1
+          displayName: 'npm install'
+          inputs:
+            command: 'install'
+            workingDir: 'portal'
+
+        - script: |
+            pushd "portal" && npm run build:${{ parameters.envName }}  && popd
+          displayName: 'npm build'
+
+        - task: ArchiveFiles@2
+          displayName: 'Archive build output'
+          inputs:
+            rootFolderOrFile: '$(Build.SourcesDirectory)/portal/build'
+            includeRootFolder: false
+            archiveType: 'zip'
+            archiveFile: '$(Build.ArtifactStagingDirectory)/${{ parameters.envName }}.zip'
+            replaceExistingArchive: true
+        
+        - task: AzureWebApp@1
+          displayName: Deploy web app
+          inputs:
+            azureSubscription: ${{ parameters.serviceconnection }}
+            appType: 'webApp'
+            appName: ${{ parameters.appName }}
+            package: '$(Build.ArtifactStagingDirectory)/${{ parameters.envName }}.zip'
+            deploymentMethod: 'auto'

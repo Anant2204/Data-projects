@@ -1,0 +1,64 @@
+.workspaceContainer{
+    height: auto;
+    width: 75%;
+    float: left;
+    margin-left: 20px;
+    /* border: 1px solid black; */
+}
+.workspaceHeading{
+    margin-top: -20px;
+    margin-left:10px;
+}
+.workspaceSection{
+    display: flex;
+    width:100%;
+    /* border: 1px solid black; */
+}
+.firstBox{
+    width: 22%;
+    height: 140px;
+    background: #ffffff;
+    display: grid;
+    margin: 10px;
+    float:left;
+    /* padding: 0px 0px 0px 0px;  */
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.firstBox h6{
+    font-size: small;
+    padding: 5px;
+}
+/* .secondBox{
+    width: 80vw;
+    height: 25vh;
+    background: #ffffff;
+    display: grid;
+    margin: 10px;
+    float:left; */
+    /* padding: 0px 0px 0px 0px;  */
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    background-image: url('./team.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  
+} */
+.secondBox{
+    width: 80%;
+    height: 140px;
+    background: #ffffff;
+    display: grid;
+    margin: 10px;
+    float:left;
+    /* padding: 0px 0px 0px 0px;  */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    background-image: url('./team.jpeg');
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+
+
+

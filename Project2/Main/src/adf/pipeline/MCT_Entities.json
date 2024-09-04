@@ -1,0 +1,1325 @@
+{
+	"name": "MCT_Entities",
+	"properties": {
+		"activities": [
+			{
+				"name": "Isp_rolesummary_staging",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.Isp_rolesummary_staging",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Isp_rolesummary_DataverseEntity",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Isp_rolesummary_Staging_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "isp_qualifier1_staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Swap_dbo_Isp_rolesummary",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.Isp_qualifier1_staging",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "isp_qualifier1_DataverseEntity",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "isp_qualifier1_staging_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "isp_qualifier2_staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Swap_dbo_Isp_qualifier1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": " TRUNCATE TABLE dbo.Isp_qualifier2_staging ",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Isp_qualifier2_DataverseEntity",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Isp_qualifier2_staging_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Isp_worker_staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Swap_Isp_qualifier2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.Isp_worker_staging\n",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Isp_worker_Dataverse",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Isp_worker_staging_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Isp_country_staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Swap_isp_jobrole",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.Isp_country_staging",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Isp_country_DataverseEntity",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Isp_country_staging_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "isp_seller_staging",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.Isp_seller_staging",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Isp_seller_Dataverse",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Isp_seller_staging_AzureSqlTabl",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Isp_Org_staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Swap_dbo_Isp_seller",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.Isp_Org_staging",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Isp_Org_DataverseEntity",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ISP_Org_Staging_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Plan Seller Staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Swap_Isp_Org",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.PlanSeller_staging",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "PlanSeller_Dataverse",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "PlanSeller_Staging_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Isp_jobrole_staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Swap_PlanSeller",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.Isp_jobrole_staging",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Isp_jobrole_Dataverse",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Isp_jobrole_Staging_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Swap_dbo_Isp_rolesummary",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Isp_rolesummary_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SwitchLiveToStage]",
+					"storedProcedureParameters": {
+						"LiveTable": {
+							"value": "Isp_rolesummary",
+							"type": "String"
+						},
+						"StagingTable": {
+							"value": "Isp_rolesummary_staging",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "pac_syn_prd",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Swap_dbo_Isp_seller",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "isp_seller_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SwitchLiveToStage]",
+					"storedProcedureParameters": {
+						"LiveTable": {
+							"value": "Isp_seller",
+							"type": "String"
+						},
+						"StagingTable": {
+							"value": "Isp_seller_staging",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "pac_syn_prd",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Swap_dbo_Isp_qualifier1",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "isp_qualifier1_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SwitchLiveToStage]",
+					"storedProcedureParameters": {
+						"LiveTable": {
+							"value": "Isp_qualifier1",
+							"type": "String"
+						},
+						"StagingTable": {
+							"value": "Isp_qualifier1_staging",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "pac_syn_prd",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Swap_Isp_qualifier2",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "isp_qualifier2_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SwitchLiveToStage]",
+					"storedProcedureParameters": {
+						"LiveTable": {
+							"value": "Isp_qualifier2",
+							"type": "String"
+						},
+						"StagingTable": {
+							"value": "Isp_qualifier2_staging",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "pac_syn_prd",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Swap_Isp_worker",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Isp_worker_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SwitchLiveToStage]",
+					"storedProcedureParameters": {
+						"LiveTable": {
+							"value": "Isp_worker",
+							"type": "String"
+						},
+						"StagingTable": {
+							"value": "Isp_worker_staging",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "pac_syn_prd",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Swap_Isp_Org",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Isp_Org_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SwitchLiveToStage]",
+					"storedProcedureParameters": {
+						"LiveTable": {
+							"value": "Isp_Org",
+							"type": "String"
+						},
+						"StagingTable": {
+							"value": "Isp_Org_staging",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "pac_syn_prd",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Swap_PlanSeller",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Plan Seller Staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SwitchLiveToStage]",
+					"storedProcedureParameters": {
+						"LiveTable": {
+							"value": "PlanSeller",
+							"type": "String"
+						},
+						"StagingTable": {
+							"value": "PlanSeller_staging",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "pac_syn_prd",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Swap_isp_jobrole",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Isp_jobrole_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SwitchLiveToStage]",
+					"storedProcedureParameters": {
+						"LiveTable": {
+							"value": "Isp_jobrole",
+							"type": "String"
+						},
+						"StagingTable": {
+							"value": "Isp_jobrole_staging",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "pac_syn_prd",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "swap_isp_country",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Isp_country_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SwitchLiveToStage]",
+					"storedProcedureParameters": {
+						"LiveTable": {
+							"value": "Isp_country",
+							"type": "String"
+						},
+						"StagingTable": {
+							"value": "Isp_country_staging",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "pac_syn_prd",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "MDM_Flow",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "MDM_Flow_CY",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 60
+				}
+			},
+			{
+				"name": "MCT_Usp_Data_Validation",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "ISP_Sproc_exec",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "MCT_Usp_Data_Validation",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "isp_costcenter_staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "swap_isp_country",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.Isp_costcenter_staging",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "isp_costcenter_DataverseEntity",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Isp_costcenter_staging_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "swap_isp_costcenter",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "isp_costcenter_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SwitchLiveToStage]",
+					"storedProcedureParameters": {
+						"LiveTable": {
+							"value": "Isp_costcenter",
+							"type": "String"
+						},
+						"StagingTable": {
+							"value": "Isp_costcenter_staging",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "pac_syn_prd",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "isp_careerstage_staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "swap_isp_costcenter",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.Isp_careerstage_staging",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "isp_careerstage_DataverseEntity",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Isp_careerstage_staging_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "swap_isp_careerstage",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "isp_careerstage_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SwitchLiveToStage]",
+					"storedProcedureParameters": {
+						"LiveTable": {
+							"value": "Isp_careerstage",
+							"type": "String"
+						},
+						"StagingTable": {
+							"value": "Isp_careerstage_staging",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "pac_syn_prd",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "isp_incentiveplan_staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "swap_isp_careerstage",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.Isp_incentiveplan_staging",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "isp_incentiveplan_DataverseEntity",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Isp_incentiveplan_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "swap_isp_incentiveplan",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "isp_incentiveplan_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SwitchLiveToStage]",
+					"storedProcedureParameters": {
+						"LiveTable": {
+							"value": "Isp_incentiveplan",
+							"type": "String"
+						},
+						"StagingTable": {
+							"value": "Isp_incentiveplan_staging",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "pac_syn_prd",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "ISP_Sproc_exec",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Wait1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[ISP_Sproc_exec]",
+					"storedProcedureParameters": {
+						"isProd": {
+							"value": "false ",
+							"type": "Boolean"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "pac_sql_prd",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "LKP_FetchHandShakeValue",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "swap_isp_incentiveplan",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Swap_Isp_discipline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*.parquet",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "DS_Lake_Handshake",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Isp_discipline_staging",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Swap_Isp_worker",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "CommonDataServiceForAppsSource"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.Isp_discipline_staging\n",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Isp_discipline_Dataverseentity",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Isp_discipline_staging_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Swap_Isp_discipline",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Isp_discipline_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SwitchLiveToStage]",
+					"storedProcedureParameters": {
+						"LiveTable": {
+							"value": "Isp_discipline",
+							"type": "String"
+						},
+						"StagingTable": {
+							"value": "Isp_discipline_staging",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "pac_syn_prd",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "MDM_Flow",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "LKP_FetchHandShakeValue",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "MDM_Flow",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"HRMD01STIP": {
+								"HandShakeValue": {
+									"value": "@activity('LKP_FetchHandShakeValue').output.firstRow.LatestFolderName",
+									"type": "Expression"
+								}
+							},
+							"HRMD01Role": {
+								"HandShakeValue": {
+									"value": "@activity('LKP_FetchHandShakeValue').output.firstRow.LatestFolderName",
+									"type": "Expression"
+								}
+							},
+							"HRMD01Qualifier1": {
+								"HandShakeValue": {
+									"value": "@activity('LKP_FetchHandShakeValue').output.firstRow.LatestFolderName",
+									"type": "Expression"
+								}
+							},
+							"HRMD01Qualifier2": {
+								"HandShakeValue": {
+									"value": "@activity('LKP_FetchHandShakeValue').output.firstRow.LatestFolderName",
+									"type": "Expression"
+								}
+							},
+							"HRMD01CareerStage": {
+								"HandShakeValue": {
+									"value": "@activity('LKP_FetchHandShakeValue').output.firstRow.LatestFolderName",
+									"type": "Expression"
+								}
+							},
+							"HRMD01CareerStageRole": {
+								"HandShakeValue": {
+									"value": "@activity('LKP_FetchHandShakeValue').output.firstRow.LatestFolderName",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 32,
+						"computeType": "MemoryOptimized"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "MDM_Flow_CY",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "LKP_FetchHandShakeValue",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "MDM_Flow_CY",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"HRMD01STIP": {
+								"HandShakeValue": {
+									"value": "@activity('LKP_FetchHandShakeValue').output.firstRow.LatestFolderName",
+									"type": "Expression"
+								}
+							},
+							"HRMD01Role": {
+								"HandShakeValue": {
+									"value": "@activity('LKP_FetchHandShakeValue').output.firstRow.LatestFolderName",
+									"type": "Expression"
+								}
+							},
+							"HRMD01Qualifier1": {
+								"HandShakeValue": {
+									"value": "@activity('LKP_FetchHandShakeValue').output.firstRow.LatestFolderName",
+									"type": "Expression"
+								}
+							},
+							"HRMD01Qualifier2": {
+								"HandShakeValue": {
+									"value": "@activity('LKP_FetchHandShakeValue').output.firstRow.LatestFolderName",
+									"type": "Expression"
+								}
+							},
+							"HRMD01CareerStage": {
+								"HandShakeValue": {
+									"value": "@activity('LKP_FetchHandShakeValue').output.firstRow.LatestFolderName",
+									"type": "Expression"
+								}
+							},
+							"HRMD01CareerStageRole": {
+								"HandShakeValue": {
+									"value": "@activity('LKP_FetchHandShakeValue').output.firstRow.LatestFolderName",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"folder": {
+			"name": "MCT"
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-04-10T13:56:22Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

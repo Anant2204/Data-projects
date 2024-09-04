@@ -1,0 +1,43 @@
+parameters:
+- name: azureSubscription
+  type: string
+- name: AuthenticationType
+  type: string
+- name: ServerName
+  type: string
+- name: DatabaseName
+  type: string
+- name: AdditionalArguments
+  type: string
+- name: IpDetectionMethod
+  type: string
+- name: environment
+  type: string
+
+  
+jobs:
+- deployment: DeploySQL
+  templateContext:
+    type: releaseJob
+    isProduction: true
+    inputs:
+    - input: pipelineArtifact
+      artifactName: sqldeploy 
+      targetPath: $(System.DefaultWorkingDirectory)/sqldeploy
+  displayName: Deploy MCT SQL
+  environment: ${{ parameters.environment }}
+  strategy:
+   runOnce:
+     deploy:
+      steps:
+      - task: SqlAzureDacpacDeployment@1
+        inputs:
+          azureSubscription: ${{parameters.azureSubscription}}
+          AuthenticationType: ${{parameters.AuthenticationType}}
+          ServerName: ${{parameters.ServerName}}
+          DatabaseName: ${{parameters.DatabaseName}}
+          deployType: 'DacpacTask'
+          DeploymentAction: 'Publish'
+          DacpacFile: '$(System.DefaultWorkingDirectory)/sqldeploy/src/database/bin/Release/database.dacpac'
+          AdditionalArguments: ${{parameters.AdditionalArguments}}
+          IpDetectionMethod: ${{parameters.IpDetectionMethod}}

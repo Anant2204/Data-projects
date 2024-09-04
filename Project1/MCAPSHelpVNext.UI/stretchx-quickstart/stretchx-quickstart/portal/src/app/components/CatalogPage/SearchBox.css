@@ -1,0 +1,55 @@
+.search-container {
+  position: relative;
+  padding: 20px 10px;
+  margin-right: 45px;
+}
+
+.search-header {
+  font-weight: 500;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 24px;
+  line-height: 28.13px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.suggestions-container {
+  position: absolute;
+  top: 53px;
+  left: 5;
+  width: calc(25% - 20px);
+  min-width: 325px;
+  max-height: 170px;
+  overflow-y: auto;
+  border: 1px solid #D1D1D1;
+  border-radius: 5px;
+  background-color: #ffffff;
+  z-index: 1;
+}
+
+.suggestions-container p {
+  font-family: Segoe UI;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin: 5px 10px;
+}
+
+.suggestion-item:hover {
+  background-color: #ddd;
+  
+}
+
+
+.catalogSearch .ms-SearchBox-icon {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+
+}
+
+.catalogSearch .ms-SearchBox-iconContainer{
+ width: 32px !important;
+}

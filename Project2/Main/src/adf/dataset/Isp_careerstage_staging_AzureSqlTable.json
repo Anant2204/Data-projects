@@ -1,0 +1,156 @@
+{
+	"name": "Isp_careerstage_staging_AzureSqlTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "pac_sql_prd",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "createdby",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "createdbyname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "createdbyyominame",
+				"type": "nvarchar"
+			},
+			{
+				"name": "createdon",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "createdonbehalfby",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "createdonbehalfbyname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "createdonbehalfbyyominame",
+				"type": "nvarchar"
+			},
+			{
+				"name": "importsequencenumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "isp_careerstagecode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "isp_careerstageid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "isp_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "modifiedby",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "modifiedbyname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "modifiedbyyominame",
+				"type": "nvarchar"
+			},
+			{
+				"name": "modifiedon",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "modifiedonbehalfby",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "modifiedonbehalfbyname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "modifiedonbehalfbyyominame",
+				"type": "nvarchar"
+			},
+			{
+				"name": "overriddencreatedon",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "ownerid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "owneridname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "owneridtype",
+				"type": "nvarchar"
+			},
+			{
+				"name": "owneridyominame",
+				"type": "nvarchar"
+			},
+			{
+				"name": "owningbusinessunit",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "owningbusinessunitname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "owningteam",
+				"type": "nvarchar"
+			},
+			{
+				"name": "owninguser",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "statecode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "statuscode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "timezoneruleversionnumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "utcconversiontimezonecode",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "versionnumber",
+				"type": "bigint",
+				"precision": 19
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "isp_careerstage_staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

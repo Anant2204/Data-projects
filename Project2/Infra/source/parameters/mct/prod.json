@@ -1,0 +1,130 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "resourceGroupName": {
+        "value": "mct-rg-prod"
+      },
+      "serviceConnectionPrincipleId": {
+        "value": "58481d9d-f41d-46cb-8db5-9a86a71b393b"
+      },
+      "location": {
+        "value": "westus"
+      },
+      "deployEnvironment": {
+        "value": "prod"
+      },
+      "sharedKeyVaultName": {
+        "value": "mct-kv-common-prod"
+      },
+      "sharedKeyVaultRGName": {
+        "value": "mct-rg-common"
+      },
+      "sharedKeyVaultSubId": {
+        "value": "02c70c87-7875-41aa-b814-371585a82a68"
+      },
+      "storageAccountDiagName": {
+        "value": "mctprodsadiag"
+      },
+      "storageAccountSku": {
+        "value": "Standard_LRS"
+      },
+      "storageAccountPortalName": {
+        "value": "mctprodsaportal"
+      },
+      "storageAccountPortalSku": {
+        "value": "Standard_LRS"
+      },
+      "logAnalyticsWorkspaceName": {
+        "value": "mct-prod-laws-diag"
+      },
+      "vnetName": {
+        "value": "mct-prod-vnet-shared"
+      },
+      "appInsightsName": {
+        "value": "mct-prod-ai-shared"
+      },
+      "cdnProfileName": {
+        "value": "mct-prod-cdn-portal"
+      },
+      "cdnSku": {
+        "value": "Premium_Verizon"
+      },
+      "cdnEndpointName": {
+        "value": "mct-prod-cde-portal"
+      },
+      "containerRegistryName": {
+        "value": "mctprodacrshared"
+      },
+      "containerImagePath": {
+        "value": "mct:latest"
+      },
+      "acrSku": {
+        "value": "Basic"
+      },
+      "keyVaultName": {
+        "value": "mct-prod-kv-shared"
+      },
+      "appServicePlanNameApi": {
+        "value": "mct-prod-asp-api"
+      },
+      "appServiceskuNameApi" :{
+        "value": "S3"
+      },
+      "appServiceLocationApi": {
+        "value": "westus"
+      },
+      "appServicePlanNamePortal": {
+        "value": "mct-prod-asp-portal"
+      },
+      "appServiceskuNamePortal" :{
+        "value": "S1"
+      },
+      "appServiceLocationPortal": {
+        "value": "westus"
+      },
+      "webAppNameApiApp": {
+        "value": "mct-prod-wa-mctapi"
+      },
+      "webAppNamePortalApp": {
+        "value": "mct-prod-wa-portal"
+      },
+      "apiCors": {
+        "value": [
+        ]
+      },  
+      "logAnalyticsWorkspacesku": {
+        "value": "PerGB2018"
+      },
+      "sid": {
+        "value": "be585c43-8073-429c-aba2-32a142156991"
+      },
+      "adAdministratorLogin": {
+        "value": "domounik@microsoft.com"
+      },
+      "tenantid": {
+        "value": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+      },    
+      "serverName" : {
+        "value": "pac-sql-prod"
+      },
+      "sqldatabase": {
+        "value": [
+          {"databaseName":"mctproddb"}
+        ]
+      }, 
+      "sqlskuname": {
+        "value": "Standard"
+      },
+        "sqlskutier": {
+            "value": "Standard"
+        },
+        "sqlskucapacity": {
+            "value": 800
+        },
+      "adfname": {
+        "value": "mct-prod-df"
+      }
+    }
+  }
+  

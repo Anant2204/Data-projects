@@ -1,0 +1,19 @@
+[
+  {
+    "source": "5d08c8e7-6b6c-451b-b379-a5e93b81b464",
+    "displayStatus": "old",
+    "status": "read",
+    "timeDelivered": "2023-05-22T05:16:11.412Z",
+    "messageBodyText": "Sprint 1 is now available",
+    "subjectIcon": "Mail",
+    "subjectHeader": "Release Notification 1",
+    "actionRequiredText": "Requested action",
+    "actionRequiredLink": "http://www.bing.com",
+    "persist": true,
+    "itemKey": "5",
+    "suppressTranslation": "false",
+    "locale": "en-au",
+    "summaryBodyText": "Sprint 1 is now available: Create View & Edit Estimate",
+    "expireBy": null
+  }
+]

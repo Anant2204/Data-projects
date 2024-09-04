@@ -1,0 +1,9 @@
+{
+	"name": "pac-adf-dev",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ce2a66df-131c-44dd-8acc-0ae955d9eaed",
+		"tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+	}
+}

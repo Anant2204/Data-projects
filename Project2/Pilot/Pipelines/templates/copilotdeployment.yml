@@ -1,0 +1,54 @@
+parameters:
+- name: azureSubscription
+  type: string
+- name: appName
+  type: string
+- name: environment
+  type: string
+- name: keyVaultName
+  type: string
+- name: location
+  type: string
+- name: resourceGroupName
+  type: string
+
+jobs:
+- deployment: DeployCopilotAPI
+  templateContext:
+    type: releaseJob
+    isProduction: true
+    inputs:
+    - input: pipelineArtifact
+      artifactName: drop 
+      targetPath: $(System.DefaultWorkingDirectory)/drop
+  displayName: Deploy MCT Copilot API
+  environment: ${{parameters.environment}}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: AzureCLI@2
+          displayName: 'Azure CLI '
+          inputs:
+            azureSubscription: ${{parameters.azureSubscription}}
+            scriptType: ps
+            scriptLocation: inlineScript
+            inlineScript: 'az resource update --resource-group ${{parameters.resourceGroupName}} --name scm --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/${{parameters.appname}} --set properties.allow=true'
+
+        - task: AzureRmWebAppDeployment@4
+          displayName: 'Deploy Azure App Service'
+          inputs:
+            ConnectionType: 'AzureRM'
+            azureSubscription: ${{parameters.azureSubscription}}
+            appType: 'webApp'
+            WebAppName: "$(appName)"
+            packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+            AppSettings: '-KeyVaultName ${{parameters.keyVaultName}}'
+
+        - task: AzureCLI@2
+          displayName: 'Azure CLI '
+          inputs:
+            azureSubscription: ${{parameters.azureSubscription}}
+            scriptType: ps
+            scriptLocation: inlineScript
+            inlineScript: 'az resource update --resource-group ${{parameters.resourceGroupName}} --name scm --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/${{parameters.appname}} --set properties.allow=false'      

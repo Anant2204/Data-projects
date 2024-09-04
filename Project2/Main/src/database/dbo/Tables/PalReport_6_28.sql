@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[PalReport_6_28] (
+    [Email]                        NVARCHAR (50)  NULL,
+    [Full_Name]                    NVARCHAR (MAX) NULL,
+    [Reports_To_Level_1_Email]     NVARCHAR (50)  NULL,
+    [ManagerEmail]                 NVARCHAR (50)  NULL,
+    [Reports_To_Full_Name]         NVARCHAR (MAX) NULL,
+    [Skip_Level_Email]             NVARCHAR (50)  NULL,
+    [Org]                          NVARCHAR (50)  NULL,
+    [Position_Number]              INT            NULL,
+    [Qualifier_1]                  NVARCHAR (50)  NULL,
+    [Qualifier_2]                  NVARCHAR (50)  NULL,
+    [Reports_To_Level_1_Full_Name] NVARCHAR (MAX) NULL,
+    [Reports_To_Level_2_Email]     NVARCHAR (50)  NULL,
+    [Reports_To_Level_2_Full_Name] NVARCHAR (MAX) NULL,
+    [Reports_To_Level_3_Email]     NVARCHAR (50)  NULL,
+    [Reports_To_Level_3_Full_Name] NVARCHAR (MAX) NULL,
+    [Reports_To_Level_4_Email]     NVARCHAR (50)  NULL,
+    [Reports_To_Level_4_Full_Name] NVARCHAR (MAX) NULL,
+    [Reports_To_Level_5_Email]     NVARCHAR (50)  NULL,
+    [Reports_To_Level_5_Full_Name] NVARCHAR (MAX) NULL,
+    [Reports_To_Level_6_Email]     NVARCHAR (50)  NULL,
+    [Reports_To_Level_6_Full_Name] NVARCHAR (MAX) NULL,
+    [Reports_To_Level_7_Email]     NVARCHAR (50)  NULL,
+    [Reports_To_Level_7_Full_Name] NVARCHAR (MAX) NULL,
+    [Role_Summary]                 NVARCHAR (50)  NULL
+);
+

@@ -1,0 +1,74 @@
+parameters:
+- name: envName
+  type: string
+- name: 'subscription' 
+  type: string
+- name: 'storageAccountName'
+  type: string
+- name: 'containerName'
+  type: string
+- name: 'resourceGroup'
+  type: string
+- name: 'cdnProfileName'
+  type: string
+- name: 'endpointName'
+  type: string
+
+jobs:  
+- deployment: Deploy
+  displayName: Deploy Consumption Web Extension
+  environment: ${{ parameters.envName }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: ExtractFiles@1
+          displayName: Extract source
+          inputs:
+            archiveFilePatterns: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+            destinationFolder: 'portal'
+            cleanDestinationFolder: true
+            overwriteExistingFiles: true
+
+        - task: NodeTool@0
+          displayName: 'Install Node.js'
+          inputs:
+            versionSpec: '16.x'
+      
+        - task: Npm@1
+          displayName: 'npm cache clean'
+          inputs:
+            command: 'custom'
+            workingDir: 'portal'
+            verbose: false
+            customCommand: 'cache clean --force'
+    
+        - task: Npm@1
+          displayName: 'npm install'
+          inputs:
+            command: 'install'
+            workingDir: 'portal'
+        - script: |
+            pushd "portal" && npm run build:${{ parameters.envName }}  && popd
+          displayName: 'npm build'
+
+        - task: AzCopy@1
+          displayName: 'Copy JS files to Azure blob'
+          inputs:
+            SourceKind: 'FileSystem'
+            SourcePath: '$(Build.SourcesDirectory)/portal/build'
+            DestinationKind: 'Storage'
+            DestinationConnectedServiceName: '${{ parameters.subscription }}'
+            DestinationAccount: '${{ parameters.storageAccountName }}'
+            DestinationObject: '${{ parameters.containerName }}'
+            Pattern: 'sw-*.js'
+            Arguments: '--overwrite'
+        
+        - task: AzureCLI@2
+          displayName: Purge CDN endpoint
+          inputs:
+            azureSubscription: '${{ parameters.subscription }}'
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: 'az cdn endpoint purge --resource-group ${{ parameters.resourceGroup }} --profile-name ${{ parameters.cdnProfileName }} --name ${{ parameters.endpointName }} --no-wait --content-paths "/*"'
+        

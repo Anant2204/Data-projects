@@ -1,0 +1,18 @@
+IF OBJECT_ID('BSO.FindUser', 'P') IS NOT NULL
+
+BEGIN
+    DROP PROCEDURE BSO.FindUser;
+END
+
+GO
+
+CREATE PROCEDURE BSO.FindUser
+    @UPN NVARCHAR(255) 
+AS
+BEGIN
+    SELECT U.*, M.UserADGroupID
+    FROM BSO.[User] U WITH (NOLOCK)
+    JOIN BSO.[UserADGroupMapping] M ON U.Id = M.UserId
+    WHERE U.UPN = @UPN
+END;
+GO

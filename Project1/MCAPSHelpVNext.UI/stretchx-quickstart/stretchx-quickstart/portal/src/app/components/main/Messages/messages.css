@@ -1,0 +1,64 @@
+.message-success {
+    background-color: #F1FAF1; /* Green color */
+    color: #242424;
+    padding: 7px;
+    text-align: left;
+    height: 35px;
+    font-size: 12px;
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #9FD89F;
+  }
+  
+  .message-fail {
+    background-color: #de9999; /* Red color */
+    color: #242424;
+    padding: 15px;
+    text-align: center;
+    padding: 15px;
+    text-align: left;
+    display: flex;
+    width: 100%;
+
+  }
+  
+  .message-warning {
+    background-color: #ffbb33; /* Yellow color */
+    color: #242424;
+    padding: 15px;
+    text-align: center;
+    padding: 15px;
+    text-align: left;
+    display: flex;
+    width: 100%;
+
+  }
+  
+
+  .message-icon {
+    width: 16px; /* Adjust the size as needed */
+    height: 16px; /* Adjust the size as needed */
+    margin-left: 10px;
+    margin-right: 10px;
+    display: inline-block;
+    margin-top: 1px;
+  }
+
+.message-text {
+  flex-grow: 1;
+  text-align: left;
+  margin: 0;
+}
+
+.close-icon {
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: -7px;
+}
+
+.message-title
+{
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 10px;
+}

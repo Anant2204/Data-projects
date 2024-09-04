@@ -1,0 +1,10 @@
+GRANT REFERENCES ON SYMMETRIC KEY::[MySymmetricKey] TO [MCAPSHelpFeedbackReportProblemToSupport-Prod];
+GO
+GRANT VIEW DEFINITION ON SYMMETRIC KEY::[MySymmetricKey] TO [MCAPSHelpFeedbackReportProblemToSupport-Prod];
+GO
+GRANT CONTROL ON SYMMETRIC KEY::[MySymmetricKey] TO [MCAPSHelpFeedbackReportProblemToSupport-Prod];
+GO
+GRANT VIEW DEFINITION ON Certificate::[MySelfSignedCert] TO [MCAPSHelpFeedbackReportProblemToSupport-Prod];
+GO
+GRANT CONTROL ON Certificate::[MySelfSignedCert] TO [MCAPSHelpFeedbackReportProblemToSupport-Prod];
+GO

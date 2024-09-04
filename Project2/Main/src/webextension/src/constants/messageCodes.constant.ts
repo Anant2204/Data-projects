@@ -1,0 +1,20 @@
+//Info Message codes - It can be any name but unique message codes based format componentname_informessagename
+export const fetchReceiveDataAPIError = "fetchReceiveData";
+export const fetchReceiveStatisticeDataAPIError = "fetchReceiveStatisticeData";
+export const fetchSendDataAPIError = "fetchSendData";
+export const fetchSendStatisticeDataAPIError = "fetchSendStatisticeData";
+export const fetchManagerDataAPIError = "fetchManagerData";
+export const fetchConversationScriptDataAPIError = "fetchConversationScriptData";
+export const fetchTaxonomyScriptContentDataAPIError = "fetchTaxonomyScriptContentData";
+export const taxonomyScriptContentStatisticsAPIError = "taxonomyScriptContentStatisticsAPIError";
+export const fetchFutureManagerDataAPIError = "fetchFutureManagerData";
+//TODO correct below message codes
+export const fySummaryCurrentError = "fetchFySummaryCurrentData";
+export const fySummaryFutureError = "fetchFySummaryFutureData";
+export const fySummaryStatistcsError = "fetchFySummaryStatisticsData";
+export const fetchEDMChangeRequestDataAPIError = "fetchEDMChangeRequestData";
+export const fetchEDMChangeTaxonomyCorrectionDataAPIError = "fetchEDMChangeTaxonomyCorrectionDataAPIError";
+export const fetchTaxonomyDetailsAPIError = "fetchTaxonomyDetails";
+export const fetchOrgDetailsAPIError = "fetchOrgDetails";
+export const fetchTaxonomyDetailsQualifierAPIError = "fetchTaxonomyDetails";
+export const saveApproveAPIError = "saveApprove";

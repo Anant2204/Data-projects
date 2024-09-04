@@ -1,0 +1,949 @@
+{
+    "Category": "Partner Related Requests",
+    "RequestTypeOptions": [
+      {
+        "key": "Request GPS Revenue Support",
+        "text": "GPS Revenue Support",
+        "group":"Revenue Support"
+      },
+      {
+        "key": "Request ID Mapping",
+        "text": "Mapping Request",
+        "group":"Mapping Requests "
+      },
+      {
+        "key":"Request MPL Modifications",
+        "text":"MPL Management",
+        "group":"MPL Management"
+      },
+      {
+        "key":"Raise Revenue Query",
+        "text":"Other",
+        "group":"Revenue Support"
+      }
+    ],
+    "Partner Related Requests - GPS Revenue Support": {
+        "Category": "Partner Related Requests",
+        "typeOfRequest": {
+          "GPS Revenue Support": {
+            "fieldType": "Dropdown",
+            "selectionType": "Single Value",
+            "dependencies": "none",
+            "editable": true,
+            "required": true,
+            "value": [
+                {
+                  "key": "Request GPS Revenue Support",
+                  "text": "GPS Revenue Support"
+                }
+              ],
+            "hooverText": "Request Type",
+            "Ticket Subject":{
+              "fieldName": "Ticket Subject",
+              "fieldType": "Text Field",
+              "selectionType": "Single Value",
+              "dependencies": "",
+              "editable": true,
+              "required": true,
+              "notes": "",
+              "value":"",
+              "hooverText": "",
+              "placeholderText":"Title"
+  
+            },
+            "Estimated revenue impact ($)": {
+              "fieldName": "Estimated revenue impact ($)",
+              "fieldType": "Number",
+              "selectionType": "Single Value",
+              "dependencies": "",
+              "editable": true,
+              "required": true,
+              "notes": "",
+              "value":"",
+              "hooverText": "Estimated revenue impact ($)",
+              "placeholderText": "Estimated revenue impact ($)"
+            },
+            "Priority": {
+                "fieldName": "Priority",
+                "fieldType": "Dropdown",
+                "selectionType": "Single Value",
+                "dependencies": "None",
+                "editable": true,
+                "required": true,
+                "values": [
+                  {
+                    "key": "P1 - Critical",
+                    "text": "P1 - Critical"
+                  },
+                  {
+                    "key": "P2 - High",
+                    "text": "P2 - High"
+                  },
+                  {
+                    "key": "P3 - Medium",
+                    "text": "P3 - Medium"
+                  },
+                  {
+                    "key": "P4 - Low",
+                    "text": "P4 - Low"
+                  }
+                ],
+                "notes": "Default to 'P4 - Low'",
+                "hooverText": "Priority 1 - Urgency: High (1 - 3 days) + Impact: High\nPriority 2 - Urgency: High (4 – 14 days) + Impact: High\nPriority 3 - Urgency: Medium + Impact: Medium\nPriority 4 - Urgency: Low + Impact: Low",
+                "placeholderText": "P4 - Low"
+              },
+            "Impacted ID Type":{
+              "fieldName": "Impacted ID Type",
+              "fieldType": "Dropdown",
+              "selectionType": "Single Value",
+              "dependencies": "Type of Request = GPS Revenue Support",
+              "editable": true,
+              "required": true,
+              "notes": "",
+              "value":[
+                {
+                    "key":"Partner One ID",
+                    "text":"Partner One ID"
+                },
+                {
+                    "key":"Top Parent ID",
+                    "text":"Top Parent ID"
+                },
+                {
+                    "key":"GPS CRM ID",
+                    "text":"GPS CRM ID"
+                }
+              ],
+              "hooverText": "Impacted ID Type",
+              "placeholderText":"ID Type"
+  
+            },
+            "Impacted Partner One ID": {
+              "fieldName": "Impacted Partner One ID",
+              "fieldType": "Dynamic Drop-down",
+              "selectionType": "Single Value",
+              "dependencies": "Impacted ID Type = Partner One ID",
+              "editable": true,
+              "required": true,
+              "notes": "",
+              "value":"",
+              "hooverText": "Impacted Partner One ID",
+              "placeholderText": "Partner One ID"
+            },
+            "Impacted TPID": {
+                "fieldName": "Impacted TPID",
+                "fieldType": "Dynamic Drop-down",
+                "selectionType": "Multi Select",
+                "dependencies": "Impacted ID Type = Top Parent ID",
+                "editable": true,
+                "required": true,
+                "notes": "",
+                "value":"",
+                "hooverText": "Impacted TPID",
+                "placeholderText": "TPID/TPName"
+              },
+            "Impacted GPS CRM ID": {
+            "fieldName": "Impacted GPS CRM ID",
+            "fieldType": "Dynamic Drop-down",
+            "selectionType": "Single Value",
+            "dependencies": "Impacted ID Type = GPS CRM ID",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": "Impacted GPS CRM ID",
+            "placeholderText": "GPS CRM ID"
+            },
+            "Partner Name": {
+              "fieldName": "Partner Name",
+              "fieldType": "Text Field",
+              "selectionType": "Single Value",
+              "dependencies": "None",
+              "editable": true,
+              "required": false,
+              "values":[],
+              "notes": "",
+              "hooverText": "Partner Name",
+              "placeholderText": "Partner Name"
+            },
+            "Enrollment, Agreement, TPID or Invoice ID if available": {
+                "fieldName": "Enrollment, Agreement, TPID or Invoice ID if available",
+                "fieldType": "Text Field",
+                "selectionType": "Single Value",
+                "dependencies": "None",
+                "editable": true,
+                "required": false,
+                "values":[],
+                "notes": "",
+                "hooverText": "Enrollment, Agreement, TPID or Invoice ID if available",
+                "placeholderText": "Enrollment, Agreement, TPID or Invoice ID if available"
+              },
+            "Description": {
+            "fieldName": "Description",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "None",
+            "editable": true,
+            "required": true,
+            "values":[],
+            "notes": "",
+            "hooverText": "Enter any additional information to help with researching your issue, including screeshots. For example, if you know where the revenue seems to be missing based on your investigation, state the system(s), i.e. MSXi, C&AI Portal, GPS Insights.",
+            "placeholderText": "Description"
+            }, 
+            "Additional visibility (CC)": {
+              "fieldName": "Additional visibility (CC)",
+              "fieldType": "Dynamic Dropdown",
+              "selectionType": "Multi Select",
+              "dependencies": "None",
+              "editable": true,
+              "required": false,
+              "values": [],
+              "hooverText": "Add names/aliases of individuals that should be involved in all communications unique to this incident, i.e., managers, other team members, individuals providing support",
+              "placeholderText": "Additional visibility"
+            }
+          }
+        }
+    },
+    "Partner Related Requests - Mapping Request": {
+        "Category": "Partner Related Requests",
+        "typeOfRequest": {
+          "Mapping Request": {
+            "fieldType": "Dropdown",
+            "selectionType": "Single Value",
+            "dependencies": "none",
+            "editable": true,
+            "required": true,
+            "value": [
+                {
+                  "key": "Request ID Mapping",
+                  "text": "Mapping Request"
+                }
+              ],
+            "hooverText": "Request Type",
+            "Estimated revenue impact ($)": {
+              "fieldName": "Estimated revenue impact ($)",
+              "fieldType": "Number",
+              "selectionType": "Single Value",
+              "dependencies": "",
+              "editable": true,
+              "required": true,
+              "notes": "",
+              "value":"",
+              "hooverText": "Estimated revenue impact ($)",
+              "placeholderText": "Estimated revenue impact ($)"
+            },
+            "Priority": {
+                "fieldName": "Priority",
+                "fieldType": "Dropdown",
+                "selectionType": "Single Value",
+                "dependencies": "None",
+                "editable": true,
+                "required": true,
+                "values": [
+                  {
+                    "key": "P1 - Critical",
+                    "text": "P1 - Critical"
+                  },
+                  {
+                    "key": "P2 - High",
+                    "text": "P2 - High"
+                  },
+                  {
+                    "key": "P3 - Medium",
+                    "text": "P3 - Medium"
+                  },
+                  {
+                    "key": "P4 - Low",
+                    "text": "P4 - Low"
+                  }
+                ],
+                "notes": "Default to 'P4 - Low'",
+                "hooverText": "Priority 1 - Urgency: High (1 - 3 days) + Impact: High\nPriority 2 - Urgency: High (4 – 14 days) + Impact: High\nPriority 3 - Urgency: Medium + Impact: Medium\nPriority 4 - Urgency: Low + Impact: Low",
+                "placeholderText": "P4 - Low"
+              },
+            "Source ID Type":{
+              "fieldName": "Source ID Type",
+              "fieldType": "Dropdown",
+              "selectionType": "Single Value",
+              "dependencies": "Type of Request = Mapping Request",
+              "editable": true,
+              "required": true,
+              "notes": "",
+              "value":[
+                {
+                    "key":"Partner One ID",
+                    "text":"Partner One ID"
+                },
+                {
+                    "key":"Top Parent ID",
+                    "text":"Top Parent ID"
+                },
+                {
+                    "key":"GPS CRM ID",
+                    "text":"GPS CRM ID"
+                },
+                {
+                    "key":"Enrollment ID",
+                    "text":"Enrollment ID"
+                }
+              ],
+              "hooverText": "Source ID Type",
+              "placeholderText":"Source ID Type"
+  
+            },
+            "Impacted Source Partner One ID": {
+              "fieldName": "Impacted Source Partner One ID",
+              "fieldType": "Dynamic Drop-down",
+              "selectionType": "Single Value",
+              "dependencies": "Impacted ID Type = Partner One ID",
+              "editable": true,
+              "required": true,
+              "notes": "",
+              "value":"",
+              "hooverText": "Impacted Source Partner One ID",
+              "placeholderText": "Partner One ID"
+            },
+            "Impacted Source TPID": {
+                "fieldName": "Impacted Source TPID",
+                "fieldType": "Dynamic Drop-down",
+                "selectionType": "Multi Select",
+                "dependencies": "Impacted ID Type = Top Parent ID",
+                "editable": true,
+                "required": true,
+                "notes": "",
+                "value":"",
+                "hooverText": "Impacted Source TPID",
+                "placeholderText": "TPID/TPName"
+              },
+            "Impacted Source Enrollment ID": {
+            "fieldName": "Impacted Source Enrollment ID",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "Impacted ID Type = Enrollment ID",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": "Impacted Source Enrollment ID",
+            "placeholderText": "Enrollment ID"
+            },
+            "Impacted Source GPS CRM ID": {
+            "fieldName": "Impacted Source GPS CRM ID",
+            "fieldType": "Dynamic Drop-down",
+            "selectionType": "Single Value",
+            "dependencies": "Impacted ID Type = GPS CRM ID",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": "Impacted Source GPS CRM ID",
+            "placeholderText": "GPS CRM ID"
+            },
+            "Partner Name": {
+              "fieldName": "Partner Name",
+              "fieldType": "Text Field",
+              "selectionType": "Single Value",
+              "dependencies": "None",
+              "editable": true,
+              "required": true,
+              "values":[],
+              "notes": "",
+              "hooverText": "Partner Name",
+              "placeholderText": "Partner Name"
+            },
+            "Destination ID Type": {
+                "fieldName": "Destination ID Type",
+                "fieldType": "Drop-down",
+                "selectionType": "Single Value",
+                "dependencies": "",
+                "editable": true,
+                "required": true,
+                "notes": "",
+                "value":[                    
+                    {
+                        "key":"TPID",
+                        "text":"TPID"
+                    },
+                    {
+                        "key":"Org ID",
+                        "text":"Org ID"
+                    },
+                    {
+                        "key":"Enrollment ID",
+                        "text":"Enrollment ID"
+                    }
+                ],
+                "hooverText": "Enter the destination for the move and the ID type (i.e. EnrollementID, OrgID, ..)",
+                "placeholderText": ""
+              },
+            "Destination ID Value": {
+            "fieldName": "Destination ID Value",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "Destination ID Type = TPID or OrgID, EnrollmentID",
+            "editable": true,
+            "required": true,
+            "values":[],
+            "notes": "",
+            "hooverText": "Enter the destination for the move and the corresponding ID (GPS CRM ID or Partner / P1ID)",
+            "placeholderText": "Destination ID Value"
+            }, 
+            "Description": {
+            "fieldName": "Description",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "None",
+            "editable": true,
+            "required": true,
+            "values":[],
+            "notes": "",
+            "hooverText": "Enter any additional information to help with researching your issue, including screeshots. For example, if you know where the revenue seems to be missing based on your investigation, state the system(s), i.e. MSXi, C&AI Portal, GPS Insights.",
+            "placeholderText": "Description"
+            }, 
+            "Additional visibility (CC)": {
+              "fieldName": "Additional visibility (CC)",
+              "fieldType": "Dynamic Dropdown",
+              "selectionType": "Multi Select",
+              "dependencies": "None",
+              "editable": true,
+              "required": false,
+              "values": [],
+              "hooverText": "Add names/aliases of individuals that should be involved in all communications unique to this incident, i.e., managers, other team members, individuals providing support",
+              "placeholderText": "Additional visibility"
+            }
+          }
+        }
+    },
+    "Partner Related Requests - MPL Management": {
+        "Category": "Partner Related Requests",
+        "typeOfRequest": {
+          "MPL Management": {
+            "fieldType": "Dropdown",
+            "selectionType": "Single Value",
+            "dependencies": "none",
+            "editable": true,
+            "required": true,
+            "value": [
+                {
+                  "key": "Request MPL Modifications",
+                  "text": "MPL Management"
+                }
+              ],
+            "hooverText": "Request Type",
+            
+            "Priority": {
+                "fieldName": "Priority",
+                "fieldType": "Dropdown",
+                "selectionType": "Single Value",
+                "dependencies": "None",
+                "editable": true,
+                "required": true,
+                "values": [
+                  {
+                    "key": "P1 - Critical",
+                    "text": "P1 - Critical"
+                  },
+                  {
+                    "key": "P2 - High",
+                    "text": "P2 - High"
+                  },
+                  {
+                    "key": "P3 - Medium",
+                    "text": "P3 - Medium"
+                  },
+                  {
+                    "key": "P4 - Low",
+                    "text": "P4 - Low"
+                  }
+                ],
+                "notes": "Default to 'P4 - Low'",
+                "hooverText": "Priority 1 - Urgency: High (1 - 3 days) + Impact: High\nPriority 2 - Urgency: High (4 – 14 days) + Impact: High\nPriority 3 - Urgency: Medium + Impact: Medium\nPriority 4 - Urgency: Low + Impact: Low",
+                "placeholderText": "P4 - Low"
+              },
+            "Are you ADDING, DROPPING, or MERGING Partners on the MPL?": {
+              "fieldName": "Are you ADDING, DROPPING, or MERGING Partners on the MPL?",
+              "fieldType": "Dropdown",
+              "selectionType": "Single Value",
+              "dependencies": "",
+              "editable": true,
+              "required": true,
+              "notes": "",
+              "value":[
+                {
+                    "key":"Adding",
+                    "text":"Adding"
+                },
+                {
+                    "key":"Dropping",
+                    "text":"Dropping"
+                },
+                {
+                    "key":"Merging",
+                    "text":"Merging"
+                },
+                {
+                    "key":"Other",
+                    "text":"Other"
+                }
+              ],
+              "hooverText": "Are you ADDING, DROPPING, or MERGING Partners on the MPL?",
+              "placeholderText": ""
+            },
+            "What is the GPS CRM ID of the account you wish to add?":{
+              "fieldName": "What is the GPS CRM ID of the account you wish to add?",
+              "fieldType": "Dynamic Drop-down",
+              "selectionType": "Multi Select",
+              "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Adding",
+              "editable": true,
+              "required": true,
+              "notes": "",
+              "value":"",
+              "hooverText": "What is the GPS CRM ID of the account you wish to add?",
+              "placeholderText":"Impacted GPS CRMIDs"
+            },
+            "What is the P1 ID of the account you wish to add to the MPL?":{
+                "fieldName": "What is the P1 ID of the account you wish to add to the MPL?",
+                "fieldType": "Dynamic Drop-down",
+                "selectionType": "Multi Select",
+                "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Adding",
+                "editable": true,
+                "required": true,
+                "notes": "",
+                "value":"",
+                "hooverText": "What is the P1 ID of the account you wish to add to the MPL?",
+                "placeholderText":"Partner One ID"
+            },
+            "What is the name of the Partner you wish to add to the MPL?":{
+            "fieldName": "What is the name of the Partner you wish to add to the MPL?",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Adding",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": "What is the name of the Partner you wish to add to the MPL?",
+            "placeholderText":"Partner Name"
+            },
+            "What is the alias of the PDM who should be listed at Primary Account Owner on the account?":{
+            "fieldName": "What is the alias of the PDM who should be listed at Primary Account Owner on the account?",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Adding & Merging",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": "What is the alias of the PDM who should be listed at Primary Account Owner on the account?",
+            "placeholderText":"Primary Account Owner's Alias"
+            },
+            "What is the GPS CRM ID of the account you wish to drop?":{
+                "fieldName": "What is the GPS CRM ID of the account you wish to drop?",
+                "fieldType": "Dynamic Drop-down",
+                "selectionType": "Multi Select",
+                "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Dropping",
+                "editable": true,
+                "required": true,
+                "notes": "",
+                "value":"",
+                "hooverText": "What is the GPS CRM ID of the account you wish to drop?",
+                "placeholderText":"Impacted GPS CRMIDs"
+            },
+            "What is the P1 ID of the account you wish to drop to the MPL?":{
+                "fieldName": "What is the P1 ID of the account you wish to drop to the MPL?",
+                "fieldType": "Dynamic Drop-down",
+                "selectionType": "Multi Select",
+                "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Dropping",
+                "editable": true,
+                "required": true,
+                "notes": "",
+                "value":"",
+                "hooverText": "What is the P1 ID of the account you wish to drop to the MPL?",
+                "placeholderText":"Partner One ID"
+            },
+            "What is the name of the Partner you wish to drop to the MPL?":{
+            "fieldName": "What is the name of the Partner you wish to drop to the MPL?",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Dropping",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": "What is the name of the Partner you wish to drop to the MPL?",
+            "placeholderText":"Partner Name"
+            },
+            "What are the 2 GPS CRMIDs you wish to merge?":{
+                "fieldName": "What are the 2 GPS CRMIDs you wish to merge?",
+                "fieldType": "Dynamic Drop-down",
+                "selectionType": "Multi Select",
+                "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Merging",
+                "editable": true,
+                "required": true,
+                "notes": "",
+                "value":"",
+                "hooverText": "What are the 2 GPS CRMIDs you wish to merge?",
+                "placeholderText":"Impacted GPS CRMIDs"
+            },
+            "What are the P1 IDs for the 2 GPS CRMIDs you wish to merge?":{
+                "fieldName": "What are the P1 IDs for the 2 GPS CRMIDs you wish to merge?",
+                "fieldType": "Dynamic Drop-down",
+                "selectionType": "Multi Select",
+                "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Merging",
+                "editable": true,
+                "required": true,
+                "notes": "",
+                "value":"",
+                "hooverText": "What are the P1 IDs for the 2 GPS CRMIDs you wish to merge?",
+                "placeholderText":"Partner One ID"
+            },
+            "Which GPS CRMID should be the survivor?":{
+                "fieldName": "Which GPS CRMID should be the survivor?",
+                "fieldType": "Dynamic Drop-down",
+                "selectionType": "Multi Select",
+                "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Merging",
+                "editable": true,
+                "required": true,
+                "notes": "",
+                "value":"",
+                "hooverText": "Which GPS CRMID should be the survivor?",
+                "placeholderText":"Surviving GPS CRMIDs"
+            },
+            "What is the name of the surviving Partner?":{
+                "fieldName": "What is the name of the surviving Partner?",
+                "fieldType": "Text Field",
+                "selectionType": "Single Value",
+                "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Merging",
+                "editable": true,
+                "required": true,
+                "notes": "",
+                "value":"",
+                "hooverText": "What is the name of the surviving Partner?",
+                "placeholderText":"Surviving Partner Name"
+            },
+            "Which GPS CRMID should be the victim?":{
+                "fieldName": "Which GPS CRMID should be the victim?",
+                "fieldType": "Dynamic Drop-down",
+                "selectionType": "Multi Select",
+                "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Merging",
+                "editable": true,
+                "required": true,
+                "notes": "",
+                "value":"",
+                "hooverText": "Which GPS CRMID should be the victim?",
+                "placeholderText":"Victim GPS CRMIDs"
+            },
+            "What is the name of the victim Partner?":{
+                "fieldName": "What is the name of the victim Partner?",
+                "fieldType": "Text Field",
+                "selectionType": "Single Value",
+                "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Merging",
+                "editable": true,
+                "required": true,
+                "notes": "",
+                "value":"",
+                "hooverText": "What is the name of the victim Partner?",
+                "placeholderText":"VictimPartnerName"
+            },
+            "Are there items associated with the victim ID that need to transfer to the surviving ID? (e.g. PBP)":{
+                "fieldName": "Are there items associated with the victim ID that need to transfer to the surviving ID? (e.g. PBP)",
+                "fieldType": "Drop-down",
+                "selectionType": "Single Value",
+                "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Merging",
+                "editable": true,
+                "required": true,
+                "notes": "",
+                "value":[
+                    {
+                        "key":"Yes",
+                        "text":"Yes"
+                    },
+                    {
+                        "key":"No",
+                        "text":"No"
+                    }
+                ],
+                "hooverText": "Are there items associated with the victim ID that need to transfer to the surviving ID? ",
+                "placeholderText":"Associated Items Transfer Required?"
+            },
+            "What are those items?":{
+              "fieldName":"What are those items?",
+              "fieldType":"Text Field",
+              "selectionType":"Single Value",
+              "editable":true,
+              "required":true,
+              "hooverText":"What are those items?",
+              "placeholderText":"Associated items To Transfer"
+            },
+            "Date of request": {
+            "fieldName": "Date of request",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Adding, Dropping, Merging",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": "Date of request",
+            "placeholderText": "dd-mm-yyyy"
+            },
+            "Alias of Requestor": {
+            "fieldName": "Alias of Requestor",
+            "fieldType": "Drop-down",
+            "selectionType": "Single Value",
+            "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Adding, Dropping, Merging",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": "Alias of Requestor",
+            "placeholderText": "Requestor's Alias"
+            },
+            "Revenue Impact": {
+            "fieldName": "Revenue Impact",
+            "fieldType": "Number",
+            "selectionType": "Single Value",
+            "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Adding, Dropping, Merging",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": "Revenue Impact",
+            "placeholderText": "Estimated revenue impact ($)"
+            },
+            "Target Impact": {
+              "fieldName": "Target Impact",
+              "fieldType": "Text Field",
+              "selectionType": "Single Value",
+              "dependencies": "Are you ADDING, DROPPING, or MERGING Partners on the MPL = Adding, Dropping, Merging",
+              "editable": true,
+              "required": true,
+              "values":[],
+              "notes": "",
+              "hooverText": "Target Impact",
+              "placeholderText": "Target Impact"
+            },
+            "Description": {
+            "fieldName": "Description",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "None",
+            "editable": true,
+            "required": true,
+            "values":[],
+            "notes": "",
+            "hooverText": "Enter any additional information to help with researching your issue, including screeshots. For example, if you know where the revenue seems to be missing based on your investigation, state the system(s), i.e. MSXi, C&AI Portal, GPS Insights.",
+            "placeholderText": "Description"
+            }, 
+            "Additional visibility (CC)": {
+              "fieldName": "Additional visibility (CC)",
+              "fieldType": "Dynamic Dropdown",
+              "selectionType": "Multi Select",
+              "dependencies": "None",
+              "editable": true,
+              "required": false,
+              "values": [],
+              "hooverText": "Add names/aliases of individuals that should be involved in all communications unique to this incident, i.e., managers, other team members, individuals providing support",
+              "placeholderText": "Additional visibility"
+            },
+            "Must attach GPS LT Approval Email OR Request will be rejected":{
+              "fieldName": "Must attach GPS LT Approval Email OR Request will be rejected",
+              "fieldType": "information",
+              "selectionType": "display text",
+              "dependencies": "None",
+              "editable": false,
+              "required": false,
+              "values": [],
+              "hooverText": "",
+              "placeholderText": ""
+            }
+          }
+        }
+    },
+    "Partner Related Requests - Other": {
+        "Category": "Partner Related Requests",
+        "typeOfRequest": {
+          "Other": {
+            "fieldType": "Dropdown",
+            "selectionType": "Single Value",
+            "dependencies": "none",
+            "editable": true,
+            "required": true,
+            "value": [
+                {
+                  "key": "Raise Revenue Query",
+                  "text": "Other"
+                }
+              ],
+            "hooverText": "Request Type",
+            "Estimated revenue impact ($)": {
+              "fieldName": "Estimated revenue impact ($)",
+              "fieldType": "Number",
+              "selectionType": "Single Value",
+              "dependencies": "",
+              "editable": true,
+              "required": true,
+              "notes": "",
+              "value":"",
+              "hooverText": "Estimated revenue impact ($)",
+              "placeholderText": "Estimated revenue impact ($)"
+            },
+            "Priority": {
+                "fieldName": "Priority",
+                "fieldType": "Dropdown",
+                "selectionType": "Single Value",
+                "dependencies": "None",
+                "editable": true,
+                "required": true,
+                "values": [
+                  {
+                    "key": "P1 - Critical",
+                    "text": "P1 - Critical"
+                  },
+                  {
+                    "key": "P2 - High",
+                    "text": "P2 - High"
+                  },
+                  {
+                    "key": "P3 - Medium",
+                    "text": "P3 - Medium"
+                  },
+                  {
+                    "key": "P4 - Low",
+                    "text": "P4 - Low"
+                  }
+                ],
+                "notes": "Default to 'P4 - Low'",
+                "hooverText": "Priority 1 - Urgency: High (1 - 3 days) + Impact: High\nPriority 2 - Urgency: High (4 – 14 days) + Impact: High\nPriority 3 - Urgency: Medium + Impact: Medium\nPriority 4 - Urgency: Low + Impact: Low",
+                "placeholderText": "P4 - Low"
+              },
+            "Impacted ID Type":{
+              "fieldName": "Impacted ID Type",
+              "fieldType": "Dropdown",
+              "selectionType": "Single Value",
+              "dependencies": "Type of Request = Other",
+              "editable": true,
+              "required": true,
+              "notes": "",
+              "value":[
+                {
+                    "key":"Partner One ID",
+                    "text":"Partner One ID"
+                },
+                {
+                    "key":"Top Parent ID",
+                    "text":"Top Parent ID"
+                },
+                {
+                    "key":"GPS CRM ID",
+                    "text":"GPS CRM ID"
+                },
+                {
+                    "key":"Enrollment ID",
+                    "text":"Enrollment ID"
+                }
+              ],
+              "hooverText": "Source ID Type",
+              "placeholderText":"Source ID Type"
+  
+            },
+            "Impacted Partner One ID": {
+              "fieldName": "Impacted  Partner One ID",
+              "fieldType": "Dynamic Drop-down",
+              "selectionType": "Single Value",
+              "dependencies": "Impacted ID Type = Partner One ID",
+              "editable": true,
+              "required": true,
+              "notes": "",
+              "value":"",
+              "hooverText": "Impacted  Partner One ID",
+              "placeholderText": "Partner One ID"
+            },
+            "Impacted TPID": {
+                "fieldName": "Impacted TPID",
+                "fieldType": "Dynamic Drop-down",
+                "selectionType": "Multi Select",
+                "dependencies": "Impacted ID Type = Other",
+                "editable": true,
+                "required": true,
+                "notes": "",
+                "value":"",
+                "hooverText": "Impacted TPID",
+                "placeholderText": "TPID/TPName"
+              },
+            "Enrollment ID": {
+            "fieldName": "Enrollment ID",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "Impacted ID Type = Enrollment ID",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": "Enrollment ID",
+            "placeholderText": "Enrollment ID"
+            },
+            "Impacted GPS CRM ID": {
+            "fieldName": "Impacted GPS CRM ID",
+            "fieldType": "Dynamic Drop-down",
+            "selectionType": "Single Value",
+            "dependencies": "Impacted ID Type = GPS CRM ID",
+            "editable": true,
+            "required": true,
+            "notes": "",
+            "value":"",
+            "hooverText": "Impacted GPS CRM ID",
+            "placeholderText": "GPS CRM ID"
+            },
+            "Partner Name": {
+              "fieldName": "Partner Name",
+              "fieldType": "Text Field",
+              "selectionType": "Single Value",
+              "dependencies": "None",
+              "editable": true,
+              "required": false,
+              "values":[],
+              "notes": "",
+              "hooverText": "Partner Name",
+              "placeholderText": "Partner Name"
+            },
+            "Enrollment, Agreement, TPID or Invoice ID if available": {
+            "fieldName": "Enrollment, Agreement, TPID or Invoice ID if available",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "",
+            "editable": true,
+            "required": false,
+            "values":[],
+            "notes": "",
+            "hooverText": "Enrollment, Agreement, TPID or Invoice ID if available",
+            "placeholderText": "Enrollment, Agreement, TPID or Invoice ID if available"
+            }, 
+            "Description": {
+            "fieldName": "Description",
+            "fieldType": "Text Field",
+            "selectionType": "Single Value",
+            "dependencies": "None",
+            "editable": true,
+            "required": true,
+            "values":[],
+            "notes": "",
+            "hooverText": "Enter any additional information to help with researching your issue, including screeshots. For example, if you know where the revenue seems to be missing based on your investigation, state the system(s), i.e. MSXi, C&AI Portal, GPS Insights.",
+            "placeholderText": "Description"
+            }, 
+            "Additional visibility (CC)": {
+              "fieldName": "Additional visibility (CC)",
+              "fieldType": "Dynamic Dropdown",
+              "selectionType": "Multi Select",
+              "dependencies": "None",
+              "editable": true,
+              "required": false,
+              "values": [],
+              "hooverText": "Add names/aliases of individuals that should be involved in all communications unique to this incident, i.e., managers, other team members, individuals providing support",
+              "placeholderText": "Additional visibility"
+            }
+          }
+        }
+    }
+  }
+  

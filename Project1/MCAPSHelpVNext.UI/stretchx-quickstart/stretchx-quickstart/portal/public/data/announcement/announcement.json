@@ -1,0 +1,133 @@
+{
+  "id": "Announcements",
+  "title": "What's new in MCAPSHelp",
+  "subTitle": "March 2024",
+  "Announcements": [
+    {
+      "id": "AA4DD9BB-DAA7-4FCD-8696-AF639F0A3078",
+      "startDate": "2024-02-01T00:00:00Z",
+      "endDate": "2024-06-30T00:00:00Z",
+      "announcementTitle": "Weclome to MCAPSHelp Top Deal",
+      "announcementDescription": [
+        {
+          "subheading": "What is MCAPSHelp ?",
+          "bulletPoints": ["<b>MCAPSHelp</b> provides a connected help experience across our fragmented network of tools, to solve MCAPS business process, policy, tool, or transformational needs.", 
+          "Infused with the power of AI and aligned to the MCEM lifecycle, MCAPSHelp is set to transform help experiences, like never before! ", 
+          "Over<b> 150 help scenarios</b> have been consolidated into a single catalog (we are continuously adding more) and <b> ~20K MCAPS employees already use MCAPSHelp today! </b>"    
+        ],
+          "wikiLink": ""
+        }
+      ],
+      "wikiLink": "Not Used - ",
+      "imageName": "MCAPSHelp_Screen.png",
+      "dateAdded": "2022-01-01T00:00:00Z",
+      "audience": "Not Used -",
+      "feature": "MCAPSHelp"
+    },
+   
+  
+    {
+      "id": "068603E2-415A-4597-9FC7-DAB1A0E94B9B",
+      "startDate": "2024-02-01T00:00:00Z",
+      "endDate": "2024-06-30T00:00:00Z",
+      "announcementTitle": "Not Used - New Feature Title 4",
+      "announcementDescription": [
+        {
+          "subheading": "Set up your profile ",
+          "bulletPoints": ["Help topics in the application can be tailored to your needs by setting up preferences in the profile. ",
+          "Update the Area, Role, Segment and Subsegment by selecting <b>Profile > My Preferences.</b> ",
+          "<b>Important –</b> Setting up your preferences adapts MCAPSHelp to your role. If you later change these, that’s OK, but please be aware this resets the app to ensure correct help options are then able to be installed. "],
+          "wikiLink": ""
+        }
+      ],
+      "wikiLink": "Not Used - ",
+      "imageName": "Profile.png",
+      "dateAdded": "2024-01-11T00:00:00Z",
+      "audience": "Not Used - ",
+      "feature": "MCAPSHelp"
+    },
+    {
+      "id": "068603E2-415A-4597-9FC7-DAB1A0E94B9D",
+      "startDate": "2024-02-01T00:00:00Z",
+      "endDate": "2024-06-30T00:00:00Z",
+      "announcementTitle": "Not Used - New Feature Title 4",
+      "announcementDescription": [
+        {
+          "subheading": "How to add topics to your My Help Workspace.",
+          "bulletPoints": ["Personalize your My Help Workspace by selecting and adding your help topics from Catalog.  ",
+        "Click on the <b>Catalog </b>tab in the top. Alternatively, you can Click on the tile<b> ‘+ Add more Help to My Help Workspace’<b>  in My Help section. ",
+      "Search for the help you need in the Catalog and click on Add. The added topics are then available in My Help Workspace for you to raise the Help Requests."],
+          "wikiLink": ""
+        }
+      ],
+      "wikiLink": "Not Used - ",
+      "imageName": "MyWorkSpace.png",
+      "dateAdded": "2024-01-11T00:00:00Z",
+      "audience": "Not Used -",
+      "feature": "MCAPSHelp"
+    },
+    {
+      "id": "068603E2-415A-4597-9FC7-DAB1A0E94B9E",
+      "startDate": "2024-02-01T00:00:00Z",
+      "endDate": "2024-06-30T00:00:00Z",
+      "announcementTitle": "Not Used - New Feature Title 4",
+      "announcementDescription": [
+        {
+          "subheading": "Get Help in My Help Workspace",
+          "bulletPoints": ["To get started with help, you have the correct help tile installed by clicking the tile body to get additional information."
+        ],
+        "SubbulletPoints": ["If correct, select START to notify the copilot that this is the context in which you need help.",
+        "If not, use the catalog to search for the correct help. If you can’t locate, simply go ahead and let the copilot know what you need and the general help AI will determine the next best steps. "
+
+        ],
+          "wikiLink": ""
+        }
+      ],
+      "wikiLink": "Not Used - ",
+      "imageName": "HelpInMyWorkSpace.png",
+      "dateAdded": "2024-01-11T00:00:00Z",
+      "audience": "Not Used -",
+      "feature": "MCAPSHelp"
+    },
+    {
+      "id": "068603E2-415A-4597-9FC7-DAB1A0E94B9F",
+      "startDate": "2024-02-01T00:00:00Z",
+      "endDate": "2024-06-30T00:00:00Z",
+      "announcementTitle": "Not Used - New Feature Title 4",
+      "announcementDescription": [
+        {
+          "subheading": "View your tickets in My Help Dashboard",
+          "bulletPoints": ["View the details of all your help requests in a single place by clicking on My Help Dashboard tile ",
+        "You can also interact direct with the copilot and ask to <b>‘escalate a ticket’,</b> ‘or<b> ‘obtain my ticket status’</b> "      
+    ],
+          "wikiLink": ""
+        }
+      ],
+      "wikiLink": "Not Used - ",
+      "imageName": "Dashboard.png",
+      "dateAdded": "2024-01-11T00:00:00Z",
+      "audience": "Not Used -",
+      "feature": "MCAPSHelp"
+    },
+    {
+      "id": "068603E2-415A-4597-9FC7-DAB1A0E94B9B",
+      "startDate": "2024-02-01T00:00:00Z",
+      "endDate": "2024-06-30T00:00:00Z",
+      "announcementTitle": "Not Used - New Feature Title 4",
+      "announcementDescription": [
+        {
+          "subheading": "Know more about MCAPSHelp ",
+          "bulletPoints": ["To know more about how you can use MCAPSHelp for your help and support needs select<b> Help > Training</b> on top right navigation bar  ",
+        "If you are experiencing a problem with the tool, please send an email to MCAPSHelpIntakeIssue@microsoft.com"],
+        
+          "wikiLink": ""
+        }
+      ],
+      "wikiLink": "Not Used - ",
+      "imageName": "knowmore.png",
+      "dateAdded": "2024-01-11T00:00:00Z",
+      "audience": "Not Used - ",
+      "feature": "MCAPSHelp"
+    }
+  ]
+}

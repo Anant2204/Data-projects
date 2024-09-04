@@ -1,0 +1,131 @@
+trigger:
+  branches:
+    include:
+    - dev
+    - release1/*
+
+  paths:
+    include:
+     - src/api/*
+
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+
+variables:
+  imageRepository: 'mctapi'
+  dockerfilePath: '$(Build.SourcesDirectory)/src/api/Dockerfile'
+  tag: $(Build.BuildId)
+  artifactName: 'apioutput.tar'
+
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    pool:
+      name: mct1espool
+      image: mct1esimageubantu
+      os: linux
+    sdl:
+      sourceAnalysisPool:
+        name: mct1espool
+        image: mct1esptwindows
+        os: windows
+    stages:
+    - stage: BuildPackage
+      displayName: Build and Publish
+      jobs:
+      - job: Build
+        templateContext:
+          outputs:
+          - output: pipelineArtifact
+            displayName: 'Publish Build Artifacts'
+            targetPath: '$(Build.ArtifactStagingDirectory)'
+            artifactName: 'drop'
+            publishLocation: 'Container'
+        steps:
+        - task: 1ES.BuildContainerImage@1
+          displayName: Build Image
+          inputs:
+            dockerfile: $(dockerfilePath)
+            context: '$(Build.SourcesDirectory)/src/api/'
+            image: '$(imageRepository):$(tag)'
+            buildArguments: '--build-arg FEED_ACCESSTOKEN=$(System.AccessToken)'
+            enableNetwork: true
+            useBuildKit: false
+            enableCache: false
+
+        - task: Bash@3
+          displayName: Save Image
+          inputs:
+            targetType: 'inline'
+            script: 'docker save $(imageRepository):$(tag) -o $(Build.ArtifactStagingDirectory)/$(artifactName)'
+
+        - task: CopyFiles@2
+          displayName: Copy Pipeline Utilities
+          inputs:
+            SourceFolder: '$(Build.SourcesDirectory)/pipelines'
+            Contents: '**/?(*.ps1|*.json|*.txt|*.bicep)'
+            TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    - stage: DeployDEV1
+      displayName: Deploy - DEV1
+      dependsOn: BuildPackage
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+      jobs:
+      - template: /pipelines/templates/api-deploymenttask.yml@self
+        parameters:
+          serviceConnection: 'mct-dev1-docker'
+          containerRegistry: 'mctdev1acrshared.azurecr.io'
+          azureSubscription: 'mct-dev1'
+          appName: 'mct-dev1-wa-mctapi'
+          keyVaultName: 'mct-dev1-kv-shared'
+          environment: 'DEV1'
+          location: 'westus'
+
+    - stage: DeployUAT1
+      displayName: Deploy - UAT1
+      dependsOn: BuildPackage
+      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release1/'))
+      jobs:
+      - template: /pipelines/templates/api-deploymenttask.yml@self
+        parameters:
+          serviceConnection: 'mct-uat1-docker'
+          containerRegistry: 'mctuat1acrshared.azurecr.io'
+          azureSubscription: 'mct-uat1'
+          appName: 'mct-uat1-wa-mctapi'
+          keyVaultName: 'mct-uat1-kv-shared'
+          environment: 'UAT1'
+          location: 'westus'
+
+    - stage: DeployPROD
+      displayName: Deploy - PROD
+      dependsOn: DeployUAT1
+      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release1/'))
+      jobs:
+      - template: /pipelines/templates/api-deploymenttask.yml@self
+        parameters:
+          serviceConnection: 'mct-prod-docker'
+          containerRegistry: 'mctprodacrshared.azurecr.io'
+          azureSubscription: 'mct-prod'
+          appName: 'mct-prod-wa-mctapi'
+          keyVaultName: 'mct-prod-kv-shared'
+          environment: 'PROD'
+          location: 'westus'
+
+    - stage: PRODDR
+      displayName: Deploy - PRODDR
+      dependsOn: DeployUAT1
+      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release1/'))
+      jobs:
+      - template: /pipelines/templates/api-deploymenttask.yml@self
+        parameters:
+          serviceConnection: 'mct-proddr-docker'
+          containerRegistry: 'mctproddracrshared.azurecr.io'
+          azureSubscription: 'mct-proddr'
+          appName: 'mct-proddr-wa-mctapi'
+          keyVaultName: 'mct-proddr-kv-shared'
+          environment: 'PRODDR'
+          location: 'eastus'

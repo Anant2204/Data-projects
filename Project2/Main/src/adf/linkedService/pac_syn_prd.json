@@ -1,0 +1,11 @@
+{
+	"name": "pac_syn_prd",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDW",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=pac-sql-dev1.database.windows.net;Initial Catalog=mctdev1db"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
+}

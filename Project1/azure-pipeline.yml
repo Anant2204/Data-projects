@@ -1,0 +1,615 @@
+name: MCAPSHelp_UI_$(Date:yyyyMMdd)$(Rev:.r)
+trigger:
+ branches:
+  include:
+   - premain_integration
+   - PreMain_UAT
+
+pool: 
+ name: mcapshelppool-vsogd
+#  demands:
+#    - imageOverride -equals MMS2022
+
+variables:
+  uiSource: 'MCAPSHelpVNext.UI/stretchx-quickstart/stretchx-quickstart/portal'
+  uiBuild: '$(uiSource)/build'
+
+
+stages:
+
+ - stage: build_dev
+   condition: eq(variables['Build.SourceBranch)'], 'refs/heads/premain_integration')
+   jobs:
+   - job: CodeQLInitJob
+     displayName: 'Initialize CodeQL Database'
+
+     steps: 
+     - task: CodeQL3000Init@0
+       displayName: 'Initialize CodeQL'
+
+       
+   - job: BuildUI
+     dependsOn: CodeQLInitJob
+     steps:
+     - task: UseNode@1
+       inputs:
+         version: '20.x'
+         checkLatest: true
+       displayName: 'Install Node.js'
+    
+
+     - task: Npm@1
+       displayName: 'npm cache clean'
+       inputs:
+        command: 'custom'
+        workingDir: $(uiSource)
+        verbose: false
+        customCommand: 'cache clean --force'
+    
+    
+     - task: Npm@1
+       displayName: 'npm install'
+       inputs:
+        command: 'install'
+        workingDir: '$(uiSource)'
+        verbose: true
+    
+     - script: |
+         npm run build:PROD
+       workingDirectory: $(uiSource)
+       displayName: 'npm build'
+       
+    #  - task: Npm@1
+    #    inputs:
+    #     command: 'custom'
+    #     workingDir: '$(uiSource)'
+    #     verbose: true
+    #     customCommand: 'run-script build:UAT'
+    #    displayName: 'npm run build:UAT'
+  
+     - task: CopyFiles@2
+       inputs:
+        sourceFolder: '$(uiBuild)'
+        contents: '**/*'
+        targetFolder: '$(Build.ArtifactStagingDirectory)'
+       displayName: 'Copy project files'
+    
+    
+     - task: ArchiveFiles@2
+       displayName: 'Archive build from: $(Build.ArtifactStagingDirectory)'
+       inputs:
+        rootFolderOrFile: $(Build.ArtifactStagingDirectory)
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/MCAPSHelpUI.zip'
+        includeRootFolder: false
+
+     - task: CodeQL3000Finalize@0     
+       displayName: 'CodeQL Finalize'   
+       condition: succeededOrFailed()
+     - task: PublishBuildArtifacts@1
+       displayName: 'Publish built artifact'
+       inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/MCAPSHelpUI.zip'
+
+   - job: DeployInfraFiles
+     dependsOn: BuildUI
+     displayName: 'Deploy Infra files'
+     steps:
+       - task: CopyFiles@2
+         displayName: 'Copy Infra files'
+         inputs:
+          SourceFolder: '$(System.DefaultWorkingDirectory)'
+          Contents: 'infra/PROD_Infra/**'
+          TargetFolder: '$(build.artifactstagingdirectory)/infraTemplates'
+       - task: PublishBuildArtifacts@1
+         displayName:
+
+
+ - stage: 'Deploy_Dev'
+   dependsOn: build_dev
+   variables:
+    - group: env-var-ui-prod
+   jobs:
+  #  - deployment: validateAndDeployInfra 
+  #    environment: prod_infra_ui
+  #    strategy:
+  #     runOnce:
+  #       deploy:          
+  #         steps:
+  #           - task: DownloadBuildArtifacts@1
+  #             inputs:
+  #              buildType: current
+  #              downloadType: single
+  #              artifactName: 'drop'
+  #              downloadPath: '$(System.DefaultWorkingDirectory)'
+  #           - task: AzureCLI@2
+  #             displayName: 'run preflight validation'
+  #             inputs: 
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               scriptType: bash
+  #               scriptLocation: inlineScript
+  #               inlineScript: |
+  #                 az deployment group validate --resource-group $(prodResourceGroupName) --template-file '$(System.DefaultWorkingDirectory)/drop/infraTemplates/infra/PROD_Infra/uiProd.bicep' --parameters serverfarms_ASP_RGMCAPSHELPDEV_87a4_name='$(serverfarms_ASP_RGMCAPSHELPDEV_87a4_name)' prodFrontend='$(prodFrontend)'
+   
+  #           - task: AzureCLI@2
+  #             displayName: 'Deploy Bicep to Azure'
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               scriptType: bash
+  #               scriptLocation: inlineScript
+  #               inlineScript: |
+  #                 az deployment group create --mode incremental --name $(Build.BuildNumber) --resource-group $(prodResourceGroupName) \
+  #                 --template-file '$(System.DefaultWorkingDirectory)/drop/infraTemplates/infra/PROD_Infra/uiProd.bicep' --parameters serverfarms_ASP_RGMCAPSHELPDEV_87a4_name='$(serverfarms_ASP_RGMCAPSHELPDEV_87a4_name)' prodFrontend='$(prodFrontend)'
+
+   - deployment: DeployJob
+     dependsOn: validateAndDeployInfra
+     environment: prod_ui
+     strategy:
+      runOnce:
+       deploy:         
+        steps:
+            - task: DownloadBuildArtifacts@1
+              displayName: 'Download Build: MCAPSHelpUI.zip'
+              inputs:
+                buildType: 'current'
+                downloadType: 'single'
+                artifactName: 'drop'
+                itemPattern: '**/MCAPSHelpUI.zip'
+                downloadPath: '$(system.defaultworkingdirectory)'
+          
+            - task: AzureRmWebAppDeployment@4
+              displayName: 'Deploy UI to mcapshelpuat'
+              inputs:
+                ConnectionType: 'AzureRM'
+                azureSubscription: 'MCAPSHelp PROD'
+                appType: 'webApp'
+                WebAppName: '$(prodFrontend)'
+                packageForLinux: '$(system.defaultworkingdirectory)/**/*.zip'
+                enableXmlTransform: true
+            
+            - task: AzureAppServiceSettings@1
+              displayName: 'Add/Update Azure App Service Settings'
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                appName: '$(prodFrontend)'
+                resourceGroupName: '$(prodResourceGroupName)'
+                appSettings: | 
+                  [
+                    {
+                      "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                      "value": "$(APPLICATIONINSIGHTS_CONNECTION_STRING)",
+                      "slotSetting": false
+                    },
+                    {
+                      "name": "XDT_MicrosoftApplicationInsights_Mode",
+                      "value": "$(XDT_MicrosoftApplicationInsights_Mode)",
+                      "slotSetting": true
+                    },
+                    {
+                      "name": "WEBSITE_ENABLE_SYNC_UPDATE_SITE",
+                      "value": "$(WEBSITE_ENABLE_SYNC_UPDATE_SITE)",
+                      "slotSetting": false
+                    },
+                    {
+                      "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                      "value": "$(APPINSIGHTS_INSTRUMENTATIONKEY)",
+                      "slotSetting": true
+                    },
+                    {
+                      "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
+                      "value": "$(ApplicationInsightsAgent_EXTENSION_VERSION)",
+                      "slotSetting": true
+                    },
+                    {
+                      "name": "DiagnosticServices_EXTENSION_VERSION",
+                      "value": "$(DiagnosticServices_EXTENSION_VERSION)",
+                      "slotSetting": true
+                    },
+                    {
+                      "name": "InstrumentationEngine_EXTENSION_VERSION",
+                      "value": "$(InstrumentationEngine_EXTENSION_VERSION)",
+                      "slotSetting": true
+                    },
+                    {
+                      "name": "XDT_MicrosoftApplicationInsights_BaseExtensions",
+                      "value": "$(XDT_MicrosoftApplicationInsights_BaseExtensions)"
+                    }
+                  ]
+
+
+ - stage: build_uat 
+   condition: eq(variables['Build.SourceBranch)'], 'refs/heads/PreMain_UAT')
+   jobs:
+   - job: CodeQLInitJob
+     displayName: 'Initialize CodeQL Database'
+
+     steps: 
+     - task: CodeQL3000Init@0
+       displayName: 'Initialize CodeQL'
+       
+   - job: BuildUI
+     dependsOn: CodeQLInitJob
+     steps:
+     - task: UseNode@1
+       inputs:
+         version: '20.x'
+         checkLatest: true
+       displayName: 'Install Node.js'
+    
+
+     - task: Npm@1
+       displayName: 'npm cache clean'
+       inputs:
+        command: 'custom'
+        workingDir: $(uiSource)
+        verbose: false
+        customCommand: 'cache clean --force'
+    
+    
+     - task: Npm@1
+       displayName: 'npm install'
+       inputs:
+        command: 'install'
+        workingDir: '$(uiSource)'
+        verbose: true
+    
+     - script: |
+         npm run build:UAT
+       workingDirectory: $(uiSource)
+       displayName: 'npm build'
+       
+    #  - task: Npm@1
+    #    inputs:
+    #     command: 'custom'
+    #     workingDir: '$(uiSource)'
+    #     verbose: true
+    #     customCommand: 'run-script build:UAT'
+    #    displayName: 'npm run build:UAT'
+  
+     - task: CopyFiles@2
+       inputs:
+        sourceFolder: '$(uiBuild)'
+        contents: '**/*'
+        targetFolder: '$(Build.ArtifactStagingDirectory)'
+       displayName: 'Copy project files'
+    
+    
+     - task: ArchiveFiles@2
+       displayName: 'Archive build from: $(Build.ArtifactStagingDirectory)'
+       inputs:
+        rootFolderOrFile: $(Build.ArtifactStagingDirectory)
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/MCAPSHelpUI.zip'
+        includeRootFolder: false
+
+     - task: CodeQL3000Finalize@0     
+       displayName: 'CodeQL Finalize'   
+       condition: succeededOrFailed()
+     - task: PublishBuildArtifacts@1
+       displayName: 'Publish built artifact'
+       inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/MCAPSHelpUI.zip'
+
+   - job: DeployInfraFiles
+     dependsOn: BuildUI
+     displayName: 'Deploy Infra files'
+     steps:
+       - task: CopyFiles@2
+         displayName: 'Copy Infra files'
+         inputs:
+          SourceFolder: '$(System.DefaultWorkingDirectory)'
+          Contents: 'infra/PROD_Infra/**'
+          TargetFolder: '$(build.artifactstagingdirectory)/infraTemplates'
+       - task: PublishBuildArtifacts@1
+         displayName:
+
+
+ - stage: 'Deploy_UAT'
+   dependsOn: build_uat
+   variables:
+    - group: env-var-ui-uat
+   jobs:
+
+  #  - deployment: validateAndDeployInfra 
+  #    environment: uat_ui
+  #    strategy:
+  #     runOnce:
+  #       deploy:          
+  #         steps:
+  #           - task: AzureCLI@2
+  #             displayName: 'run preflight validation'
+  #             inputs: 
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               scriptType: bash
+  #               scriptLocation: inlineScript
+  #               inlineScript: |
+  #                az deployment group validate \
+  #                --resource-group $(prodResourceGroupName) --template-file infra/PROD_Infra/uiDev.bicep --parameters serverfarms_ASP_RGMCAPSHELPDEV_87a4_name='$(serverfarms_ASP_RGMCAPSHELPDEV_87a4_name)' prodFrontend='$(prodFrontend)'
+   
+  #           - task: AzureCLI@2
+  #             displayName: 'Deploy Bicep to Azure'
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               scriptType: bash
+  #               scriptLocation: inlineScript
+  #               inlineScript: |
+  #                 az deployment group create --mode incremental --name $(Build.BuildNumber) --resource-group $(prodResourceGroupName) \
+  #                 --template-file infra/PROD_Infra/uiDev.bicep --parameters serverfarms_ASP_RGMCAPSHELPDEV_87a4_name='$(serverfarms_ASP_RGMCAPSHELPDEV_87a4_name)' prodFrontend='$(prodFrontend)'
+
+   - deployment: DeployJob
+    #  dependsOn: validateAndDeployInfra
+     environment: uat_ui
+     strategy:
+      runOnce:
+       deploy:         
+        steps:
+            - task: DownloadBuildArtifacts@1
+              displayName: 'Download Build: MCAPSHelpUI.zip'
+              inputs:
+                buildType: 'current'
+                downloadType: 'single'
+                artifactName: 'drop'
+                itemPattern: '**/MCAPSHelpUI.zip'
+                downloadPath: '$(system.defaultworkingdirectory)'
+          
+            - task: AzureRmWebAppDeployment@4
+              displayName: 'Deploy UI to mcapshelpuat'
+              inputs:
+                ConnectionType: 'AzureRM'
+                azureSubscription: 'MCAPS Help Non-Prod Deployment'
+                appType: 'webApp'
+                WebAppName: '$(uatFrontend)'
+                packageForLinux: '$(system.defaultworkingdirectory)/**/*.zip'
+                enableXmlTransform: true
+            
+            - task: AzureAppServiceSettings@1
+              displayName: 'Add/Update Azure App Service Settings'
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                appName: '$(uatFrontend)'
+                resourceGroupName: '$(uatResourceGroupName)'
+                appSettings: | 
+                  [
+                    {
+                      "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                      "value": "$(APPLICATIONINSIGHTS_CONNECTION_STRING)",
+                      "slotSetting": false
+                    },
+                    {
+                      "name": "XDT_MicrosoftApplicationInsights_Mode",
+                      "value": "$(XDT_MicrosoftApplicationInsights_Mode)",
+                      "slotSetting": true
+                    },
+                    {
+                      "name": "WEBSITE_ENABLE_SYNC_UPDATE_SITE",
+                      "value": "$(WEBSITE_ENABLE_SYNC_UPDATE_SITE)",
+                      "slotSetting": false
+                    },
+                    {
+                      "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                      "value": "$(APPINSIGHTS_INSTRUMENTATIONKEY)",
+                      "slotSetting": true
+                    },
+                    {
+                      "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
+                      "value": "$(ApplicationInsightsAgent_EXTENSION_VERSION)",
+                      "slotSetting": true
+                    },
+                    {
+                      "name": "DiagnosticServices_EXTENSION_VERSION",
+                      "value": "$(DiagnosticServices_EXTENSION_VERSION)",
+                      "slotSetting": true
+                    },
+                    {
+                      "name": "InstrumentationEngine_EXTENSION_VERSION",
+                      "value": "$(InstrumentationEngine_EXTENSION_VERSION)",
+                      "slotSetting": true
+                    },
+                    {
+                      "name": "XDT_MicrosoftApplicationInsights_BaseExtensions",
+                      "value": "$(XDT_MicrosoftApplicationInsights_BaseExtensions)"
+                    }
+                  ]
+
+ - stage: build_prod
+   condition: eq(variables['Build.SourceBranch)'], 'refs/heads/PreMain_UAT')
+  #  dependsOn: build_uat
+   jobs:
+   - job: CodeQLInitJob
+     displayName: 'Initialize CodeQL Database'
+
+     steps: 
+     - task: CodeQL3000Init@0
+       displayName: 'Initialize CodeQL'
+       
+   - job: BuildUI
+     dependsOn: CodeQLInitJob
+     steps:
+     - task: UseNode@1
+       inputs:
+         version: '20.x'
+         checkLatest: true
+       displayName: 'Install Node.js'
+    
+
+     - task: Npm@1
+       displayName: 'npm cache clean'
+       inputs:
+        command: 'custom'
+        workingDir: $(uiSource)
+        verbose: false
+        customCommand: 'cache clean --force'
+    
+    
+     - task: Npm@1
+       displayName: 'npm install'
+       inputs:
+        command: 'install'
+        workingDir: '$(uiSource)'
+        verbose: true
+    
+     - script: |
+         npm run build:PROD
+       workingDirectory: $(uiSource)
+       displayName: 'npm build'
+       
+    #  - task: Npm@1
+    #    inputs:
+    #     command: 'custom'
+    #     workingDir: '$(uiSource)'
+    #     verbose: true
+    #     customCommand: 'run-script build:UAT'
+    #    displayName: 'npm run build:UAT'
+  
+     - task: CopyFiles@2
+       inputs:
+        sourceFolder: '$(uiBuild)'
+        contents: '**/*'
+        targetFolder: '$(Build.ArtifactStagingDirectory)'
+       displayName: 'Copy project files'
+    
+    
+     - task: ArchiveFiles@2
+       displayName: 'Archive build from: $(Build.ArtifactStagingDirectory)'
+       inputs:
+        rootFolderOrFile: $(Build.ArtifactStagingDirectory)
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/MCAPSHelpUI.zip'
+        includeRootFolder: false
+
+     - task: CodeQL3000Finalize@0     
+       displayName: 'CodeQL Finalize'   
+       condition: succeededOrFailed()
+     - task: PublishBuildArtifacts@1
+       displayName: 'Publish built artifact'
+       inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/MCAPSHelpUI.zip'
+
+   - job: DeployInfraFiles
+     dependsOn: BuildUI
+     displayName: 'Deploy Infra files'
+     steps:
+       - task: CopyFiles@2
+         displayName: 'Copy Infra files'
+         inputs:
+          SourceFolder: '$(System.DefaultWorkingDirectory)'
+          Contents: 'infra/PROD_Infra/**'
+          TargetFolder: '$(build.artifactstagingdirectory)/infraTemplates'
+       - task: PublishBuildArtifacts@1
+         displayName:
+
+
+ - stage: 'Deploy_PROD'
+   dependsOn: build_prod
+   variables:
+    - group: env-var-ui-prod
+   jobs:
+#    - deployment: validateAndDeployInfra 
+#      environment: prod_infra_ui
+#      strategy:
+#       runOnce:
+#         deploy:          
+#           steps:
+#             - task: DownloadBuildArtifacts@1
+#               inputs:
+#                buildType: current
+#                downloadType: single
+#                artifactName: 'drop'
+#                downloadPath: '$(System.DefaultWorkingDirectory)'
+#             - task: AzureCLI@2
+#               displayName: 'run preflight validation'
+#               inputs: 
+#                 azureSubscription: 'MCAPSHelp PROD'
+#                 scriptType: bash
+#                 scriptLocation: inlineScript
+#                 inlineScript: |
+#                   az deployment group validate --resource-group $(prodResourceGroupName) --template-file '$(System.DefaultWorkingDirectory)/drop/infraTemplates/infra/PROD_Infra/uiProd.bicep' --parameters serverfarms_ASP_RGMCAPSHELPDEV_87a4_name='$(serverfarms_ASP_RGMCAPSHELPDEV_87a4_name)' prodFrontend='$(prodFrontend)'
+   
+#             - task: AzureCLI@2
+#               displayName: 'Deploy Bicep to Azure'
+#               inputs:
+#                 azureSubscription: 'MCAPSHelp PROD'
+#                 scriptType: bash
+#                 scriptLocation: inlineScript
+#                 inlineScript: |
+#                   az deployment group create --mode incremental --name $(Build.BuildNumber) --resource-group $(prodResourceGroupName) \
+#                   --template-file '$(System.DefaultWorkingDirectory)/drop/infraTemplates/infra/PROD_Infra/uiProd.bicep' --parameters serverfarms_ASP_RGMCAPSHELPDEV_87a4_name='$(serverfarms_ASP_RGMCAPSHELPDEV_87a4_name)' prodFrontend='$(prodFrontend)'
+
+   - deployment: DeployJob
+    #  dependsOn: validateAndDeployInfra
+     environment: prod_ui
+     strategy:
+      runOnce:
+       deploy:         
+        steps:
+            - task: DownloadBuildArtifacts@1
+              displayName: 'Download Build: MCAPSHelpUI.zip'
+              inputs:
+                buildType: 'current'
+                downloadType: 'single'
+                artifactName: 'drop'
+                itemPattern: '**/MCAPSHelpUI.zip'
+                downloadPath: '$(system.defaultworkingdirectory)'
+          
+            - task: AzureRmWebAppDeployment@4
+              displayName: 'Deploy UI to mcapshelpuat'
+              inputs:
+                ConnectionType: 'AzureRM'
+                azureSubscription: 'MCAPSHelp PROD'
+                appType: 'webApp'
+                WebAppName: '$(prodFrontend)'
+                packageForLinux: '$(system.defaultworkingdirectory)/**/*.zip'
+                enableXmlTransform: true
+            
+            - task: AzureAppServiceSettings@1
+              displayName: 'Add/Update Azure App Service Settings'
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                appName: '$(prodFrontend)'
+                resourceGroupName: '$(prodResourceGroupName)'
+                appSettings: | 
+                  [
+                    {
+                      "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                      "value": "$(APPLICATIONINSIGHTS_CONNECTION_STRING)",
+                      "slotSetting": false
+                    },
+                    {
+                      "name": "XDT_MicrosoftApplicationInsights_Mode",
+                      "value": "$(XDT_MicrosoftApplicationInsights_Mode)",
+                      "slotSetting": true
+                    },
+                    {
+                      "name": "WEBSITE_ENABLE_SYNC_UPDATE_SITE",
+                      "value": "$(WEBSITE_ENABLE_SYNC_UPDATE_SITE)",
+                      "slotSetting": false
+                    },
+                    {
+                      "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                      "value": "$(APPINSIGHTS_INSTRUMENTATIONKEY)",
+                      "slotSetting": true
+                    },
+                    {
+                      "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
+                      "value": "$(ApplicationInsightsAgent_EXTENSION_VERSION)",
+                      "slotSetting": true
+                    },
+                    {
+                      "name": "DiagnosticServices_EXTENSION_VERSION",
+                      "value": "$(DiagnosticServices_EXTENSION_VERSION)",
+                      "slotSetting": true
+                    },
+                    {
+                      "name": "InstrumentationEngine_EXTENSION_VERSION",
+                      "value": "$(InstrumentationEngine_EXTENSION_VERSION)",
+                      "slotSetting": true
+                    },
+                    {
+                      "name": "XDT_MicrosoftApplicationInsights_BaseExtensions",
+                      "value": "$(XDT_MicrosoftApplicationInsights_BaseExtensions)"
+                    }
+                  ]
+             
+        
+
+        

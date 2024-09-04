@@ -1,0 +1,138 @@
+.welcomePopup {
+    width: 576px;
+    /* height: 408px; */
+    height: 256px;
+    top: 278px;
+    left: 672px;
+    padding: 0px, 0px, 24px, 0px;
+    border-radius: 2px;
+    background: #FFFFFF;
+    margin-top: 12px;
+}
+
+.model-title {
+
+    width: 690px;
+    height: 48px;
+    top: 343px;
+    left: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+
+    font-family: Segoe UI;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0px;
+    text-align: left;
+}
+
+.model-body-text {
+    width: 480px;
+    height: 132px;
+    font-family: Segoe UI;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0px;
+    text-align: left;
+
+}
+
+.model-body {
+    margin-top: 90px;
+    padding-left: 24px;
+    padding-right: 24px;
+    margin-top: 12px;
+    width: 682px;
+    font-family: Segoe UI;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0px;
+    text-align: left;
+
+}
+/* width: 720px; */
+.model-footer {
+    width: 690px;
+    height: 32px;
+    gap: 12px;
+    margin-top: 12px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.model-paging {
+    width: 290px;
+    height: 32px;
+    font-family: Segoe UI;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0px;
+    text-align: left;
+    }
+
+.model-header {
+
+    font-family: Segoe UI;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0px;
+    text-align: left;
+    width: 480px;
+    height: 24px;
+    margin-top: 24px;
+    margin-left: 24px;
+
+
+}
+
+.model-date {
+
+    font-family: Segoe UI;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-left: 24px;
+}
+
+.image-section {
+    margin-left: 24px;
+    margin-right: 24px;
+    margin-top: 24px;
+
+}
+
+/* [class^="scrollableContent-"] {
+    overflow-x: hidden;
+    width: 685px;
+} */
+
+.scroll-welcome-container{
+    overflow-x: hidden;
+    width: 685px;
+}
+
+/* [class^="scrollableContent-"]  */
+/* .ms-Modal-scrollableContent{
+    scroll-behavior: auto;
+  scroll-snap-type: y proximity;
+  scroll-snap-align: start;
+} */
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.image-section {
+    height: 230px;
+}
+
+.btnOK{
+    padding-bottom: 15px;
+}

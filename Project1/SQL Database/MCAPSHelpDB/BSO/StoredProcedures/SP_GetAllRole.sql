@@ -1,0 +1,12 @@
+IF OBJECT_ID('[BSO].[GetAllRole]', 'P') IS NOT NULL
+BEGIN
+    DROP PROCEDURE [BSO].[GetAllRole];
+END
+GO
+CREATE PROCEDURE [BSO].[GetAllRole]
+AS
+BEGIN
+    SET NOCOUNT ON;
+	SELECT [Id],[Name] FROM [BSO].[Role] WITH (NOLOCK) WHERE IsActive = 1 ORDER BY [Name] 
+END;
+GO

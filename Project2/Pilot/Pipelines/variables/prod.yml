@@ -1,0 +1,8 @@
+variables:
+  azureSubscription: 'mct-copilot-prod'
+  resourceGroupName: 'mct-rg-copilot-prod'
+  environment: 'Prod'
+  location: 'WestUS'
+  WebAppName: 'mct-copilotapi-prod'
+  appName: mct-copilotapi-prod
+  keyVaultName: 'mct-kv-copilot-nonprod'

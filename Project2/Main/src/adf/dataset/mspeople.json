@@ -1,0 +1,21 @@
+{
+	"name": "mspeople",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Export",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "mspeople.xlsx",
+				"container": "mspeople"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}

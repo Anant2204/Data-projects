@@ -1,0 +1,130 @@
+
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    padding: 15px 0px 15px 0px;
+    color: #ffffff; /* Fluent UI text color or your desired text color */
+  }
+  
+  .dashboard-back-button {
+    font-size: 38px;
+    margin-right: 3px;
+    color: #0078d4;
+    margin-top: -21px;
+  }
+  
+  .dashboard-heading {
+    font-family: 'Segoe UI' !important;
+    font-size: 24px !important;
+    color: black !important;
+    font-weight: 600 !important;
+  }
+
+  .list-ticket-details
+  {
+    margin-right: 55px !important;
+    
+  }
+
+  /* .list-ticket-details .ms-DetailsRow:hover {
+    background-color: #fff !important;
+  } */
+
+  .status-circle
+  {
+    float: left;
+    margin-top: 7px;
+    margin-right: 15px;
+  }
+
+  .status-inner-content
+  {
+    margin-top: 5px;
+  }
+
+  .filter-section {
+    height: 48px;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 0 16px;
+    margin-bottom: 20px;
+    width: 96%;
+  }
+
+  /* Style for the dropdowns */
+  .filter-dropdown-container {
+    margin-right: 50px;
+    height: 32px;
+    width: 131px;
+  }
+
+  /* Style for the cross icon */
+  .cross-icon {
+    cursor: pointer;
+    color: #0064BF;
+    margin-right: 10px;
+    margin-left: 25px;
+
+  }
+
+  .clear-filter
+  {
+    cursor: pointer;
+  }
+
+  .filter-dropdown .ms-Dropdown-title{
+    border-color: #D1D1D1 !important;
+    font-size: 14px;
+  }
+
+  .filter-dropdown .ms-TextField-fieldGroup
+  {
+    border-color: #D1D1D1 !important;
+    font-size: 14px;
+  }
+
+  .filter-button
+  {
+    margin-left: 15px;
+  }
+
+  .filter-button-section
+  {
+    display:contents;
+    cursor: pointer;
+    justify-content: end;
+  }
+
+  .search-box .ms-SearchBox
+  {
+    border: 1px solid #8d8a87 !important;
+    width: 360px;
+    justify-content: end;
+  }
+
+/* .custom-details-list .ms-DetailsHeader-cell[data-item-key="TargetSystem"] {
+  max-width: 190px !important; 
+} */
+
+.custom-details-list .ms-DetailsRow {
+  min-width: 0 !important; 
+} 
+
+.custom-details-list .ms-DetailsHeader{
+  padding-top: 1px !important;
+  min-width: 0 !important; 
+}
+
+
+/* .custom-details-list .ms-DetailsHeader-cell:hover
+{
+  background: rgb(255 255 255);
+} */
+
+/* .custom-details-list .ms-DetailsHeader-cellSizer
+{
+  display: none;
+}
+ */

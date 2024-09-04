@@ -1,0 +1,27 @@
+trigger:
+- none
+
+pool:
+   vmImage: 'Ubuntu-latest'
+
+variables: 
+ repository: 'name of repository'
+ imagename: 'name of the image'
+ tag: 'tag of the image'
+ registry: 'name of the registry'
+
+
+stages:
+  - stage: ACRdeleteimage
+    jobs:
+      - job: Deleteimagesfromregistry
+        steps:
+           - task: AzureCLI@2
+             displayName: deleteimagesfromacr
+             inputs:
+               azureSubscription: 'mct-dev1'
+               scriptType: 'bash'
+               scriptLocation: 'inlineScript'
+               inlineScript: |
+                 az acr manifest list-metadata --name $(repository) --registry $(registry)
+                 az acr repository delete --name $(registry) --image $(imagename):$(tag)

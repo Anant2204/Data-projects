@@ -1,0 +1,138 @@
+
+.tableContainer {
+  width: 100%;
+  margin:10px 0px;
+  padding:0px 8px;
+}
+
+.tableHeader {
+  background:#0070c0;
+  color: white !important;
+}
+
+.tableCell {
+  vertical-align: top;
+  text-align: left;
+  width: 50%; /* Add this line to set the width to 50% */
+  box-sizing: border-box; /* Add this line to include padding and border in the width */
+}
+.tableCell .serviceGroupText{
+  font-size: 14px!important;
+  margin-left: 6px;
+}
+.serviceGroupText  {
+  font-family: 'Segoe UI';
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding:5px 0px;
+}
+
+.requestTypeText {
+  font-family: 'Segoe UI';
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 23px;
+  letter-spacing: 0em;
+  text-align: left;
+  vertical-align: top; 
+}
+
+.requestTypeHeader {
+  padding-left: 10px;
+}
+
+.tableSpacer {
+  height: 7px;
+
+}
+.linebreak{
+  height: 7px;
+  border-bottom: 1px solid #E6DEDE;
+  position: relative;
+  left: 44%;
+  transform: translateX(-50%);
+  width: 200%;
+  margin: 0 auto;
+  margin-bottom: 2vw;
+}
+
+.serviceGroupDescriptionText {
+  white-space: normal;
+  margin-left: 6px;
+  font-family: 'Segoe UI';
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 23px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.tableheading span{
+  font-size: 14px!important;
+  padding: 5px 8px;
+}
+
+.service-info-panel .ms-Panel-content{
+  margin-top: -10px;
+}
+
+.p-element{
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  margin: 5px 0 0 auto;
+}
+
+.ecif-stack{
+  height: 32px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.ecif-dropdown {
+  width: 360px;
+  overflow-x: auto;
+}
+
+.ecif-textbox {
+  width: 200px;
+}
+
+.ecif-button {
+  width: 87px;
+}
+
+.ecif-container{
+  width: 100%;
+  margin:10px 0 0 0;
+  overflow-y: auto;
+  height: 250px;
+}
+
+.ecif-table{
+  width: 150%;
+  overflow-x: auto;
+}
+
+.ecif-table-row{
+  font-size: 12px;
+  font-family: 'Segoe UI';
+  border-top: 1px solid #F0F0F0;
+  /* white-space: nowrap; */
+  padding: 8px;
+}
+
+.ecif-table-header{
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.ecif-table-column{ 
+  white-space: nowrap;
+  padding: 8px 8px 8px 0;
+  font-weight: 600;
+  line-height: 16px;
+  font-size: 12px;
+}

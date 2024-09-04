@@ -1,0 +1,19 @@
+/* .ms-Panel-headerText {
+    display: none;
+  } */
+  .profilebutton {
+    margin-left: 5px;
+  }
+  
+  .ms-Panel-content {
+    margin-top: 10px;
+  }
+  
+  button.ms-Button.ms-Panel-closeButton.ms-PanelAction-close {
+    margin-top: 10px;
+  }
+  
+  .ms-Panel-headerText {
+    padding-top: 10px;
+  }
+  

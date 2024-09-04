@@ -1,0 +1,33 @@
+{
+	"name": "MCT_Usp_Data_Validation",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data validation",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[report].[Usp_DataValidation]"
+				},
+				"linkedServiceName": {
+					"referenceName": "pac_sql_prd",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "MCT"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-11-24T14:42:12Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

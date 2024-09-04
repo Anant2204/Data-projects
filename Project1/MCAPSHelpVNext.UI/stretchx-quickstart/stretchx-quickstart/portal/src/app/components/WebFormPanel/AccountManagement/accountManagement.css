@@ -1,0 +1,6 @@
+#fluent-default-layer-host .formClass .ms-Panel-contentInner {
+    margin-bottom: 40px;
+}
+#fluent-default-layer-host .formClass .ms-Panel-scrollableContent{
+    overflow-x: hidden;
+}

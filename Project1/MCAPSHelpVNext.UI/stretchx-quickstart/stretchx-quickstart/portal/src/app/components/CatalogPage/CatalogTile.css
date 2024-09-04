@@ -1,0 +1,239 @@
+.catalog_tileContainer{
+  margin-left: 10px;
+    margin-right: 45px;
+    min-height: 450px;
+    /* width:calc(100% + 50px); */
+
+}
+/* .catalogTiles {
+    min-width: 325px !important;
+    padding: 16px !important;
+} */
+
+.tileHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 2em;
+  }
+
+.checkboxContainer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 8px;
+}
+
+.is-disabled {
+    pointer-events: none;
+}
+
+.tileContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    height: auto;
+    align-items: flex-start; /* Adjusted to allow dynamic height based on content */
+    cursor: pointer;
+  }
+
+.Catalog_tileDesc {
+    font-family: Segoe UI;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    padding: 0;
+    margin: 8px 0px 0px 0px;
+    height: 48px;
+    position: relative;
+    align-self: flex-start;
+}
+
+
+.lockIconContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 13px;
+  }
+  
+
+.lockIcon {
+    cursor: pointer;
+}
+
+
+.tooltip-host {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.tooltip-content {
+    position: relative;
+    top: 0;
+    left: 5px;
+    padding: 5px;
+    color: #000;
+}
+
+  
+
+/* ------------------------------------------------------------------New MockUp UI--------------------------------------------------------------------------------- */
+
+.Catalog_multipleTiles {
+  flex: 1; /* each tile takes up an equal amount of space */
+  min-width:230px;
+  max-width: 230px;
+  height: 135px; /* adjust as needed */
+  border: 1px solid #EBEBEB; /* white border */
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.0); /* shadow effect */
+  margin-right: 16px;
+  margin-bottom: 16px;
+  /* margin-left: 54px; */
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #ffffff; /* white background */
+}
+
+.Catalog_multipleTiles:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a box shadow on hover */
+}
+
+
+.Catalog_tileContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  height: auto;
+  align-items: flex-start; /* Adjusted to allow dynamic height based on content */
+}
+
+.Catalog_tileTitle {
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start; /* align title to the left */
+  align-items: baseline;
+  align-self: flex-start;
+  color: black ;
+  font-size: 16px; 
+  font-weight: 600;
+  height: 80px;
+  width: 179px;
+  margin-left: 0; /* remove left margin */
+}
+
+.Catalog_separator {
+  border-bottom: 1px solid #F0F0F0;
+  margin: 2px 0px 2px 0px;
+}
+
+.Catalog_info-icon {
+  margin-left: 190px;
+  position: absolute;
+  font-family: 'Fluent UI Icons';
+  display: inline-block;
+  font-size: 12px;
+  color: #005A9E;
+  margin-top: 7px;
+  cursor: pointer;
+}
+
+.Catalog_info-icon:hover .Catalog_tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.Catalog_tooltip {
+  visibility: hidden;
+  width: 240px;
+  background-color: #333333;
+  text-align: left;
+  text-align-last: 10px;
+  border-radius: 4px;
+  padding: 5px;
+  margin-left: -15px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 12px;
+  position: absolute;
+  top: calc(100% + 0px); /* Adjust this value to control the vertical position */
+  left: 75%;
+  transform: translateX(-50%);
+  background-color: #333333;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.Catalog_tooltip-content {
+  padding: 10px; /* Adjust the padding as needed */
+  color: #fff !important;
+  font-family: 'Segoe UI' !important;
+}
+
+.Catalog_arrow-up {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #333333;
+  top: -9px;
+  left: 55%;
+  transform: translateX(-50%);
+}
+
+.tile-add-button {
+    position: relative;
+    background-color: white;
+    /* Change the background color to white */
+    color: #106ebe;
+    /* Change the text color to blue */
+    border: none;
+    /* Remove the border */
+    padding: 0px 6px 2px 0px;
+    /* Add some padding to the button */
+    cursor: pointer;
+    /* Change the cursor to a pointer when hovering over the button */
+    font-weight: 600;
+    /* Make the text light */
+    border-radius: 5px;
+    /* Add some border radius to make the button round */
+    display: flex;
+    align-items: center;
+    /* Align items vertically in the center */
+    gap: 8px;
+    /* Adjust the gap between the icon and button as needed */
+  
+  }
+
+  .circular-checkmark-icon {
+    font-size: 16px;           /* Set your desired font size */
+  }
+  
+  .iconLeft.button.ms-Button,.iconLeft.button.ms-Button:hover{
+  background-color: rgb(243, 242, 241);
+    width: 25px!important;
+    height: 25px!important;
+    font-size: 10px !important;
+  }
+ .iconLeft span.ms-Button-flexContainer.flexContainer-259 i,
+ .iconRight span.ms-Button-flexContainer.flexContainer-259 i {
+    font-size: 10px;
+}
+.iconLeft.root-314:hover {
+  color: rgb(16, 110, 190);
+  background-color: rgb(243, 242, 241);
+  width: 29px;
+  height: 29px;
+}

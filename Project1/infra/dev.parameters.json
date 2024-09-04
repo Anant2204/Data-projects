@@ -1,0 +1,151 @@
+
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "uatAFDEndpoint": {
+      "value": ""
+    },
+    "uatAFDRoute": {
+      "value": ""
+    },
+    "uatApiURL": {
+      "value": ""
+    },
+    "uatfrontdoorName": {
+      "value": ""
+    },
+    "uatoriginGroup": {
+      "value": ""
+    },
+    "uatSecurityPolicy": {
+      "value": ""
+    },
+    "uatwafMode": {
+      "value": ""
+    },
+    "uatwafPolicyName": {
+      "value": ""
+    },
+    "resourceGroupNameAFD": {
+      "value": ""
+    },
+    "deployUatAFDEndpoint": {
+      "value": false
+    },
+    "location": {
+      "value": "South Central US"
+    },
+    "SQLServeradministratorLoginUserName": {
+      "value": "MxpaCatSrvice@microsoft.com"
+    },
+    "SQLServeradministratorsid": {
+      "value": "71414682-3274-4ada-86a4-16e5e10dbb77"
+    },
+    "SQLServeradministratortenantId": {
+      "value": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+    },
+    "SQLServerazureADOnlyAuthentication": {
+      "value": true
+    },
+    "sqlServerName": {
+      "value": "mcapshelp"
+    },
+    "deploySQLServerWithFailOverGroup": {
+      "value": false
+    },
+    "sqlServerFailOverGroupName": {
+      "value": "mcapshelpserverWithFailOverGroup"
+    },
+    "dbMaxSize": {
+      "value": 268435456000
+    },
+    "sqlDBName": {
+      "value": "mcapshelpdb"
+    },
+    "dbskuCapacity": {
+      "value": 100
+    },
+    "dbskuName": {
+      "value": "Standard"
+    },
+    "dbskuTier": {
+      "value": "Standard"
+    },
+    "deployDB": {
+      "value": false
+    },
+    "SecondarySQLServerName": {
+      "value": "mcapshelpdevsecondary"
+    },
+    "SecondarySQLServerLocation": {
+      "value": "Central US"
+    },
+    "deploySecondaryServer": {
+      "value": false
+    },
+    "SecondarySQLServeradministratorLogin": {
+      "value": "MxpaCatSrvice@microsoft.com"
+    },
+    "resourceGroupName": {
+      "value": "RG-MCAPSHELP-DEV"
+    },
+    "eventGridTopicName": {
+      "value": "MCAPSHELPEventGridTopic-DEV"
+    },
+    "eventGridName": {
+      "value": "EventGridDEV"
+    },
+    "deployEventGridTopic": {
+      "value": false
+    },
+    "logicAppName": {
+      "value": "SendEmailSynapsePipelineStatus"
+    },
+    "deploylogicApp": {
+      "value": false
+    },
+    "appServicePlanElasticScale": {
+      "value": false
+    },
+    "appServicePlanFamily": {
+      "value": "Pv3"
+    },
+    "appServicePlanKind": {
+      "value": "app"
+    },
+    "appServicePlanMinWorkerCount": {
+      "value": 1
+    },
+    "appServicePlanSize": {
+      "value": "P0v3"
+    },
+    "appServicePlanTier": {
+      "value": "Premium0V3"
+    },
+    "ASPlan": {
+      "value": "ASP-RGMCAPSHELPDEV-87a4"
+    },
+    "pSKUName": {
+      "value": "P0v3"
+    },
+    "deployAzureAppService": {
+      "value": true
+    },
+    "webAppName": {
+      "value": "mcapshelpjobs"
+    },
+    "webAppKind": {
+      "value": "app"
+    },
+    "allowedCors": {
+      "value": [
+        "https://mcapshelpdev.azurewebsites.net",
+        "https://mcapshelpdevapi.azurewebsites.net"
+      ]
+    },
+    "deployazureWebApp": {
+      "value": true
+    }
+  }
+}

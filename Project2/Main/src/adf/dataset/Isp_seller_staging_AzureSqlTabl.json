@@ -1,0 +1,17 @@
+{
+	"name": "Isp_seller_staging_AzureSqlTabl",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "pac_sql_prd",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Isp_seller_staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

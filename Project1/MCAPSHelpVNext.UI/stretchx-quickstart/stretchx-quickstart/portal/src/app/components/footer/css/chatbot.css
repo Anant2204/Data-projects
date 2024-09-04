@@ -1,0 +1,62 @@
+#fluent-default-layer-host .ms-Panel-main {
+    height: 99vh !important;
+    top: 0vh !important;
+    margin-right: 22px;
+    /* top: 18vh!important; */
+}
+
+#fluent-default-layer-host .ms-Panel-main-expand {
+    height: 87vh !important;
+    top: 9vh !important;
+}
+
+.bot-container {
+    position: fixed;
+    bottom: 20px;
+    z-index: 1000;
+    /* Add any other styles for .bot-container here */
+}
+
+.irisBot .ms-Panel-contentInner
+{
+    display: block !important;
+}
+
+.irisBot div[class^=modalBody-expand]>div:first-child, div[class^=modalBody]>div:first-child {
+    height: 87.7vh!important;
+}
+
+.iris-header [title="Expand"] {
+    display: none;
+}
+
+.iris-header
+{
+    pointer-events: none !important;
+}
+
+.iris-header [title="Start Over"] 
+{
+    pointer-events: auto !important;
+}
+
+@media screen and (min-width: 900px) {
+
+    .irisBot .ms-Panel-main
+    {
+        min-width: 25.1% !important;
+    }
+    
+}
+.fakebot-container{
+    width: 25.5%;
+    height: 93.5%;
+    right: 1%;
+    position: absolute;
+    bottom: 0%;
+}
+
+    
+
+
+       

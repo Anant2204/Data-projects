@@ -1,0 +1,9 @@
+CREATE PROCEDURE BSO.FindUser
+    @UPN NVARCHAR(255),
+    @UserADGroupID INT
+AS
+BEGIN
+    SELECT *
+    FROM BSO.[User]
+    WHERE UPN = @UPN AND UserADGroupID = @UserADGroupID;
+END;

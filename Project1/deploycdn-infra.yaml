@@ -1,0 +1,50 @@
+trigger: none
+
+pool:
+  name: mcapshelppool-vsogd
+
+
+variables:
+- name: cdnParametersJSON
+  value: '@./infra/cdn.parameters.json'
+- name: mainBicepFile
+  value: './infra/main.bicep'
+
+- name: cdnResourceGroup
+  value: 'RG-MCAPSHELP-PROD-CDN'
+
+steps:
+#  - task: AzureCLI@2
+#    displayName: Deploy CDN and Storage
+#    inputs:
+#     azureSubscription: 'MCAPSHelp PROD'
+#     scriptType: bash
+#     scriptLocation: inlineScript
+#     inlineScript: |
+#       az deployment group create --resource-group $(cdnResourceGroup) --mode Incremental --template-file $(mainBicepFile) --parameters $(cdnParametersJSON)
+
+
+- task: AzurePowerShell@5
+  inputs:
+    azureSubscription: 'MCAPS Help Non-Prod Deployment'
+    ScriptType: 'InlineScript'
+    Inline: |
+      $sourceVaultName = "MCAPSHELPKeyVaultDEV"
+              $secrets = Get-AzKeyVaultSecret -VaultName $sourceVaultName
+              
+              # Export the secrets (Note: This only exports secret names, not values)
+              $secrets | ForEach-Object { 
+                  $secretValue = Get-AzKeyVaultSecret -VaultName $sourceVaultName -Name $_.Name
+                  # Securely store the secret value for transfer
+                  Write-Host $secretValue
+              }
+              
+              # Target Key Vault in Tenant B
+            #   $targetVaultName = "TargetVaultName"
+              
+              # Import the secrets into the target Key Vault
+            #   foreach ($secret in $secrets) {
+            #       $secretValue = # Retrieve the securely stored secret value
+            #       Set-AzKeyVaultSecret -VaultName $targetVaultName -Name $secret.Name -SecretValue $secretValue
+            #   }
+    azurePowerShellVersion: 'LatestVersion'

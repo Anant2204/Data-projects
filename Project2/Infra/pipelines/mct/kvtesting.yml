@@ -1,0 +1,19 @@
+trigger:
+- none
+
+pool:
+   vmImage: 'Ubuntu-latest'
+
+stages:
+   - stage: Dev
+     jobs:
+      - job: Toaccessecrets
+        steps:
+         - task: AzureKeyVault@2
+           inputs:
+             azureSubscription: 'mct-dev1'
+             KeyVaultName: 'mct-dev1-kv-shared'
+             SecretsFilter: '*'
+             RunAsPreJob: false
+        
+

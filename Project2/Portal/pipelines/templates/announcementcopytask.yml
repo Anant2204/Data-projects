@@ -1,0 +1,56 @@
+parameters:
+- name: envName
+  type: string
+- name: 'subscription' 
+  type: string
+- name: 'storageAccountName'
+  type: string
+- name: 'containerName'
+  type: string
+- name: 'resourceGroup'
+  type: string
+- name: 'cdnProfileName'
+  type: string
+- name: 'endpointName'
+  type: string
+
+jobs:  
+- deployment: Deploy
+  displayName:  Copy to Blob Container
+  environment: ${{ parameters.envName }}
+  templateContext:
+    type: releaseJob
+    isProduction: true
+    inputs:
+    - input: pipelineArtifact
+      artifactName: drop 
+      targetPath: $(System.DefaultWorkingDirectory)/drop
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: ExtractFiles@1
+          displayName: Extract artifacts
+          inputs:
+            archiveFilePatterns: '$(System.DefaultWorkingDirectory)/drop/$(Build.BuildId).zip'
+            destinationFolder: '$(Pipeline.Workspace)/portal'
+            cleanDestinationFolder: true
+            overwriteExistingFiles: true    
+
+        - task: AzureCLI@2
+          displayName: Copy files to Blob Container
+          inputs:
+            azureSubscription: '${{ parameters.subscription }}'
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              az storage container create --name "${{ parameters.containerName }}" --account-name ${{ parameters.storageAccountName }} --auth-mode login
+              az storage blob upload-batch --account-name ${{ parameters.storageAccountName }} -d "${{ parameters.containerName }}" -s "$(Pipeline.Workspace)/portal" --auth-mode login --overwrite true
+        
+        - task: AzureCLI@2
+          displayName: Purge CDN endpoint
+          inputs:
+            azureSubscription: '${{ parameters.subscription }}'
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: 'az cdn endpoint purge --resource-group ${{ parameters.resourceGroup }} --profile-name ${{ parameters.cdnProfileName }} --name ${{ parameters.endpointName }} --no-wait --content-paths "/*"' 

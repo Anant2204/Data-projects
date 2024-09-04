@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{cc90cc66-ca66-4119-8f8e-13174349ae6d}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath />
+    <RootNamespace>MCT_auto</RootNamespace>
+    <AssemblyName>MCT_auto</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <IsLedgerOn>False</IsLedgerOn>
+    <QueryStoreCaptureMode>Auto</QueryStoreCaptureMode>
+    <QueryStoreDesiredState>ReadWrite</QueryStoreDesiredState>
+    <QueryStoreFlushInterval>900</QueryStoreFlushInterval>
+    <QueryStoreStatsInterval>60</QueryStoreStatsInterval>
+    <QueryStoreMaxPlansPerQuery>200</QueryStoreMaxPlansPerQuery>
+    <QueryStoreStaleQueryThreshold>30</QueryStoreStaleQueryThreshold>
+    <QueryStoreMaxStorageSize>100</QueryStoreMaxStorageSize>
+    <DbScopedConfigLegacyCardinalityEstimation>Off</DbScopedConfigLegacyCardinalityEstimation>
+    <DbScopedConfigMaxDOP>0</DbScopedConfigMaxDOP>
+    <DbScopedConfigParameterSniffing>On</DbScopedConfigParameterSniffing>
+    <DbScopedConfigOptimizerHotfixes>Off</DbScopedConfigOptimizerHotfixes>
+    <DelayedDurability>DISABLED</DelayedDurability>
+    <AutoCreateStatisticsIncremental>False</AutoCreateStatisticsIncremental>
+    <MemoryOptimizedElevateToSnapshot>False</MemoryOptimizedElevateToSnapshot>
+    <Containment>None</Containment>
+    <IsNestedTriggersOn>True</IsNestedTriggersOn>
+    <IsTransformNoiseWordsOn>False</IsTransformNoiseWordsOn>
+    <TwoDigitYearCutoff>2049</TwoDigitYearCutoff>
+    <NonTransactedFileStreamAccess>OFF</NonTransactedFileStreamAccess>
+    <TargetRecoveryTimePeriod>60</TargetRecoveryTimePeriod>
+    <TargetRecoveryTimeUnit>SECONDS</TargetRecoveryTimeUnit>
+    <IsChangeTrackingOn>False</IsChangeTrackingOn>
+    <IsChangeTrackingAutoCleanupOn>True</IsChangeTrackingAutoCleanupOn>
+    <ChangeTrackingRetentionPeriod>2</ChangeTrackingRetentionPeriod>
+    <ChangeTrackingRetentionUnit>Days</ChangeTrackingRetentionUnit>
+    <IsEncryptionOn>True</IsEncryptionOn>
+    <IsBrokerPriorityHonored>False</IsBrokerPriorityHonored>
+    <Trustworthy>False</Trustworthy>
+    <AutoUpdateStatisticsAsynchronously>False</AutoUpdateStatisticsAsynchronously>
+    <PageVerify>CHECKSUM</PageVerify>
+    <ServiceBrokerOption>EnableBroker</ServiceBrokerOption>
+    <DateCorrelationOptimizationOn>False</DateCorrelationOptimizationOn>
+    <Parameterization>SIMPLE</Parameterization>
+    <AllowSnapshotIsolation>False</AllowSnapshotIsolation>
+    <ReadCommittedSnapshot>True</ReadCommittedSnapshot>
+    <VardecimalStorageFormatOn>True</VardecimalStorageFormatOn>
+    <SupplementalLoggingOn>False</SupplementalLoggingOn>
+    <CompatibilityMode>150</CompatibilityMode>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <AnsiNullDefault>True</AnsiNullDefault>
+    <AnsiNulls>True</AnsiNulls>
+    <AnsiPadding>True</AnsiPadding>
+    <AnsiWarnings>True</AnsiWarnings>
+    <ArithAbort>True</ArithAbort>
+    <ConcatNullYieldsNull>True</ConcatNullYieldsNull>
+    <QuotedIdentifier>True</QuotedIdentifier>
+    <NumericRoundAbort>False</NumericRoundAbort>
+    <RecursiveTriggersEnabled>False</RecursiveTriggersEnabled>
+    <DatabaseChaining>False</DatabaseChaining>
+    <DatabaseState>ONLINE</DatabaseState>
+    <CloseCursorOnCommitEnabled>False</CloseCursorOnCommitEnabled>
+    <DefaultCursor>GLOBAL</DefaultCursor>
+    <AutoClose>False</AutoClose>
+    <AutoCreateStatistics>True</AutoCreateStatistics>
+    <AutoShrink>False</AutoShrink>
+    <AutoUpdateStatistics>True</AutoUpdateStatistics>
+    <TornPageDetection>False</TornPageDetection>
+    <DatabaseAccess>MULTI_USER</DatabaseAccess>
+    <Recovery>FULL</Recovery>
+    <EnableFullTextSearch>True</EnableFullTextSearch>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DataRetentionEnabled>False</DataRetentionEnabled>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="HR\" />
+    <Folder Include="HR\Tables\" />
+    <Folder Include="HR\Views\" />
+    <Folder Include="HRRead\" />
+    <Folder Include="HRRead\Views\" />
+    <Folder Include="Security\" />
+    <Folder Include="dbo\Functions\" />
+    <Folder Include="HR\Functions\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="HR\Stored Procedures\" />
+    <Folder Include="Scripts\" />
+    <Folder Include="PostDeploymentScripts" />
+    <Folder Include="report" />
+    <Folder Include="report\Views" />
+    <Folder Include="report\Tables" />
+    <Folder Include="report\Stored Procedure" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Employee_CYData.sql" />
+    <Build Include="dbo\Tables\Employee_CYData_Staging.sql" />
+    <Build Include="dbo\Tables\HRDataLake_CYData.sql" />
+    <Build Include="dbo\Tables\HRDataLake_CYData_Staging.sql" />
+    <Build Include="dbo\Tables\HRDataLake_CYData_staging_V2.sql" />
+    <Build Include="dbo\Tables\Isp_careerstage.sql" />
+    <Build Include="dbo\Tables\Isp_careerstage_staging.sql" />
+    <Build Include="dbo\Tables\Isp_costcenter.sql" />
+    <Build Include="dbo\Tables\Isp_costcenter_staging.sql" />
+    <Build Include="dbo\Tables\Isp_country.sql" />
+    <Build Include="dbo\Tables\Isp_country_staging.sql" />
+    <Build Include="dbo\Tables\Isp_discipline.sql" />
+    <Build Include="dbo\Tables\Isp_discipline_staging.sql" />
+    <Build Include="dbo\Tables\Isp_incentiveplan.sql" />
+    <Build Include="dbo\Tables\Isp_incentiveplan_staging.sql" />
+    <Build Include="dbo\Tables\Isp_jobrole.sql" />
+    <Build Include="dbo\Tables\Isp_jobrole_staging.sql" />
+    <Build Include="dbo\Tables\Isp_Org.sql" />
+    <Build Include="dbo\Tables\Isp_Org_staging.sql" />
+    <Build Include="dbo\Tables\Isp_qualifier1.sql" />
+    <Build Include="dbo\Tables\Isp_qualifier1_staging.sql" />
+    <Build Include="dbo\Tables\Isp_qualifier2.sql" />
+    <Build Include="dbo\Tables\Isp_qualifier2_staging.sql" />
+    <Build Include="dbo\Tables\Isp_rolesummary.sql" />
+    <Build Include="dbo\Tables\Isp_rolesummary_staging.sql" />
+    <Build Include="dbo\Tables\Isp_seller.sql" />
+    <Build Include="dbo\Tables\Isp_seller_staging.sql" />
+    <Build Include="dbo\Tables\Isp_worker.sql" />
+    <Build Include="dbo\Tables\Isp_worker_staging.sql" />
+    <Build Include="dbo\Tables\LOV_Data.sql" />
+    <Build Include="dbo\Tables\MCT_EDMAppovers1.sql" />
+    <Build Include="dbo\Tables\MCT_EDMAppoversmapping.sql" />
+    <Build Include="dbo\Tables\MCT_EDMAppoversmapping_Staging.sql" />
+    <Build Include="dbo\Tables\MCT_EDMApprovers.sql" />
+    <Build Include="dbo\Tables\MSPeople6_29.sql" />
+    <Build Include="dbo\Tables\PalReport_6_28.sql" />
+    <Build Include="dbo\Tables\PlanSeller.sql" />
+    <Build Include="dbo\Tables\PlanSeller_staging.sql" />
+    <Build Include="dbo\Tables\TBl_FYManagerMapping.sql" />
+    <Build Include="dbo\Tables\tempEmail.sql" />
+    <Build Include="dbo\Tables\tempEmailJudson.sql" />
+    <Build Include="HR\Tables\Brdg_AliasMgrMapping.sql" />
+    <Build Include="HR\Tables\ConversionTimeline.sql" />
+    <Build Include="HR\Tables\CY_Manager_DataCorrection.sql" />
+    <Build Include="HR\Tables\Dim_Managerhierarchy.sql" />
+    <Build Include="HR\Tables\Dim_Managerhierarchy_Staging.sql" />
+    <Build Include="HR\Tables\Dim_RoleChanges.sql" />
+    <Build Include="HR\Tables\ErrorLog.sql" />
+    <Build Include="HR\Tables\HRData_FutureManager.sql" />
+    <Build Include="HR\Tables\IncorrectManagerLog.sql" />
+    <Build Include="HR\Tables\ISP_FYManager_Data_Correction.sql" />
+    <Build Include="HR\Tables\MCT_EDM_Mapping.sql" />
+    <Build Include="HR\Tables\MCT_EDM_Mapping_Staging.sql" />
+    <Build Include="HR\Tables\Org_CostCenter_Mapping.sql" />
+    <Build Include="HR\Tables\Org_CostCenter_Mapping_Staging.sql" />
+    <Build Include="HR\Tables\Rpt_RoleChangesByIC.sql" />
+    <Build Include="HR\Tables\Scripts_Logic.sql" />
+    <Build Include="HR\Tables\Scripts_Template.sql" />
+    <Build Include="HR\Tables\TaxonomyChangeControl.sql" />
+    <Build Include="HR\Tables\Tbl_HRData.sql" />
+    <Build Include="HR\Tables\Tbl_HRData_Staging.sql" />
+    <Build Include="HR\Tables\Tbl_HRData_ToolInput.sql" />
+    <Build Include="HR\Tables\Tbl_HRData_ToolInput_backup.sql" />
+    <Build Include="HR\Tables\Tbl_HRData_ToolInput_staging.sql" />
+    <Build Include="HR\Tables\Tbl_ICRoleSelection.sql" />
+    <Build Include="HR\Tables\Tbl_Manager_ExceptionList.sql" />
+    <Build Include="HR\Tables\TBL_OrgLeader.sql" />
+    <Build Include="HR\Tables\TBL_Proxy.sql" />
+    <Build Include="HR\Tables\TBL_RoleChange.sql" />
+    <Build Include="HR\Tables\Tbl_Seller_Details.sql" />
+    <Build Include="HR\Tables\Tbl_Seller_Details_30thJune.sql" />
+    <Build Include="HR\Tables\Tbl_TestTimeZone.sql" />
+    <Build Include="HR\Tables\tmp_MCT_EDM_Mapping.sql" />
+    <Build Include="HR\Tables\tmp_names.sql" />
+    <Build Include="HR\Tables\tmp_names1.sql" />
+    <Build Include="HR\Tables\WelcomeScreen.sql" />
+    <Build Include="HR\Views\Vw_EDMCorrections.sql" />
+    <Build Include="HR\Views\Vw_EDMMapping_Org.sql" />
+    <Build Include="HR\Views\Vw_EDMMapping_RS.sql" />
+    <Build Include="HR\Views\Vw_HRdata.sql" />
+    <Build Include="HR\Views\Vw_ICAvialableRoles.sql" />
+    <Build Include="HR\Views\Vw_ISPExport.sql" />
+    <Build Include="HR\Views\Vw_ManagerList.sql" />
+    <Build Include="HR\Views\Vw_ManagerSecurity.sql" />
+    <Build Include="HR\Views\VW_MangerTimeline.sql" />
+    <Build Include="HR\Views\VW_MangerTimeline_New.sql" />
+    <Build Include="HR\Views\Vw_MCTRequestStatus.sql" />
+    <Build Include="HR\Views\Vw_MCTRequestStatus_old.sql" />
+    <Build Include="HR\Views\Vw_MCTSendingConversationComplete.sql" />
+    <Build Include="HR\Views\Vw_Pbi_HRdata.sql" />
+    <Build Include="HRRead\Views\Vw_ISP_Seller_Details.sql" />
+    <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="dbo\Functions\CheckAccess.sql" />
+    <Build Include="dbo\Functions\CheckAccess_Final.sql" />
+    <Build Include="HR\Functions\Ufn_GetCYManagers.sql" />
+    <Build Include="HR\Functions\Ufn_GetFYManagers.sql" />
+    <Build Include="dbo\Stored Procedures\Test_CheckManagerAccess.sql" />
+    <Build Include="dbo\Stored Procedures\EDMApproversmappingwithManagers.sql" />
+    <Build Include="dbo\Stored Procedures\ISP_MissingPersonLoad.sql" />
+    <Build Include="dbo\Stored Procedures\ISP_Seller_Load.sql" />
+    <Build Include="dbo\Stored Procedures\ISP_Seller_Load_After30thJune.sql" />
+    <Build Include="dbo\Stored Procedures\ISP_Sproc_exec.sql" />
+    <Build Include="dbo\Stored Procedures\Load_Employee_CYData.sql" />
+    <Build Include="dbo\Stored Procedures\Load_HRDataLake_CYData_from_ISP.sql" />
+    <Build Include="dbo\Stored Procedures\SwitchLiveToStage.sql" />
+    <Build Include="HR\Stored Procedures\Insert_MCT_EDM_Mapping.sql" />
+    <Build Include="HR\Stored Procedures\Insert_Org_CostCenter_Mapping.sql" />
+    <Build Include="HR\Stored Procedures\SwtichStagingToMainTable.sql" />
+    <Build Include="HR\Stored Procedures\Usp_checkscriptfile.sql" />
+    <Build Include="HR\Stored Procedures\Usp_Generate_ManagerHierarchy.sql" />
+    <Build Include="HR\Stored Procedures\Usp_Load_HR_BaseData.sql" />
+    <Build Include="HR\Stored Procedures\Usp_SubmitFyMgrTalksReponse.sql" />
+    <Build Include="HR\Stored Procedures\Usp_SubmitICRolePreferenceResponse.sql" />
+    <Build Include="HR\Stored Procedures\usp_Update_Manual_MgrError.sql" />
+    <Build Include="dbo\Tables\role.sql" />
+    <Build Include="dbo\Tables\user.sql" />
+    <Build Include="dbo\Tables\userRole.sql" />
+    <Build Include="dbo\Tables\permission.sql" />
+    <Build Include="dbo\Tables\feature.sql" />
+    <Build Include="dbo\Tables\featureRolePermissionMapping.sql" />
+    <Build Include="dbo\Tables\disableOrgFeatureMapping.sql" />
+    <Build Include="dbo\Tables\orgToolAccess.sql" />
+    <Build Include="dbo\Tables\regionToolAccess.sql" />
+    <Build Include="HR\Tables\Tbl_HRData_FYManagerCorrection.sql" />
+    <Build Include="HR\Functions\Ufn_CheckCircularReference.sql" />
+    <Build Include="Security\HR.sql" />
+    <Build Include="Security\HRRead.sql" />
+    <None Include="Scripts\ScriptsIgnoredOnImport.sql" />
+    <Build Include="HR\Stored Procedures\Usp_UpdateDiscipline_Profession_HRdata.sql" />
+    <Build Include="dbo\Stored Procedures\Usp_PopulateManagerAccessDetails.sql" />
+    <Build Include="dbo\Stored Procedures\CheckUserAccessForSelectedManager.sql" />
+    <Build Include="dbo\Stored Procedures\GetFutureManagerRequests.sql" />
+    <Build Include="dbo\Stored Procedures\GetManagersList.sql" />
+    <Build Include="dbo\Stored Procedures\GetRoleFeaturesAndPermissions.sql" />
+    <Build Include="dbo\Tables\userrole_staging.sql" />
+    <Build Include="dbo\Tables\user_staging.sql" />
+    <Build Include="dbo\Stored Procedures\GetConversationList.sql" />
+    <Build Include="dbo\Stored Procedures\GetSectionsDetails.sql" />
+    <PostDeploy Include="Script.PostDeployment1.sql" />
+    <Build Include="dbo\Tables\ScriptSegmentContent.sql" />
+    <Build Include="dbo\Tables\ScriptStaticContent.sql" />
+    <Build Include="dbo\Tables\ScriptOpeningContent.sql" />
+    <Build Include="dbo\Tables\ScriptExclusion.sql" />
+    <Build Include="dbo\Tables\SectionHeaderMapping.sql" />
+    <Build Include="dbo\Tables\ConversationEmailReminderLog.sql" />
+    <Build Include="HR\Tables\ScriptTaxonomyContent.sql" />
+    <Build Include="dbo\Stored Procedures\Usp_CleanupProxyUsers.sql" />
+    <None Include="PostDeploymentScripts\InternalSeedData.sql" />
+    <Build Include="HR\Tbl_Seller_Details_Staging.sql" />
+    <Build Include="dbo\Stored Procedures\GetProposedFyManagerForApprovals.sql" />
+    <Build Include="dbo\Stored Procedures\Usp_UpdateUserEmailId.sql" />
+    <Build Include="dbo\Tables\EmployeeConversations.sql" />
+    <Build Include="HR\Stored Procedures\UpdateConversationRequiredColumnData.sql" />
+    <Build Include="dbo\Stored Procedures\GetTaxonomyDetails.sql" />
+    <Build Include="dbo\Stored Procedures\FyManagerTwoLevelApprovalRequired.sql" />
+    <Build Include="dbo\Stored Procedures\AddAdminUsers.sql" />
+    <Build Include="dbo\Stored Procedures\CreateTestData_ForManagerAndProxy.sql" />
+    <Build Include="HR\Tables\Tbl_HRData_TaxonomyCorrection.sql" />
+    <Build Include="dbo\Stored Procedures\FYManagerCorrectionsApprovalAccess.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateFYManagerCorrectionsApprovalAccess.sql" />
+    <Build Include="dbo\Stored Procedures\GetTaxonomyCorrectionRequests.sql" />
+    <Build Include="dbo\Stored Procedures\Usp_Insert_OrgLeader_UserRole.sql" />
+    <Build Include="dbo\Stored Procedures\Usp_Delete_Script_Contributor.sql" />
+    <Build Include="dbo\Stored Procedures\Usp_Insert_Script_Contributor.sql" />
+    <Build Include="dbo\Stored Procedures\Usp_Delete_OrgLeader.sql" />
+    <Build Include="dbo\Stored Procedures\GetTaxonomyScriptContent.sql" />
+    <Build Include="dbo\Stored Procedures\UpsertTaxonomyScriptContentData.sql" />
+    <Build Include="dbo\Stored Procedures\Usp_Insert_EDM_Data_Keeper.sql" />
+    <Build Include="dbo\Stored Procedures\Usp_Delete_EDM_Data_Keeper.sql" />
+    <Build Include="dbo\Stored Procedures\Usp_Insert_Proxy.sql" />
+    <Build Include="dbo\Stored Procedures\Usp_Delete_Proxy.sql" />
+    <Build Include="HR\Tables\tmp_MCT_EDM_Mapping_CY.sql" />
+    <Build Include="HR\Tables\MCT_EDM_Mapping_CY.sql" />
+    <Build Include="HR\Tables\MCT_EDM_Mapping_CY_Staging.sql" />
+    <Build Include="dbo\Stored Procedures\Insert_MCT_EDM_Mapping_CY.sql" />
+    <Build Include="dbo\Tables\RoleDefaultFeatureMapping.sql" />
+    <Build Include="dbo\Tables\ToolRuntimeWindow.sql" />
+    <Build Include="Security\report.sql" />
+    <Build Include="report\Views\Vw_TaxonomyCorrectionRequests.sql" />
+    <Build Include="report\Views\Vw_FYManagerCorrectionRequests.sql" />
+    <Build Include="HR\Tables\TBL_Proxy_staging.sql" />
+    <Build Include="dbo\Tables\Configuration.sql" />
+    <Build Include="dbo\Stored Procedures\UpdateTitleForScriptTaxonomyContent.sql" />
+    <Build Include="dbo\Stored Procedures\Usp_CheckRowCountThreshold.sql" />
+    <Build Include="dbo\Tables\ErrorLogTable.sql" />
+    <Build Include="report\Tables\Validation_RowCountTable.sql" />
+    <Build Include="report\Stored Procedure\Usp_Validation_InsertEDMReviewstatus.sql" />
+    <Build Include="report\Stored Procedure\Usp_DataValidation.sql" />
+    <Build Include="report\Stored Procedure\Usp_Validation_InsertUserAccessRecordCount.sql" />
+    <Build Include="report\Stored Procedure\Usp_Validation_UpdateRowCount.sql" />
+    <Build Include="report\Tables\Validation_Reviewstatus.sql" />
+    <Build Include="report\Tables\Validation_userAccessRecordCount.sql" />
+    <Build Include="HR\Tables\mspeople.sql" />
+  </ItemGroup>
+</Project>

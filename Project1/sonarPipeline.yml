@@ -1,0 +1,107 @@
+# schedules:
+#   - cron: "30 16 * * *"
+#     displayName: 'Run at 18:00PM every day'
+#     always: true
+#     branches:
+#      include:
+#        - sonar_implementation_dharmendra
+
+name: MCAPSHelp_UI_$(Date:yyyyMMdd)$(Rev:.r)
+trigger:
+- none
+ 
+pool: 
+ name: ServicesDevOps-Vsogd
+ demands:
+   - imageOverride -equals MMS2022
+ 
+variables:
+  uiSource: 'MCAPSHelpVNext.UI/stretchx-quickstart/stretchx-quickstart/portal'
+  uiBuild: '$(uiSource)/build'
+ 
+ 
+stages:
+ 
+ - stage: Build
+   jobs:
+   - job: CodeQLInitJob
+     displayName: 'Initialize CodeQL Database'
+ 
+     steps: 
+     - task: CodeQL3000Init@0
+       displayName: 'Initialize CodeQL'
+
+   - job: BuildUI
+     steps:
+
+     - task: SonarQubePrepare@5
+       inputs:
+         SonarQube: 'ServicesSonarEndPoint'
+         scannerMode: 'CLI'
+         configMode: 'manual'
+         cliProjectKey: 'MCAPSHelp_UI_Vnext'
+         cliProjectName: 'MCAPSHELP_UI_Vnext_main_#TOOLS'
+         cliSources: '.'
+
+     - task: UseNode@1
+       inputs:
+        version: '16.x'
+       displayName: 'Install Node.js'
+    
+ 
+     - task: Npm@1
+       displayName: 'npm cache clean'
+       inputs:
+        command: 'custom'
+        workingDir: $(uiSource)
+        verbose: false
+        customCommand: 'cache clean --force'
+    
+    
+     - task: Npm@1
+       displayName: 'npm install'
+       inputs:
+        command: 'install'
+        workingDir: '$(uiSource)'
+        verbose: true
+    
+     - script: |
+        npm run build:PROD
+       workingDirectory: $(uiSource)
+       displayName: 'npm build'
+      
+     - task: SonarQubeAnalyze@5
+       inputs:
+         jdkversion: 'JAVA_HOME_11_X64'
+    #  - task: Npm@1
+    #    inputs:
+    #     command: 'custom'
+    #     workingDir: '$(uiSource)'
+    #     verbose: true
+    #     customCommand: 'run-script build:UAT'
+    #    displayName: 'npm run build:UAT'
+  
+
+     - task: CopyFiles@2
+       inputs:
+        sourceFolder: '$(uiBuild)'
+        contents: '**/*'
+        targetFolder: '$(Build.ArtifactStagingDirectory)'
+       displayName: 'Copy project files'
+    
+    
+     - task: ArchiveFiles@2
+       displayName: 'Archive build from: $(Build.ArtifactStagingDirectory)'
+       inputs:
+        rootFolderOrFile: $(Build.ArtifactStagingDirectory)
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/MCAPSHelpUI.zip'
+        includeRootFolder: false
+ 
+     - task: CodeQL3000Finalize@0     
+       displayName: 'CodeQL Finalize'   
+       condition: succeededOrFailed()
+     - task: PublishBuildArtifacts@1
+       displayName: 'Publish built artifact'
+       inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/MCAPSHelpUI.zip'

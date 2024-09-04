@@ -1,0 +1,1 @@
+webextension file will be copied in CICD pipeline during build

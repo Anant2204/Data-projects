@@ -1,0 +1,6 @@
+variables:
+  resourceGroup: "mct-rg-dev100" #Deploy env resource group
+  azureSubscription: "mct-dev1" #Deploy env DevOps service Connection
+  env: "DEV1"
+  location: "westus" #Default location for deployment
+  dateTime: $(Get-Date -Format yyyyMMddhhmmss)

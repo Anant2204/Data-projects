@@ -1,0 +1,43 @@
+/* global styles placeholder */
+
+body, html{
+  background-color: #F5F5F5 !important;
+}
+
+.header_logo {
+  height: 26px;
+    /* border-right: 2px solid white; */
+    padding-right: 23px;
+    margin-right: -11px;
+    cursor: pointer;
+    margin-left: 35px;
+}
+
+#app{
+  overflow: scroll;
+  overflow-x: hidden;
+  /* height: 100px; */
+}
+
+#app::-webkit-scrollbar {
+  width: 1px;
+}
+
+
+
+
+
+sw-todo-summary,
+sw-payment-summary,
+sw-datainsights-summary,
+sw-ccminvoice-summary,
+sw-po-summary,
+sw-tickets-summary,
+sw-invoice-summary,
+sw-recycling-tile,
+sw-supplier-summary,
+sw-sourcing-summary
+ {
+  width: 392px;
+  height: 230px;
+}

@@ -1,0 +1,301 @@
+{
+	"name": "MDM_Flow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Lake_HRMD01STIP",
+						"type": "DatasetReference"
+					},
+					"name": "HRMD01STIP"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Lake_HRMD01Role",
+						"type": "DatasetReference"
+					},
+					"name": "HRMD01Role"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Lake_HRMD01Qualifier1",
+						"type": "DatasetReference"
+					},
+					"name": "HRMD01Qualifier1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Lake_HRMD01Qualifier2",
+						"type": "DatasetReference"
+					},
+					"name": "HRMD01Qualifier2"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Lake_HRMD01CareerStage",
+						"type": "DatasetReference"
+					},
+					"name": "HRMD01CareerStage"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Lake_HRMD01CareerStageRole",
+						"type": "DatasetReference"
+					},
+					"name": "HRMD01CareerStageRole"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_MCT_EDM_Mapping",
+						"type": "DatasetReference"
+					},
+					"name": "Sink",
+					"description": "Export data to DS_MCT_EDM_Mapping"
+				}
+			],
+			"transformations": [
+				{
+					"name": "HRMD01STIPSelect"
+				},
+				{
+					"name": "HRMD01RoleSelect"
+				},
+				{
+					"name": "HRMD01Qualifier1Select"
+				},
+				{
+					"name": "HRMD01Qualifier2Select"
+				},
+				{
+					"name": "RoleSummaryJoin"
+				},
+				{
+					"name": "Qualifier1Join"
+				},
+				{
+					"name": "Qualifier2Join"
+				},
+				{
+					"name": "FinalSelect"
+				},
+				{
+					"name": "HRMD01STIPFilter"
+				},
+				{
+					"name": "HRMD01RoleFilter"
+				},
+				{
+					"name": "HRMD01Qualifier1Filter"
+				},
+				{
+					"name": "HRMD01Qualifier2Filter"
+				},
+				{
+					"name": "HRMD01CareerStageFilter"
+				},
+				{
+					"name": "HRMD01CareerStageRoleFilter"
+				},
+				{
+					"name": "CareerStage"
+				},
+				{
+					"name": "CareerStageSelect"
+				},
+				{
+					"name": "CareerStageJoin"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          StipId as string,",
+				"          ChannelOrganization as string,",
+				"          RoleId as string,",
+				"          Qualifier1Id as string,",
+				"          Qualifier2Id as string,",
+				"          IncentivePlanId as string,",
+				"          GTMPositionId as string,",
+				"          StartDate as timestamp,",
+				"          EndDate as timestamp,",
+				"          Status as string,",
+				"          Exception as boolean,",
+				"          Confidential as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> HRMD01STIP",
+				"source(output(",
+				"          RoleId as string,",
+				"          RoleName as string,",
+				"          SAPShortCode as string,",
+				"          RoleDescription as string,",
+				"          RoleAnalysisIndicator as boolean,",
+				"          RoleSummary as string,",
+				"          RoleType as string,",
+				"          DisciplineId as string,",
+				"          StartDate as timestamp,",
+				"          EndDate as timestamp,",
+				"          Status as string,",
+				"          Exception as boolean,",
+				"          Confidential as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> HRMD01Role",
+				"source(output(",
+				"          Qualifier1Id as string,",
+				"          Qualifier1Name as string,",
+				"          StartDate as timestamp,",
+				"          EndDate as timestamp,",
+				"          Status as string,",
+				"          Exception as boolean,",
+				"          Confidential as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> HRMD01Qualifier1",
+				"source(output(",
+				"          Qualifier2Id as string,",
+				"          Qualifier2Name as string,",
+				"          StartDate as timestamp,",
+				"          EndDate as timestamp,",
+				"          Status as string,",
+				"          Exception as boolean,",
+				"          Confidential as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> HRMD01Qualifier2",
+				"source(output(",
+				"          CareerStageId as string,",
+				"          CareerStageName as string,",
+				"          CareerStagePrefix as string,",
+				"          CareerStageSuffix as string,",
+				"          ManagerIndicatorID as string,",
+				"          ManagerIndicator as string,",
+				"          StartDate as timestamp,",
+				"          EndDate as timestamp,",
+				"          Status as string,",
+				"          Exception as boolean,",
+				"          Confidential as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> HRMD01CareerStage",
+				"source(output(",
+				"          RoleId as string,",
+				"          CareerStageId as string,",
+				"          StartDate as timestamp,",
+				"          EndDate as timestamp,",
+				"          Status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> HRMD01CareerStageRole",
+				"HRMD01STIPFilter select(mapColumn(",
+				"          ChannelOrganization,",
+				"          RoleId,",
+				"          Qualifier1Id,",
+				"          Qualifier2Id,",
+				"          IncentivePlanId",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> HRMD01STIPSelect",
+				"HRMD01RoleFilter select(mapColumn(",
+				"          RoleId,",
+				"          RoleSummary",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> HRMD01RoleSelect",
+				"HRMD01Qualifier1Filter select(mapColumn(",
+				"          Qualifier1Id,",
+				"          Qualifier1Name",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> HRMD01Qualifier1Select",
+				"HRMD01Qualifier2Filter select(mapColumn(",
+				"          Qualifier2Id,",
+				"          Qualifier2Name",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> HRMD01Qualifier2Select",
+				"HRMD01STIPSelect, HRMD01RoleSelect join(HRMD01STIPSelect@RoleId == HRMD01RoleSelect@RoleId,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> RoleSummaryJoin",
+				"RoleSummaryJoin, HRMD01Qualifier1Select join(HRMD01STIPSelect@Qualifier1Id == HRMD01Qualifier1Select@Qualifier1Id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> Qualifier1Join",
+				"Qualifier1Join, HRMD01Qualifier2Select join(HRMD01STIPSelect@Qualifier2Id == HRMD01Qualifier2Select@Qualifier2Id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> Qualifier2Join",
+				"CareerStageJoin select(mapColumn(",
+				"          OrgCode = ChannelOrganization,",
+				"          RoleSummary,",
+				"          Q1 = Qualifier1Name,",
+				"          Q2 = Qualifier2Name,",
+				"          IncentivePlan = IncentivePlanId,",
+				"          CareerStage",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> FinalSelect",
+				"HRMD01STIP filter(Status=='A' && EndDate==toTimestamp('9999-12-31 00:00:00.000') && Exception==toBoolean('false') && Confidential==toBoolean('false')) ~> HRMD01STIPFilter",
+				"HRMD01Role filter(Status=='A' && EndDate==toTimestamp('9999-12-31 00:00:00.000') && Exception==toBoolean('false') && Confidential==toBoolean('false')) ~> HRMD01RoleFilter",
+				"HRMD01Qualifier1 filter(Status=='A' && EndDate==toTimestamp('9999-12-31 00:00:00.000') && Exception==toBoolean('false') && Confidential==toBoolean('false')) ~> HRMD01Qualifier1Filter",
+				"HRMD01Qualifier2 filter(Status=='A' && EndDate==toTimestamp('9999-12-31 00:00:00.000') && Exception==toBoolean('false') && Confidential==toBoolean('false')) ~> HRMD01Qualifier2Filter",
+				"HRMD01CareerStage filter(Status=='A' && EndDate==toTimestamp('9999-12-31 00:00:00.000') && Exception==toBoolean('false') && Confidential==toBoolean('false') &&  CareerStageName!='INTERN') ~> HRMD01CareerStageFilter",
+				"HRMD01CareerStageRole filter(Status=='A' && EndDate==toTimestamp('9999-12-31 00:00:00.000')) ~> HRMD01CareerStageRoleFilter",
+				"HRMD01CareerStageFilter, HRMD01CareerStageRoleFilter join(HRMD01CareerStage@CareerStageId == HRMD01CareerStageRole@CareerStageId,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> CareerStage",
+				"CareerStage select(mapColumn(",
+				"          CareerStageId = HRMD01CareerStage@CareerStageId,",
+				"          CareerStage = CareerStageName,",
+				"          RoleId",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> CareerStageSelect",
+				"Qualifier2Join, CareerStageSelect join(HRMD01STIPSelect@RoleId == CareerStageSelect@RoleId,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> CareerStageJoin",
+				"FinalSelect sink(allowSchemaDrift: true,",
+				"     validateSchema: true,",
+				"     input(",
+				"          OrgCode as string,",
+				"          RoleSummary as string,",
+				"          Q1 as string,",
+				"          Q2 as string,",
+				"          IncentivePlan as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> Sink"
+			]
+		}
+	}
+}

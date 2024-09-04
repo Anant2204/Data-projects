@@ -1,0 +1,20 @@
+trigger: none
+pool:
+  name: 'mct1eswindowsagentpool'
+
+stages:
+################ Linting and Validation #########
+ - stage: Linter
+   displayName: Linting
+   jobs:
+   - job: Linting
+     displayName: Linting Bicep template
+     steps:
+      - task: AzureCLI@2
+        displayName: Lint MCT Resources
+        inputs:
+          azureSubscription: 'MCT-NonProd-DEV'
+          scriptType: 'pscore'
+          scriptLocation: 'inlineScript'
+          inlineScript: 'az bicep build --file mct.bicep'
+          workingDirectory: '$(Build.SourcesDirectory)/source/'

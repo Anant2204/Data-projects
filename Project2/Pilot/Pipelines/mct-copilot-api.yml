@@ -1,0 +1,188 @@
+trigger:
+  branches:
+    include:
+    - develop
+
+  paths:
+    exclude:
+     - Infra/*
+     - Pipelines/*
+
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+
+variables:
+  solution: '**/Copilot.Backend.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    pool:
+      name: 'mct1espool'
+      image: mct1esptwindows
+      os: windows 
+
+    stages:
+    - stage: BuildPackage
+      displayName: Build and Publish
+      jobs:
+        - job: Build
+          templateContext:
+            outputs:
+            - output: pipelineArtifact
+              targetPath: '$(Build.ArtifactStagingDirectory)'
+              artifactName: drop
+          cancelTimeoutInMinutes: 1
+          timeoutInMinutes: 30
+          workspace:
+            clean: all
+          steps: 
+          - task: SonarQubePrepare@5
+            displayName: Prepare Sonar Analysis
+            inputs:
+              SonarQube: 'mct-copilot-sonar'
+              scannerMode: 'MSBuild'
+              projectKey: 'MCT_MCT-Copilot'
+              projectName: 'MCT_MCT-Copilot_#Tools'
+              projectVersion: '$(Build.BuildId)'
+
+          - task: NuGetToolInstaller@1
+
+          - task: NuGetCommand@2
+            inputs:
+              command: 'restore'
+              feedsToUse: 'select'
+              vstsFeed: 'c1eb1d13-5333-4112-95b2-2e514c22c241/e7a9b03a-3e9e-4ae7-b444-a06a80ff3074'
+              restoreSolution: '$(solution)'
+
+          - task: VSBuild@1
+            inputs:
+                solution: '$(solution)'
+                msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+                platform: '$(buildPlatform)'
+                configuration: '$(buildConfiguration)'
+
+          - task: SonarQubeAnalyze@5
+            displayName: Analyse Build
+            inputs:
+              jdkversion: 'JAVA_HOME_17_X64'
+
+          - task: SonarQubePublish@5
+            displayName: Publish Sonar Report
+            inputs:
+              pollingTimeoutSec: '300'
+
+  #######Deployment-On -NONPROD#################
+
+    - stage: DeployNONPROD
+      displayName: Deploy - NONPRPOD
+      dependsOn: BuildPackage
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+      jobs:
+      - template: /Pipelines/templates/copilotdeployment.yml@self 
+        parameters:
+          azureSubscription: 'mct-copilot-nonprod'
+          appName: 'mct-copilotapi-nonprod'
+          environment: 'NONPROD'
+          keyVaultName: 'mct-kv-copilot-nonprod'
+          location: 'westus'
+          resourceGroupName: 'mct-rg-copilot-nonprod'
+      # - deployment: DeployCopilotAPI
+      #   templateContext:
+      #     type: releaseJob
+      #     isProduction: true
+      #     inputs:
+      #     - input: pipelineArtifact
+      #       artifactName: drop 
+      #       targetPath: $(System.DefaultWorkingDirectory)/drop
+      #   displayName: Deploy MCT Copilot API
+      #   environment: "$(environment)"
+      #   strategy:
+      #     runOnce:
+      #       deploy:
+      #         steps:
+      #         - task: AzureCLI@2
+      #           displayName: 'Azure CLI '
+      #           inputs:
+      #             azureSubscription: 'mct-copilot-nonprod'
+      #             scriptType: ps
+      #             scriptLocation: inlineScript
+      #             inlineScript: 'az resource update --resource-group "$(resourceGroupName)" --name scm --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/"$(appName)" --set properties.allow=true'
+
+      #         - task: AzureRmWebAppDeployment@4
+      #           displayName: 'Deploy Azure App Service'
+      #           inputs:
+      #             ConnectionType: 'AzureRM'
+      #             azureSubscription: 'mct-copilot-nonprod'
+      #             appType: 'webApp'
+      #             WebAppName: "$(appName)"
+      #             packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+      #             AppSettings: '-KeyVaultName "$(keyVaultName)"'
+
+      #         - task: AzureCLI@2
+      #           displayName: 'Azure CLI '
+      #           inputs:
+      #             azureSubscription: 'mct-copilot-nonprod'
+      #             scriptType: ps
+      #             scriptLocation: inlineScript
+      #             inlineScript: 'az resource update --resource-group "$(resourceGroupName)" --name scm --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/"$(appName)" --set properties.allow=false'
+    
+
+  ###############################################
+    - stage: DeployPROD
+      displayName: Deploy - PROD
+      dependsOn: DeployNONPROD
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+      jobs:
+      - template: /Pipelines/templates/copilotdeployment.yml@self 
+        parameters:
+          azureSubscription: 'mct-copilot-prod'
+          appName: 'mct-copilotapi-prod'
+          environment: 'PROD'
+          keyVaultName: 'mct-kv-copilot-prod'
+          location: 'westus'
+          resourceGroupName: 'mct-rg-copilot-prod'
+      # - deployment: DeployCopilotAPI
+      #   templateContext:
+      #     type: releaseJob
+      #     isProduction: true
+      #     inputs:
+      #     - input: pipelineArtifact
+      #       artifactName: drop 
+      #       targetPath: $(System.DefaultWorkingDirectory)/drop
+      #   displayName: Deploy MCT Copilot API
+      #   environment: "$(environment)"
+      #   strategy:
+      #     runOnce:
+      #       deploy:
+      #         steps:
+      #         - task: AzureCLI@2
+      #           displayName: 'Azure CLI '
+      #           inputs:
+      #             azureSubscription: 'mct-copilot-prod'
+      #             scriptType: ps
+      #             scriptLocation: inlineScript
+      #             inlineScript: 'az resource update --resource-group "$(resourceGroupName)" --name scm --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/"$(appName)" --set properties.allow=true'
+
+      #         - task: AzureRmWebAppDeployment@4
+      #           displayName: 'Deploy Azure App Service'
+      #           inputs:
+      #             ConnectionType: 'AzureRM'
+      #             azureSubscription: 'mct-copilot-prod'
+      #             appType: 'webApp'
+      #             WebAppName: "$(appName)"
+      #             packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+      #             AppSettings: '-KeyVaultName "$(keyVaultName)"'
+
+      #         - task: AzureCLI@2
+      #           displayName: 'Azure CLI '
+      #           inputs:
+      #             azureSubscription: 'mct-copilot-prod'
+      #             scriptType: ps
+      #             scriptLocation: inlineScript
+      #             inlineScript: 'az resource update --resource-group "$(resourceGroupName)" --name scm --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/"$(appName)" --set properties.allow=false'

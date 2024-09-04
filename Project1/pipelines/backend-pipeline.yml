@@ -1,0 +1,2131 @@
+name: MCAPSHelp_WebAPI_$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger: none
+
+pool: 
+ name: ServicesDevOps-Vsogd
+ demands:
+   - imageOverride -equals MMS2022
+
+
+stages:
+  - stage: Build_Stage
+    jobs:
+      - job: "BuildWebAPI"
+
+        variables:
+          solution: '**/MCAPSHelpVNext.API.sln'
+          project: '**/MCAPSHelpVNext.API.csproj'
+          buildPlatform: 'Any CPU'
+          buildConfiguration: 'Release'
+ 
+
+        steps:
+
+         - task: CodeQL3000Init@0
+           displayName: 'Initialize CodeQL'
+           
+         - task: UseDotNet@2
+           displayName: 'Install .NET Core SDK'
+           inputs:
+             version: 6.x
+             performMultiLevelLookup: true
+             includePreviewVersions: true  
+         
+         - task: NuGetToolInstaller@1
+           displayName: 'Install NuGet Tool'
+             
+        
+         - task: NuGetCommand@2
+           displayName: 'restore nuget packages'
+           inputs:
+            command: restore
+            restoreSolution: '$(solution)'
+              
+         - task: VSBuild@1
+           inputs:
+            solution: '$(solution)'
+            msbuildArgs: '/p:DeployOnBuild=true /p:Configuration=Release /p:WebPublishMethod=FileSystem  /p:SkipInvalidConfigurations=true /p:DeployDefaultTarget=WebPublish /p:DeleteExistingFiles=True  /p:OutputPath="$(Build.ArtifactStagingDirectory)" /p:DeployIisAppPath="Default Web Site"'
+            platform: '$(buildPlatform)'
+            configuration: '$(buildConfiguration)'
+
+        #  - task: VSTest@2
+        #    inputs:
+        #     platform: '$(buildPlatform)'
+        #     configuration: '$(buildConfiguration)'
+
+         - task: ArchiveFiles@2
+           displayName: 'Archive build from: $(Build.ArtifactStagingDirectory)'
+           inputs:
+            rootFolderOrFile: $(Build.ArtifactStagingDirectory)
+            archiveType: 'zip'
+            archiveFile: '$(Build.ArtifactStagingDirectory)/MCAPSHelpBackend.zip'
+            includeRootFolder: false
+
+         - task: CodeQL3000Finalize@0     
+           displayName: 'CodeQL Finalize'   
+           condition: succeededOrFailed()
+        
+         - task: PublishBuildArtifacts@1
+           displayName: 'publish artifact: drop'
+           inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)/MCAPSHelpBackend.zip'
+            ArtifactName: 'drop'
+            # publishLocation: Container
+           
+             
+      - job: BuildDatabase
+        dependsOn: BuildWebAPI
+        steps:
+        - task: CodeQL3000Init@0
+          displayName: 'Initialize CodeQL'
+
+        - task: NuGetToolInstaller@1
+        - task: NuGetCommand@2
+          inputs: 
+           restoreSolution: '**/MCAPSHelpDB.sln'
+        
+        - task: VSBuild@1
+          inputs:
+            solution: '**/MCAPSHelpDB.sln'      
+        
+        - task: CopyFiles@2
+          inputs:
+           SourceFolder: '$(System.DefaultWorkingDirectory)'
+           Contents: '**\SQL Database\**'
+           TargetFolder: '$(Build.ArtifactStagingDirectory)'
+        - task: PowerShell@2
+          inputs:
+             targetType: 'inline'
+             script: |
+              'Get-ChildItem $(Build.SourcesDirectory)'
+        
+        - task: CodeQL3000Finalize@0     
+          displayName: 'CodeQL Finalize'   
+          condition: succeededOrFailed()
+        
+        - task: PublishBuildArtifacts@1
+          inputs:
+           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+           ArtifactName: 'sql'
+           publishLocation: Container
+
+      - job: 'PublishInfraTemplates'
+        dependsOn: BuildDatabase
+        steps: 
+        - task: CopyFiles@2
+          displayName: 'Copy Infra files'
+          inputs:
+           SourceFolder: '$(System.DefaultWorkingDirectory)'
+           Contents: 'infra/PROD_Infra/**'
+           TargetFolder: '$(build.artifactstagingdirectory)/infraTemplates'
+        - task: PublishBuildArtifacts@1
+          displayName: 'Publish Artifact: drop'
+      
+
+  # - stage: Dev_Stage
+  #   variables:
+  #   - group: env-var-webapi-dev
+  #   dependsOn: Build_Stage
+  #   jobs: 
+  #   - deployment: ValidateAndDeployInfraDEV
+  #     environment: dev_infra_api
+  #     strategy:
+  #      runOnce:
+  #        deploy:
+  #         steps:
+  #           - task: AzureCLI@2
+  #             displayName: 'run preflight validation'
+  #             inputs: 
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               scriptType: bash
+  #               scriptLocation: inlineScript
+  #               inlineScript: |
+  #                az deployment group validate --resource-group $(devResourceGroupName) \
+  #                --template-file infra/Dev_Infra/apiDev.bicep --parameters DevWebAPI='$(DevWebAPI)' servers_mcapshelp_name='$(servers_mcapshelp_name)' serverfarms_ASP_RGMCAPSHELPDEV_87a4_name='$(serverfarms_ASP_RGMCAPSHELPDEV_87a4_name)'      
+  #           - task: AzureCLI@2
+  #             displayName: 'Deploy Bicep to Azure'
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               scriptType: bash
+  #               scriptLocation: inlineScript
+  #               inlineScript: |
+  #                 az deployment group create --mode incremental --name $(Build.BuildNumber) --resource-group $(devResourceGroupName) \
+  #                 --template-file infra/Dev_Infra/apiDev.bicep --parameters DevWebAPI='$(DevWebAPI)' servers_mcapshelp_name='$(servers_mcapshelp_name)' serverfarms_ASP_RGMCAPSHELPDEV_87a4_name='$(serverfarms_ASP_RGMCAPSHELPDEV_87a4_name)'                        
+
+  #   - deployment:
+  #     dependsOn: ValidateAndDeployInfraDEV 
+  #     environment: dev_api
+  #     strategy:
+  #      runOnce:
+  #        deploy:           
+  #         steps:
+  #           - task: DownloadBuildArtifacts@1
+  #             displayName: 'Download WebApp.zip'
+  #             inputs:
+  #               buildType: current
+  #               downloadType: single
+  #               artifactName: 'drop'
+  #               itemPattern: '**/MCAPSHelpBackend.zip'
+  #               downloadPath: '$(System.DefaultWorkingDirectory)'
+
+  #           - task: AzureRmWebAppDeployment@4
+  #             displayName: 'Deploy WebAPI to Azure'
+  #             inputs:
+  #               ConnectionType: 'AzureRM'
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               appType: 'apiApp'
+  #               WebAppName: '$(DevWebAPI)'
+  #               packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+  #               JSONFiles: '**/appsettings.json'
+            
+  #           - task: AzureAppServiceSettings@1
+  #             displayName: 'Add/Update Azure App Service Settings'
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               appName: '$(DebWbAPI)'
+  #               resourceGroupName: '$(devResourceGroupName)'
+  #               slotName: 'Development'
+  #               appSettings: |
+  #                 [
+  #                   {
+  #                     "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+  #                     "value": '$(APPINSIGHTS_INSTRUMENTATIONKEY)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+  #                     "value": $(APPLICATIONINSIGHTS_CONNECTION_STRING),
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
+  #                     "value": '$(ApplicationInsightsAgent_EXTENSION_VERSION)',
+  #                     "slotSetting": true
+
+  #                   },
+  #                   {
+  #                     "name": "XDT_MicrosoftApplicationInsights_Mode",
+  #                     "value": '$(XDT_MicrosoftApplicationInsights_Mode)',
+  #                     "slotSetting": true
+  #                   },
+  #                   {
+  #                     "name": "ASPNETCORE_ENVIRONMENT",
+  #                     "value": '$(ASPNETCORE_ENVIRONMENT)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "ApplicationInsights:InstrumentationKey"
+  #                     "value": '$(ApplicationInsights_InstrumentationKey)'
+  #                   },
+  #                   {
+  #                     "name": "ApplicationInsights:ConnectionString",
+  #                     "value": '$(ApplicationInsights_ConnectionString)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "AuthGroup:GroupName",
+  #                     "value": '$(AuthGroup_GroupName)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "ConnectionStrings:DefaultConnection",
+  #                     "value": '$(ConnectionStrings_DefaultConnection)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IRIS:APIBaseEndPoint",
+  #                     "value": '$(IRIS_APIBaseEndPoint)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IRIS:ResourceId",
+  #                     "value": '$(IRIS_ResourceId)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:IRISAPIBasePath",
+  #                     "value": '$(IrisSupportAPI_IRISAPIBasePath)',
+  #                     "slotSetting": false
+
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:RetryAttempts",
+  #                     "value": '$(IrisSupportAPI_RetryAttempts)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:AADTokenPath",
+  #                     "value": '$(IrisSupportAPI_AADTokenPath)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:Tenant",
+  #                     "value": '$(IrisSupportAPI_Tenant)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:AADInstance",
+  #                     "value": '$(IrisSupportAPI_AADInstance)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WEBSITE_LOCAL_CACHE_OPTION",
+  #                     "value": '$(WEBSITE_LOCAL_CACHE_OPTION)',
+  #                     "slotSetting": false
+
+  #                   },
+  #                   {
+  #                     "name": "WEBSITE_LOCAL_CACHE_SIZEINMB",
+  #                     "value": '$(WEBSITE_LOCAL_CACHE_SIZEINMB)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "AzureAd:ClientSecret"
+  #                     "value": '$(AzureAd_ClientSecret)'
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:IRISAPIClientID"
+  #                     "value": '$(IrisSupportAPI_IRISAPIClientID)'
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:IRISAPIClientSecret",
+  #                     "value": '$(IrisSupportAPI_IRISAPIClientSecret)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:IRISAPIScope",
+  #                     "value": '$(IrisSupportAPI_IRISAPIScope)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "BlobStorageAccount:AccountKey",
+  #                     "value": '$(BlobStorageAccount_AccountKey)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "BlobStorageAccount:AccountName",
+  #                     "value": '$(BlobStorageAccount_AccountName)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "BlobStorageAccount:ContainerName",
+  #                     "value": '$(BlobStorageAccount_ContainerName)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "BlobStorageAccount:ExpiresOnYear",
+  #                     "value": '$(BlobStorageAccount_ExpiresOnYear)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "BlobStorageAccount:EncryptionPhrase",
+  #                     "value": '$(BlobStorageAccount_EncryptionPhrase)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "BlobStorageAccount:FolderName",
+  #                     "value": '$(BlobStorageAccount_FolderName)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:Scope",
+  #                     "value": '$(WebJob_Scope)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:resource",
+  #                     "value": '$(WebJob_resource)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:ApiEndPoint",
+  #                     "value": '$(WebJob_ApiEndPoint)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:ApiKey",
+  #                     "value": '$(WebJob_ApiKey)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:Authority",
+  #                     "value": '$(WebJob_Authority)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:ClientId"
+  #                     "value": '$(WebJob_ClientId)'
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:ClientSecret",
+  #                     "value": '$(WebJob_ClientSecret)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:TriggerDuration"
+  #                     "value": '$(WebJob_TriggerDuration)'
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "SCM_COMMAND_IDLE_TIMEOUT",
+  #                     "value": '$(SCM_COMMAND_IDLE_TIMEOUT)',
+  #                     "slotSetting": false
+  #                   }
+                
+  #                 ]
+                        
+  #           - task: DownloadBuildArtifacts@1
+  #             displayName: 'Download SQL Script'
+  #             inputs: 
+  #               buildType: current
+  #               downloadType: single
+  #               artifactName: sql
+  #               itemPattern: 'sql/SQL Database/MCAPSHelpDB/BSO/Table/Script.sql'
+  #               downloadPath: '$(System.DefaultWorkingDirectory)' 
+
+  #           - task: DownloadBuildArtifacts@1
+  #             displayName: 'Download SQL Script'
+  #             inputs: 
+  #               buildType: current
+  #               downloadType: single
+  #               artifactName: sql
+  #               itemPattern: 'sql/SQL Database/MCAPSHelpDB/BSO/Table/AlterScripts.sql'
+  #               downloadPath: '$(System.DefaultWorkingDirectory)'
+
+  #           - task: DownloadBuildArtifacts@1
+  #             displayName: 'Download SQL Script'
+  #             inputs: 
+  #               buildType: current
+  #               downloadType: single
+  #               artifactName: sql
+  #               itemPattern: 'sql/SQL Database/MCAPSHelpDB/BSO/Table/FinalSCript.sql'
+  #               downloadPath: '$(System.DefaultWorkingDirectory)'                   
+                
+  #           - task: DownloadBuildArtifacts@1
+  #             displayName: 'Download stored procedures'
+  #             inputs: 
+  #               buildType: current
+  #               downloadType: single
+  #               artifactName: sql
+  #               itemPattern: 'sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/*.sql'
+  #               downloadPath: '$(System.DefaultWorkingDirectory)'   
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: 'SqlTask'
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/Table/Script.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database' 
+            
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: 'SqlTask'
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/Table/AlterScripts.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy Alter SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: 'SqlTask'
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/Table/FinalSCript.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy Alter SQL script to SQL Azure Database'
+
+  #           # # - task: SqlAzureDacpacDeployment@1
+  #           # #   inputs:
+  #           # #     azureSubscription: 'MCAPSHelp PROD'
+  #           # #     AuthenticationType: aadAuthenticationPassword
+  #           # #     ServerName: '$(ServerName)'
+  #           # #     DatabaseName: '$(database_name)'
+  #           # #     aadSqlUsername: '$(aadSqlUsername)'
+  #           # #     aadSqlPassword: '$(aadSqlPassword)'
+  #           # #     deployType: 'SqlTask'
+  #           # #     SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/UATTableDataOnly.sql'
+  #           # #     IpDetectionMethod: 'AutoDetect'
+  #           # #   displayName: 'Deploy sql data to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_AddUser.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'  
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_AddFeedback.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_DeleteUserAndRelatedData.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database' 
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_FindUser.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAboutMCAPSHtmlContent.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'     
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAboutMCAPSNavigationHierarchy.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetActiveServicesNotInUserWorkSpace.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'             
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllAnnouncement.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'                
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllArea.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'             
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllRole.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'    
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllSegment.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'         
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllSubSegment.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'   
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllUsers.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'   
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAnnouncements.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetFeedback.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetFeedbackByUserID.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetLoggedInService.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'   
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetLoggedInServicesByID.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetServiceGroupNRequestTypeDetails.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetUserById.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetUserByIdFromEmail.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetUserByIdFromEmailDetails.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetUserWorkSpacesByUserId.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_InActiveUserWorkSpaceByPreference.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_STG_RequestType_MService_STGtoService.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_STG_RequestTypeMerge.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_STG_ServiceGroup_MService_STGtoService.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_STG_ServiceGroupMerge.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_UpdateUser.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(database_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_UserADGroupListForJob.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+           
+  # - stage: UAT_Stage
+  #   dependsOn: Build_Stage
+  #   variables:
+  #   - group: env-var-webapi-uat
+  #   jobs:
+  #   - deployment: ValidateAndDeployInfraUAT
+  #     environment: uat_infra_api
+  #     strategy:
+  #      runOnce:
+  #        deploy:           
+  #         steps:
+  #           - task: AzureCLI@2
+  #             displayName: 'run preflight validation'
+  #             inputs: 
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               scriptType: bash
+  #               scriptLocation: inlineScript
+  #               inlineScript: |
+  #                az deployment group validate --resource-group $(uatResourceGroupName) \
+  #                --template-file infra/UAT_Infra/api_UAT.bicep --parameters UATWebAPI='$(UATWebAPI)' servers_mcapshelp_name='$(servers_mcapshelp_name)' serverfarms_ASP_RGMCAPSHELPDEV_87a4_name='$(serverfarms_ASP_RGMCAPSHELPDEV_87a4_name)'
+                   
+
+  #           - task: AzureCLI@2
+  #             displayName: 'Deploy Bicep to Azure'
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               scriptType: bash
+  #               scriptLocation: inlineScript
+  #               inlineScript: |
+  #                 az deployment group create --mode incremental --name $(Build.BuildNumber) --resource-group $(uatResourceGroupName) \
+  #                 --template-file infra/UAT_Infra/api_UAT.bicep --parameters UATWebAPI='$(UATWebAPI)' servers_mcapshelp_name='$(servers_mcapshelp_name)' serverfarms_ASP_RGMCAPSHELPDEV_87a4_name='$(serverfarms_ASP_RGMCAPSHELPDEV_87a4_name)' 
+  #   - deployment:
+  #     dependsOn: ValidateAndDeployInfraUAT
+  #     environment: uat_api
+  #     strategy:
+  #      runOnce:
+  #        deploy:           
+  #         steps:
+  #           - task: DownloadBuildArtifacts@1
+  #             displayName: 'Download WebApp.zip'
+  #             inputs:
+  #               buildType: current
+  #               downloadType: single
+  #               artifactName: 'drop'
+  #               itemPattern: '**/MCAPSHelpBackend.zip'
+  #               downloadPath: '$(System.DefaultWorkingDirectory)'
+
+  #           - task: AzureRmWebAppDeployment@4
+  #             displayName: 'Deploy WebAPI to Azure'
+  #             inputs:
+  #               ConnectionType: 'AzureRM'
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               appType: 'apiApp'
+  #               WebAppName: '$(DevWebAPI)'
+  #               packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+  #               JSONFiles: '**/appsettings.json'
+            
+  #           - task: AzureAppServiceSettings@1
+  #             displayName: 'Add/Update Azure App Service Settings'
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               appName: '$(DebWbAPI)'
+  #               resourceGroupName: '$(devResourceGroupName)'
+  #               slotName: 'Development'
+  #               appSettings: |
+  #                 [
+  #                   {
+  #                     "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+  #                     "value": '$(APPINSIGHTS_INSTRUMENTATIONKEY)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+  #                     "value": $(APPLICATIONINSIGHTS_CONNECTION_STRING),
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
+  #                     "value": '$(ApplicationInsightsAgent_EXTENSION_VERSION)',
+  #                     "slotSetting": true
+
+  #                   },
+  #                   {
+  #                     "name": "XDT_MicrosoftApplicationInsights_Mode",
+  #                     "value": '$(XDT_MicrosoftApplicationInsights_Mode)',
+  #                     "slotSetting": true
+  #                   },
+  #                   {
+  #                     "name": "ASPNETCORE_ENVIRONMENT",
+  #                     "value": '$(ASPNETCORE_ENVIRONMENT)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "ApplicationInsights:InstrumentationKey",
+  #                     "value": '$(ApplicationInsights_InstrumentationKey)'
+  #                   },
+  #                   {
+  #                     "name": "ApplicationInsights:ConnectionString",
+  #                     "value": '$(ApplicationInsights_ConnectionString)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "AuthGroup:GroupName",
+  #                     "value": '$(AuthGroup_GroupName)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "ConnectionStrings:DefaultConnection",
+  #                     "value": '$(ConnectionStrings_DefaultConnection)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IRIS:APIBaseEndPoint",
+  #                     "value": '$(IRIS_APIBaseEndPoint)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IRIS:ResourceId",
+  #                     "value": '$(IRIS_ResourceId)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:IRISAPIBasePath",
+  #                     "value": '$(IrisSupportAPI_IRISAPIBasePath)',
+  #                     "slotSetting": false
+
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:RetryAttempts",
+  #                     "value": '$(IrisSupportAPI_RetryAttempts)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:AADTokenPath",
+  #                     "value": '$(IrisSupportAPI_AADTokenPath)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:Tenant",
+  #                     "value": '$(IrisSupportAPI_Tenant)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:AADInstance",
+  #                     "value": '$(IrisSupportAPI_AADInstance)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WEBSITE_LOCAL_CACHE_OPTION",
+  #                     "value": '$(WEBSITE_LOCAL_CACHE_OPTION)',
+  #                     "slotSetting": false
+
+  #                   },
+  #                   {
+  #                     "name": "WEBSITE_LOCAL_CACHE_SIZEINMB",
+  #                     "value": '$(WEBSITE_LOCAL_CACHE_SIZEINMB)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "AzureAd:ClientSecret",
+  #                     "value": '$(AzureAd_ClientSecret)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:IRISAPIClientID",
+  #                     "value": '$(IrisSupportAPI_IRISAPIClientID)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:IRISAPIClientSecret",
+  #                     "value": '$(IrisSupportAPI_IRISAPIClientSecret)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "IrisSupportAPI:IRISAPIScope",
+  #                     "value": '$(IrisSupportAPI_IRISAPIScope)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "BlobStorageAccount:AccountKey",
+  #                     "value": '$(BlobStorageAccount_AccountKey)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "BlobStorageAccount:AccountName",
+  #                     "value": '$(BlobStorageAccount_AccountName)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "BlobStorageAccount:ContainerName",
+  #                     "value": '$(BlobStorageAccount_ContainerName)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "BlobStorageAccount:ExpiresOnYear",
+  #                     "value": '$(BlobStorageAccount_ExpiresOnYear)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "BlobStorageAccount:EncryptionPhrase",
+  #                     "value": '$(BlobStorageAccount_EncryptionPhrase)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "BlobStorageAccount:FolderName",
+  #                     "value": '$(BlobStorageAccount_FolderName)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:Scope",
+  #                     "value": '$(WebJob_Scope)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:resource",
+  #                     "value": '$(WebJob_resource)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:ApiEndPoint",
+  #                     "value": '$(WebJob_ApiEndPoint)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:ApiKey",
+  #                     "value": '$(WebJob_ApiKey)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:Authority",
+  #                     "value": '$(WebJob_Authority)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:ClientId",
+  #                     "value": '$(WebJob_ClientId)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:ClientSecret",
+  #                     "value": '$(WebJob_ClientSecret)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "WebJob:TriggerDuration",
+  #                     "value": '$(WebJob_TriggerDuration)',
+  #                     "slotSetting": false
+  #                   },
+  #                   {
+  #                     "name": "SCM_COMMAND_IDLE_TIMEOUT",
+  #                     "value": '$(SCM_COMMAND_IDLE_TIMEOUT)',
+  #                     "slotSetting": false
+  #                   }
+                
+  #                 ]
+                        
+  #           - task: DownloadBuildArtifacts@1
+  #             displayName: 'Download SQL Script'
+  #             inputs: 
+  #               buildType: current
+  #               downloadType: single
+  #               artifactName: sql
+  #               itemPattern: 'sql/SQL Database/MCAPSHelpDB/BSO/Table/Script.sql'
+  #               downloadPath: '$(System.DefaultWorkingDirectory)' 
+
+  #           - task: DownloadBuildArtifacts@1
+  #             displayName: 'Download SQL Script'
+  #             inputs: 
+  #               buildType: current
+  #               downloadType: single
+  #               artifactName: sql
+  #               itemPattern: 'sql/SQL Database/MCAPSHelpDB/BSO/Table/AlterScripts.sql'
+  #               downloadPath: '$(System.DefaultWorkingDirectory)'                   
+                
+  #           - task: DownloadBuildArtifacts@1
+  #             displayName: 'Download stored procedures'
+  #             inputs: 
+  #               buildType: current
+  #               downloadType: single
+  #               artifactName: sql
+  #               itemPattern: 'sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/*.sql'
+  #               downloadPath: '$(System.DefaultWorkingDirectory)'   
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_AddUser.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'  
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_DeleteUserAndRelatedData.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database' 
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_FindUser.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'     
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetActiveServicesNotInUserWorkSpace.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'             
+                
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllArea.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'             
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllRole.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'    
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllSegment.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'         
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllSubSegment.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'   
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllUsers.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'   
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetLoggedInService.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'   
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetLoggedInServicesByID.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetUserById.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetUserByIdFromEmail.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetUserByIdFromEmailDetails.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetUserWorkSpacesByUserId.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_UpdateUser.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: SqlTask
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_UserADGroupListForJob.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database'
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: 'SqlTask'
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/Table/Script.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy SQL script to SQL Azure Database' 
+            
+
+  #           - task: SqlAzureDacpacDeployment@1
+  #             inputs:
+  #               azureSubscription: 'MCAPSHelp PROD'
+  #               AuthenticationType: aadAuthenticationPassword
+  #               ServerName: '$(ServerName)'
+  #               DatabaseName: '$(servers_mcapshelp_name)'
+  #               aadSqlUsername: '$(aadSqlUsername)'
+  #               aadSqlPassword: '$(aadSqlPassword)'
+  #               deployType: 'SqlTask'
+  #               SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/Table/AlterScripts.sql'
+  #               IpDetectionMethod: 'AutoDetect'
+  #             displayName: 'Deploy Alter SQL script to SQL Azure Database' 
+
+  - stage: Prod_Stage
+    dependsOn: build_stage
+    displayName: 'Create Infra and Deploy code to PROD'
+    variables: 
+    - group: env-var-webapi-prod
+    jobs: 
+    - deployment: ValidateInfraPROD
+      environment: prod_infra_api
+      strategy:
+       runOnce:
+         deploy:    
+          steps:
+            - task: DownloadBuildArtifacts@1
+              inputs: 
+               buildType: current
+               downloadType: single
+               artifactName: 'drop'
+               downloadPath: '$(System.DefaultWorkingDirectory)'
+               
+            - task: AzureCLI@2
+              displayName: 'run preflight validation'
+              inputs: 
+                azureSubscription: 'MCAPSHelp PROD'
+                scriptType: bash
+                scriptLocation: inlineScript
+                inlineScript: |
+                 az deployment group validate --resource-group $(prodResourceGroupName) \
+                 --template-file '$(System.DefaultWorkingDirectory)/drop/infraTemplates/infra/PROD_Infra/apiPROD.bicep' --parameters ProdWebAPI='$(ProdWebAPI)' serverfarms_ASP_RGMCAPSHELPPROD='$(serverfarms_ASP_RGMCAPSHELPPROD)' prodadministratorLoginPassword='$(prodadministratorLoginPassword)'
+                 
+                 az deployment group create --mode incremental --name $(Build.BuildNumber) --resource-group $(prodSynapseRG) \
+                  --template-file '$(System.DefaultWorkingDirectory)/drop/infraTemplates/infra/PROD_Infra/synapsePROD.bicep'
+                
+                 az deployment group create --mode incremental --name $(Build.BuildNumber) --resource-group $(prodIrisRG) \
+                  --template-file '$(System.DefaultWorkingDirectory)/drop/infraTemplates/infra/PROD_Infra/prodIrisAPI.bicep'
+            - task: AzureCLI@2
+              displayName: 'Disable Auth'
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                scriptType: bash
+                scriptLocation: inlineScript
+                inlineScript: |
+                  az sql server ad-only-auth disable --resource-group '$(prodResourceGroupName)' --name 'mcapshelpserver'
+            - task: AzureCLI@2
+              displayName: 'Deploy Bicep to Azure'
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                scriptType: bash
+                scriptLocation: inlineScript
+                inlineScript: |
+                  az deployment group create --mode incremental --name $(Build.BuildNumber) --resource-group $(prodResourceGroupName) \
+                  --template-file '$(System.DefaultWorkingDirectory)/drop/infraTemplates/infra/PROD_Infra/apiPROD.bicep' --parameters ProdWebAPI='$(ProdWebAPI)' serverfarms_ASP_RGMCAPSHELPPROD='$(serverfarms_ASP_RGMCAPSHELPPROD)' prodadministratorLoginPassword='$(prodadministratorLoginPassword)'
+                
+                  az deployment group create --mode incremental --name $(Build.BuildNumber) --resource-group $(prodSynapseRG) \
+                  --template-file '$(System.DefaultWorkingDirectory)/drop/infraTemplates/infra/PROD_Infra/synapsePROD.bicep'
+                
+                  az deployment group create --mode incremental --name $(Build.BuildNumber) --resource-group $(prodIrisRG) \
+                  --template-file '$(System.DefaultWorkingDirectory)/drop/infraTemplates/infra/PROD_Infra/prodIrisAPI.bicep'
+            - task: AzureCLI@2
+              displayName: 'Enable Auth'
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                scriptType: bash
+                scriptLocation: inlineScript
+                inlineScript: |
+                  az sql server ad-only-auth enable --resource-group '$(prodResourceGroupName)' --name 'mcapshelpserver'
+
+    - deployment: Deploy_PROD
+      dependsOn: ValidateInfraPROD 
+      environment: prod_api
+      strategy:
+        runOnce:
+         deploy:
+          steps:
+            - task: DownloadBuildArtifacts@1
+              displayName: 'Download WebApp.zip'
+              inputs:
+               buildType: current
+               downloadType: single
+               artifactName: 'drop'
+               itemPattern: '**/MCAPSHelpBackend.zip'
+               downloadPath: '$(System.DefaultWorkingDirectory)'
+
+            - task: AzureRmWebAppDeployment@4
+              displayName: 'Deploy WebAPI to Azure'
+              inputs:
+                ConnectionType: 'AzureRM'
+                azureSubscription: 'MCAPSHelp PROD'
+                appType: 'apiApp'
+                WebAppName: '$(ProdWebAPI)'
+                packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+                enableCustomDeployment: true
+                DeploymentType: 'webDeploy'
+                JSONFiles: '**/appsettings.json'
+            
+            - task: AzureAppServiceSettings@1
+              displayName: 'Add/Update Azure App Service Settings'
+              inputs:
+               azureSubscription: 'MCAPSHelp PROD'
+               appName: '$(ProdWebAPI)'
+               resourceGroupName: '$(prodResourceGroupName)'
+               appSettings: |
+                [                  
+                  {
+                    "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
+                    "value": "$(ApplicationInsightsAgent_EXTENSION_VERSION)",
+                    "slotSetting": true
+
+                  },
+                  {
+                    "name": "XDT_MicrosoftApplicationInsights_Mode",
+                    "value": "$(XDT_MicrosoftApplicationInsights_Mode)",
+                    "slotSetting": true
+                  },
+                  {
+                    "name": "ASPNETCORE_ENVIRONMENT",
+                    "value": "$(ASPNETCORE_ENVIRONMENT)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "ApplicationInsights:InstrumentationKey",
+                    "value": "$(ApplicationInsights_InstrumentationKey)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "ApplicationInsights:ConnectionString",
+                    "value": "$(ApplicationInsights_ConnectionString)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "AuthGroup:GroupName",
+                    "value": "$(AuthGroup_GroupName)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "ConnectionStrings:DefaultConnection",
+                    "value": "$(ConnectionStrings_DefaultConnection)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "IRIS:APIBaseEndPoint",
+                    "value": "$(IRIS_APIBaseEndPoint)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "IRIS:ResourceId",
+                    "value": "$(IRIS_ResourceId)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "IrisSupportAPI:IRISAPIBasePath",
+                    "value": "$(IrisSupportAPI_IRISAPIBasePath)",
+                    "slotSetting": false
+
+                  },
+                  {
+                    "name": "IrisSupportAPI:RetryAttempts",
+                    "value": "$(IrisSupportAPI_RetryAttempts)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "IrisSupportAPI:AADTokenPath",
+                    "value": "$(IrisSupportAPI_AADTokenPath)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "IrisSupportAPI:Tenant",
+                    "value": "$(IrisSupportAPI_Tenant)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "IrisSupportAPI:AADInstance",
+                    "value": "$(IrisSupportAPI_AADInstance)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "WEBSITE_LOCAL_CACHE_OPTION",
+                    "value": "$(WEBSITE_LOCAL_CACHE_OPTION)",
+                    "slotSetting": false
+
+                  },
+                  {
+                    "name": "WEBSITE_LOCAL_CACHE_SIZEINMB",
+                    "value": "$(WEBSITE_LOCAL_CACHE_SIZEINMB)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "AzureAd:ClientSecret",
+                    "value": "$(AzureAd_ClientSecret)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "IrisSupportAPI:IRISAPIClientID",
+                    "value": "$(IrisSupportAPI_IRISAPIClientID)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "IrisSupportAPI:IRISAPIClientSecret",
+                    "value": "$(IrisSupportAPI_IRISAPIClientSecret)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "IrisSupportAPI:IRISAPIScope",
+                    "value": "$(IrisSupportAPI_IRISAPIScope)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "BlobStorageAccount:AccountKey",
+                    "value": "$(BlobStorageAccount_AccountKey)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "BlobStorageAccount:AccountName",
+                    "value": "$(BlobStorageAccount_AccountName)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "BlobStorageAccount:ContainerName",
+                    "value": "$(BlobStorageAccount_ContainerName)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "BlobStorageAccount:ExpiresOnYear",
+                    "value": "$(BlobStorageAccount_ExpiresOnYear)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "BlobStorageAccount:EncryptionPhrase",
+                    "value": "$(BlobStorageAccount_EncryptionPhrase)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "BlobStorageAccount:FolderName",
+                    "value": "$(BlobStorageAccount_FolderName)",
+                    "slotSetting": false
+                  },
+                  {
+                    "name": "SCM_COMMAND_IDLE_TIMEOUT",
+                    "value": "$(SCM_COMMAND_IDLE_TIMEOUT)",
+                    "slotSetting": false
+                  }
+              
+                ]
+    - deployment: DeployDatabase
+      environment: prod_api
+      variables: 
+      - group: env-var-webapi-prod
+      dependsOn: Deploy_PROD 
+      strategy:
+       runOnce:
+        deploy:
+          steps:                     
+            - task: DownloadBuildArtifacts@1
+              displayName: 'Download SQL Script'
+              inputs: 
+                buildType: current
+                downloadType: single
+                artifactName: sql
+                itemPattern: 'sql/SQL Database/MCAPSHelpDB/BSO/Table/Script.sql'
+                downloadPath: '$(System.DefaultWorkingDirectory)' 
+
+            - task: DownloadBuildArtifacts@1
+              displayName: 'Download SQL Script'
+              inputs: 
+                buildType: current
+                downloadType: single
+                artifactName: sql
+                itemPattern: 'sql/SQL Database/MCAPSHelpDB/BSO/Table/AlterScripts.sql'
+                downloadPath: '$(System.DefaultWorkingDirectory)'
+
+            - task: DownloadBuildArtifacts@1
+              displayName: 'Download SQL Script'
+              inputs: 
+                buildType: current
+                downloadType: single
+                artifactName: sql
+                itemPattern: 'sql/SQL Database/MCAPSHelpDB/BSO/Table/FinalSCript.sql'
+                downloadPath: '$(System.DefaultWorkingDirectory)'                   
+                
+            - task: DownloadBuildArtifacts@1
+              displayName: 'Download stored procedures'
+              inputs: 
+                buildType: current
+                downloadType: single
+                artifactName: sql
+                itemPattern: 'sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/*.sql'
+                downloadPath: '$(System.DefaultWorkingDirectory)'   
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: 'SqlTask'
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/Table/Script.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database' 
+            
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: 'SqlTask'
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/Table/AlterScripts.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy Alter SQL script to SQL Azure Database'
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: 'SqlTask'
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/Table/FinalSCript.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy Alter SQL script to SQL Azure Database'
+
+            # # - task: SqlAzureDacpacDeployment@1
+            # #   inputs:
+            # #     azureSubscription: 'MCAPSHelp PROD'
+            # #     AuthenticationType: aadAuthenticationPassword
+            # #     ServerName: '$(ServerName)'
+            # #     DatabaseName: '$(database_name)'
+            # #     aadSqlUsername: '$(aadSqlUsername)'
+            # #     aadSqlPassword: '$(aadSqlPassword)'
+            # #     deployType: 'SqlTask'
+            # #     SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/UATTableDataOnly.sql'
+            # #     IpDetectionMethod: 'AutoDetect'
+            # #   displayName: 'Deploy sql data to SQL Azure Database'
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_AddUser.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'  
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_AddFeedback.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_DeleteUserAndRelatedData.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database' 
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_FindUser.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAboutMCAPSHtmlContent.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'     
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAboutMCAPSNavigationHierarchy.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetActiveServicesNotInUserWorkSpace.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'             
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllAnnouncement.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'                
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllArea.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'             
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllRole.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'    
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllSegment.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'         
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllSubSegment.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'   
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAllUsers.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'   
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetAnnouncements.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetFeedback.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetFeedbackByUserID.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetLoggedInService.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'   
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetLoggedInServicesByID.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetServiceGroupNRequestTypeDetails.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetUserById.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetUserByIdFromEmail.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetUserByIdFromEmailDetails.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_GetUserWorkSpacesByUserId.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_InActiveUserWorkSpaceByPreference.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_STG_RequestType_MService_STGtoService.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_STG_RequestTypeMerge.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_STG_ServiceGroup_MService_STGtoService.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_STG_ServiceGroupMerge.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_STG_ServiceIDWebGroupMerge.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_STG_ServiceOwner_MService_STGtoService.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_UpdateUser.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+            - task: SqlAzureDacpacDeployment@1
+              inputs:
+                azureSubscription: 'MCAPSHelp PROD'
+                AuthenticationType: aadAuthenticationPassword
+                ServerName: '$(ServerName)'
+                DatabaseName: '$(database_name)'
+                aadSqlUsername: '$(aadSqlUsername)'
+                aadSqlPassword: '$(aadSqlPassword)'
+                deployType: SqlTask
+                SqlFile: '$(System.DefaultWorkingDirectory)\sql/SQL Database/MCAPSHelpDB/BSO/StoredProcedures/SP_UserADGroupListForJob.sql'
+                IpDetectionMethod: 'AutoDetect'
+              displayName: 'Deploy SQL script to SQL Azure Database'
+ 

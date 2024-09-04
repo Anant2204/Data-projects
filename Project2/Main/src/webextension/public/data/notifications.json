@@ -1,0 +1,36 @@
+[
+  {
+    "source": "5d08c8e7-6b6c-451b-b379-a5e93b81b464",
+    "displayStatus": "old",
+    "status": "read",
+    "timeDelivered": "2021-11-22T05:16:11.412Z",
+    "messageBodyText": "Consumption VNext Core MFE Infrastructure setup. API endpoint available",
+    "subjectIcon": "Mail",
+    "subjectHeader": "Consumption VNext - Sprint1",
+    "actionRequiredText": "Requested action",
+    "actionRequiredLink": "",
+    "persist": true,
+    "itemKey": "5",
+    "suppressTranslation": "false",
+    "locale": "en-au",
+    "summaryBodyText": "Sprint 1 Release Details",
+    "expireBy": null
+  },
+  {
+    "source": "SharePoint",
+    "displayStatus": "old",
+    "status": "unread",
+    "timeDelivered": "null",
+    "messageBodyText": "Following features are part of this release - Azure Resource Catalog API, Azure Pricing Sync Job, Muy Consumptions List, Create Consumption Page",
+    "subjectIcon": "Mail",
+    "subjectHeader": "Consumption VNext - Sprint2",
+    "actionRequiredText": "Requested action",
+    "actionRequiredLink": "",
+    "persist": true,
+    "itemKey": "5",
+    "suppressTranslation": "false",
+    "locale": "en-au",
+    "summaryBodyText": "Sprint 2 Release Details",
+    "expireBy": null
+  },
+]

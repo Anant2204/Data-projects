@@ -1,0 +1,6 @@
+variables:
+  resourceGroup: "mct-rg-uat1" #Deploy env resource group
+  azureSubscription: "mct-uat1" #Deploy env DevOps service Connection
+  env: "UAT1"
+  location: "westus" #Default location for deployment
+  dateTime: $(Get-Date -Format yyyyMMddhhmmss)

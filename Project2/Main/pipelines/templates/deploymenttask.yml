@@ -1,0 +1,64 @@
+parameters:
+- name: envName
+  type: string
+- name: 'serviceconnection' 
+  type: string
+- name: 'storageAccountName'
+  type: string
+- name: 'containerName'
+  type: string
+- name: 'resourceGroup'
+  type: string
+
+jobs:  
+- deployment: Deploy
+  templateContext:
+    type: releaseJob
+    isProduction: true
+    inputs:
+    - input: pipelineArtifact
+      artifactName: drop 
+      targetPath: $(System.DefaultWorkingDirectory)/drop
+  displayName: Deploy Web Extension
+  environment: ${{ parameters.envName }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: ExtractFiles@1
+          displayName: Extract source
+          inputs:
+            archiveFilePatterns: '$(System.DefaultWorkingDirectory)/drop/$(Build.BuildId).zip'
+            destinationFolder: 'portal'
+            cleanDestinationFolder: true
+            overwriteExistingFiles: true
+
+        - task: NodeTool@0
+          displayName: 'Install Node.js'
+          inputs:
+            versionSpec: '22.x'
+      
+        - task: Npm@1
+          displayName: 'npm cache clean'
+          inputs:
+            command: 'custom'
+            workingDir: 'portal'
+            verbose: false
+            customCommand: 'cache clean --force'
+    
+        - task: Npm@1
+          displayName: 'npm install'
+          inputs:
+            command: 'install'
+            workingDir: 'portal'
+        - script: |
+            pushd "portal" && npm run build:${{ parameters.envName }}  && popd
+          displayName: 'npm build'
+
+        - task: AzureCLI@2
+          displayName: 'Copy JS files to Azure blob'
+          inputs:
+            azureSubscription: '${{ parameters.serviceconnection }}'
+            scriptType: 'pscore'
+            scriptLocation: 'inlineScript'
+            inlineScript: 'az storage blob upload-batch --account-name ${{ parameters.storageAccountName }} -d "${{ parameters.containerName }}" -s "$(Build.SourcesDirectory)/portal/build" --pattern "sw-*.js" --auth-mode login --overwrite true'

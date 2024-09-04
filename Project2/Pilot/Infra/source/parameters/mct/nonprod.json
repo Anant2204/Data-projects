@@ -1,0 +1,47 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "resourceGroupName": {
+        "value": "mct-rg-copilot-nonprod"
+      },
+      "resourceGroupNamereference": {
+        "value": "mct-rg-uat1"
+      },
+      "serviceConnectionPrincipleId": {
+        "value": "522d68e1-25be-4f73-8a76-5dd6d863914e"
+      },
+      "location": {
+        "value": "westus"
+      },
+      "deployEnvironment": {
+        "value": "nonprod"
+      },
+      "appInsightsName": {
+        "value": "mct-uat1-ai-shared"
+      },
+      "keyVaultName": {
+        "value": "mct-kv-copilot-nonprod"
+      },
+      "appServicePlanNameApi": {
+        "value": "asp-mct-copilot-nonprod"
+      },
+      "appServiceskuNameApi" :{
+        "value": "S1"
+      },
+      "appServiceLocationApi": {
+        "value": "westus"
+      }, 
+      "logAnalyticsWorkspaceName" :{
+        "value": "mct-uat1-laws-diag"
+      },
+      "webAppNameApiApp": {
+        "value": "mct-copilotapi-nonprod"
+      },
+      "managedIdentityName": {
+        "value": "mct-mi-nonprod-copilot"
+      }
+  
+    }
+  }
+  
